@@ -20,11 +20,7 @@
       "type": "text",
       "required": true
     },
-    "price": {
-      "type": "string",
-      "required": true
-    },
-    "remainder": {
+    "remaining": {
       "type": "biginteger"
     },
     "location": {
@@ -36,6 +32,11 @@
       "relation": "oneToMany",
       "target": "api::booking.booking",
       "mappedBy": "car"
+    },
+    "price": {
+      "type": "biginteger",
+      "required": true,
+      "default": "0"
     }
   }
 }
