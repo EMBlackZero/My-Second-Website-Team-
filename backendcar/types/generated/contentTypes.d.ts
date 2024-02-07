@@ -387,6 +387,9 @@ export interface ApiBookingBooking extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    location: Attribute.Text &
+      Attribute.Required &
+      Attribute.DefaultTo<'https://maps.app.goo.gl/ymMhmqjas8LMjVtf8'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -421,7 +424,6 @@ export interface ApiCarCar extends Schema.CollectionType {
     description: Attribute.Text & Attribute.Required;
     price: Attribute.String & Attribute.Required;
     remainder: Attribute.BigInteger;
-    location: Attribute.Text & Attribute.Required;
     bookings: Attribute.Relation<
       'api::car.car',
       'oneToMany',

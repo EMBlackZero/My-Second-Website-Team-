@@ -27,10 +27,6 @@
     "remainder": {
       "type": "biginteger"
     },
-    "location": {
-      "type": "text",
-      "required": true
-    },
     "bookings": {
       "type": "relation",
       "relation": "oneToMany",
