@@ -36,6 +36,11 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "bookings"
+    },
+    "location": {
+      "type": "text",
+      "required": true,
+      "default": "https://maps.app.goo.gl/ymMhmqjas8LMjVtf8"
     }
   }
 }
