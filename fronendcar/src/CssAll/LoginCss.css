@@ -1,0 +1,38 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    max-width: 500px; /* หรือความกว้างที่ต้องการ */
+    margin: 0 auto; /* จะทำให้ .login อยู่ตรงกลางของหน้าจอ */
+}
+
+  
+.name1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* เพิ่มบรรทัดนี้เพื่อจัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    color: black;
+    font-size: 35px;
+}
+.noaccount{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* เพิ่มบรรทัดนี้เพื่อจัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    color: black;
+    font-size: 14px;
+    margin-top: 20px;
+}
+.imlogo-container {
+    display: flex;
+    justify-content: center; /* จัดให้รูปอยู่ตรงกลางแนวนอน */
+    align-items: center; /* จัดให้รูปอยู่ตรงกลางแนวตั้ง */
+    margin-top: 20px;
+}
+
+.imlogo {
+    width: 40px; /* กำหนดความกว้างของรูปเป็น 50px */
+    margin: 0 20px; /* กำหนดระยะห่างระหว่างรูป */
+}
