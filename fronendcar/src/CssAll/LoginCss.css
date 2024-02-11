@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     height: 100vh;
-    max-width: 500px; /* หรือความกว้างที่ต้องการ */
+    max-width: 40%; /* หรือความกว้างที่ต้องการ */
     margin: 0 auto; /* จะทำให้ .login อยู่ตรงกลางของหน้าจอ */
 }
 
@@ -16,7 +16,8 @@
     color: black;
     font-size: 35px;
 }
-.noaccount{
+
+.account{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,3 +37,5 @@
     width: 40px; /* กำหนดความกว้างของรูปเป็น 50px */
     margin: 0 20px; /* กำหนดระยะห่างระหว่างรูป */
 }
+
+  

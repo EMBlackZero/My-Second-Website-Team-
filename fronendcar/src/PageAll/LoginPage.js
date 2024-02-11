@@ -104,8 +104,8 @@ const LoginForm = () => {
         >
           เข้าสู่ระบบ
         </Button>
-        <a href="/ลิงก์ไปยังหน้าที่ต้องการ">
-          <h1 className="noaccount">ยังไม่มีบัญชี?</h1>
+        <a href="/CreateAccount">
+          <h1 className="account">ยังไม่มีบัญชี?</h1>
         </a>
         <div className="imlogo-container">
           <img class="imlogo" src="fb_icon.png"></img>

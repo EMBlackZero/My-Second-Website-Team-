@@ -5,11 +5,21 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import CreateAccount from "./PageAll/CreateAccount";
+import LoginForm from "./PageAll/LoginPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/CreateAccount",
+    element: <CreateAccount />,
+  },
+  {
+    path: "/LoginForm",
+    element: <LoginForm />,
   },
 ]);
 
