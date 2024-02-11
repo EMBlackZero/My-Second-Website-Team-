@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    max-width: 1190px;
+    margin: 0 auto;
+}
+.products-con {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5rem;
+}
+
+.products-img img{
+    width: 100%;
+}
+.navbar {
+    background-color:#737373; /* สีพื้นหลังของ Navbar */
+    width: 100%;
+    height: 100%;
+}
+.titel{
+    color: white;
+    margin-right: auto;
+}
+.bookingcar{
+    margin: 20px;
+   
+}
+.titelogin h1{
+    display:  flex;
+    margin-left: auto;
+    font-size: 14px;
+}
