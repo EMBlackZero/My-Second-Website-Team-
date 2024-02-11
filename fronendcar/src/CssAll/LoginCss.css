@@ -1,4 +1,5 @@
 .login {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,5 +38,38 @@
     width: 40px; /* กำหนดความกว้างของรูปเป็น 50px */
     margin: 0 20px; /* กำหนดระยะห่างระหว่างรูป */
 }
+.icon-button {
+    background-color: transparent; /* กำหนดให้พื้นหลังเป็นโปร่งใส */
+    border: none; /* ลบเส้นขอบ */
+    cursor: pointer; /* เปลี่ยนเป็นรูปปุ่ม */
+    margin-top: 20px;
+}
 
+.icon-button img {
+    width: 40px; /* กำหนดขนาดของรูปภาพไอคอน */
+    height: 40px;
+    
+}
+@media screen and (max-width: 768px) {
+    .login {
+        max-width: 80%; /* เปลี่ยนความกว้างของ .login เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
+    }
+
+    .name1 {
+        font-size: 25px; /* เปลี่ยนขนาดตัวอักษรของ .name1 เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
+    }
+
+    .account {
+        font-size: 12px; /* เปลี่ยนขนาดตัวอักษรของ .account เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
+    }
+
+    .imlogo {
+        width: 30px; /* เปลี่ยนขนาดของ .imlogo เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
+    }
+
+    .icon-button img {
+        width: 30px; /* เปลี่ยนขนาดของรูปภาพไอคอนใน .icon-button เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
+        height: 30px;
+    }
+}
   

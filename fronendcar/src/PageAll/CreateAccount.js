@@ -46,12 +46,11 @@ const CreateAccount = () => {
         blocked: false,
         role: 1,
       });
-
     } catch (e) {
       console.log(e);
       console.log("wrong username & password");
     }
-    navigate("/LoginForm")
+    navigate("/LoginForm");
   };
 
   return (
@@ -133,6 +132,9 @@ const CreateAccount = () => {
           <h1 className="account">เป็นสมาชิกอยู่แล้ว</h1>
         </a>
       </Form>
+      <button className="icon-button" onClick={() => navigate("/PublicPage")}>
+        <img src="back.png"></img>
+      </button>
     </div>
   );
 };

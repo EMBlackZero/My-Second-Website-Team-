@@ -3,14 +3,15 @@
     padding: 0;
     box-sizing: border-box;
 }
-.container{
+.container {
     max-width: 1190px;
     margin: 0 auto;
 }
+
 .products-con {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2rem;
 }
 
 .products-img img{
@@ -22,15 +23,35 @@
     height: 100%;
 }
 .titel{
+    padding: 0.5rem;
     color: white;
-    margin-right: auto;
 }
 .bookingcar{
     margin: 20px;
-   
 }
-.titelogin h1{
-    display:  flex;
-    margin-left: auto;
-    font-size: 14px;
+.titelogin {
+    padding: 0.5rem;
+    display: flex;
+}
+.titelogin a h1 {
+    font-size: 20px;
+    color: white;
+    margin-right: 10px; /* เปลี่ยนค่าตามที่ต้องการ */
+}
+
+/* Media Query */
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .products-con {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 1rem;
+    }
+
+    .titelogin a h1 {
+        font-size: 16px;
+    }
 }

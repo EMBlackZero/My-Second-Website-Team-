@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateAccount from "./PageAll/CreateAccount";
 import LoginForm from "./PageAll/LoginPage";
+import PublicPage from "./PageAll/PublicPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/LoginForm",
     element: <LoginForm />,
+  },
+  {
+    path: "/PublicPage",
+    element: <PublicPage />,
   },
 ]);
 

@@ -104,6 +104,7 @@ const LoginForm = () => {
         >
           เข้าสู่ระบบ
         </Button>
+
         <a href="/CreateAccount">
           <h1 className="account">ยังไม่มีบัญชี?</h1>
         </a>
@@ -113,6 +114,9 @@ const LoginForm = () => {
           <img class="imlogo" src="Google__logo.png"></img>
         </div>
       </Form>
+      <button className="icon-button" onClick={() => navigate("/PublicPage")}>
+        <img src="back.png" ></img>
+      </button>
     </div>
   );
 };
