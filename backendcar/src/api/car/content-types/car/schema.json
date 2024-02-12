@@ -34,12 +34,8 @@
       "required": true,
       "default": "0"
     },
-    "imgcar": {
-      "allowedTypes": [
-        "images"
-      ],
-      "type": "media",
-      "multiple": false
+    "imglink": {
+      "type": "text"
     }
   }
 }

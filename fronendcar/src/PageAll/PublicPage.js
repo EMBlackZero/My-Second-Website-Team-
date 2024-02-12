@@ -44,17 +44,15 @@ const PublicPage = () => {
           {data.map((item) => (
             <div className="products-item" key={item.id}>
               <div className="products-img">
-                <img
-                  src={item.attributes.imgcar.data.attributes.url}
-                  alt="Car Image"
-                ></img>
+                <img src={item.attributes.imglink} alt="Car Image"></img>
               </div>
-              <div className="namecar">
-                {item.attributes.namecar}
-                {item.attributes.price}
+              <div className="car">
+                <div className="namecar">{item.attributes.namecar}</div>
+                <div className="pricecar"> {item.attributes.price}</div>
+                <div className="pric2ecar"> บาท</div>
               </div>
-              <div className="pricecar">
-                <button>รายละเอียด</button>
+              <div className="Bcar">
+                <Button variant="dark">ดูรายละเอียดรถ</Button>
               </div>
             </div>
           ))}
