@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../CssAll/Public.css";
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
-  const [dataimg, setDataimg] = useState([]);
-
+  const navigate = useNavigate();
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -22,6 +22,10 @@ const PublicPage = () => {
       });
   }, []);
   console.log(data);
+
+  const handleCarDetail = (id) => {
+    navigate(`/DetailsPage/${id}`);
+  };
 
   return (
     <>
@@ -49,10 +53,14 @@ const PublicPage = () => {
               <div className="car">
                 <div className="namecar">{item.attributes.namecar}</div>
                 <div className="pricecar"> {item.attributes.price}</div>
+                {/*<div className="pricecar"> {item.attributes.imgcar.data.attributes.url}</div>*/}
+
                 <div className="pric2ecar"> บาท</div>
               </div>
               <div className="Bcar">
-                <Button variant="dark">ดูรายละเอียดรถ</Button>
+                <Button variant="dark" onClick={() => handleCarDetail(item.id)}>
+                  ดูรายละเอียดรถ
+                </Button>{" "}
               </div>
             </div>
           ))}

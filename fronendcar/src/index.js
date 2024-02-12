@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateAccount from "./PageAll/CreateAccount";
 import LoginForm from "./PageAll/LoginPage";
 import PublicPage from "./PageAll/PublicPage";
+import DetailsPage from "./PageAll/DetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/PublicPage",
     element: <PublicPage />,
+  },
+  {
+    path: "/DetailsPage/:id",
+    element: <DetailsPage />,
   },
 ]);
 
