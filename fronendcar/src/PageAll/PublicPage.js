@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
+import Nav from "./Nav";
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
@@ -31,17 +32,7 @@ const PublicPage = () => {
 
   return (
     <>
-      <div class="navbar">
-        <h1 className="titel">รถเช่าผมไม่เล็กนะครับ</h1>
-        <div className="titelogin">
-          <a href="/CreateAccount">
-            <h1>สมัครสมาชิก</h1>
-          </a>
-          <a href="/LoginForm">
-            <h1>เข้าสู่ระบบ</h1>
-          </a>
-        </div>
-      </div>
+      <Nav/>
       <Button
         className="bookingcar"
         variant="dark"
@@ -72,7 +63,7 @@ const PublicPage = () => {
               <div className="Bcar">
                 <Button variant="dark" onClick={() => handleCarDetail(item.id)}>
                   ดูรายละเอียดรถ
-                </Button>{" "}
+                </Button>
               </div>
             </div>
           ))}

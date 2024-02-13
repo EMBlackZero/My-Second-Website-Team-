@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
+import Nav from "./Nav";
 
 const DetailsPage = () => {
   const { id } = useParams();
@@ -32,17 +33,7 @@ const DetailsPage = () => {
 
   return (
     <div>
-      <div class="navbar">
-        <h1 className="titel">รถเช่าผมไม่เล็กนะครับ</h1>
-        <div className="titelogin">
-          <a href="/CreateAccount">
-            <h1>สมัครสมาชิก</h1>
-          </a>
-          <a href="/LoginForm">
-            <h1>เข้าสู่ระบบ</h1>
-          </a>
-        </div>
-      </div>
+      <Nav/>
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>
