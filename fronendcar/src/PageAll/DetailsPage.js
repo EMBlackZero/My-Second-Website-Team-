@@ -60,7 +60,7 @@ const DetailsPage = () => {
           </div>
           <div className="layout2">
             <div className="detialcar">
-              <img src={data.attributes && data.attributes.imglink}></img>
+              <img src={"http://localhost:1337"+data?.attributes?.imgcar?.data?.attributes?.url  }></img>
             </div>
             <div>
               จำนวนที่เหลือ :{data.attributes && data.attributes.remaining} คัน

@@ -429,7 +429,6 @@ export interface ApiCarCar extends Schema.CollectionType {
       'api::booking.booking'
     >;
     price: Attribute.BigInteger & Attribute.Required & Attribute.DefaultTo<'0'>;
-    imglink: Attribute.Text;
     imgcar: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

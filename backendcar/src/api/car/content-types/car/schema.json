@@ -34,16 +34,13 @@
       "required": true,
       "default": "0"
     },
-    "imglink": {
-      "type": "text"
-    },
     "imgcar": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": false
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
