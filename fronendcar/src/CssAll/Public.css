@@ -31,6 +31,9 @@
 .titel{
     padding: 0.5rem;
     color: white;
+    text-decoration: none;
+    font-size: 30px;
+    margin-left: 10px;
 }
 .bookingcar{
     margin: 20px;
