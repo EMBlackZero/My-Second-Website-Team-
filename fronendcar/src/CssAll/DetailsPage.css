@@ -68,6 +68,8 @@
     align-items: center; /* จัดให้เรียงตรงกลางแนวตั้ง */
 }
 
+  
+
 @media (max-width: 768px) {
     .layoutobj {
         flex-direction: column-reverse; /* เรียง .layout2 ไว้ด้านบน */

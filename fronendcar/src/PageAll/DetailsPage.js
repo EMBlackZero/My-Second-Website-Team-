@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
 
+
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();

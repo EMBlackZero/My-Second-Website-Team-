@@ -108,11 +108,7 @@ const LoginForm = () => {
         <a href="/CreateAccount">
           <h1 className="account">ยังไม่มีบัญชี?</h1>
         </a>
-        <div className="imlogo-container">
-          <img class="imlogo" src="fb_icon.png"></img>
-          <img class="imlogo" src="line-icon.png"></img>
-          <img class="imlogo" src="Google__logo.png"></img>
-        </div>
+        
       </Form>
       <button className="icon-button" onClick={() => navigate("/PublicPage")}>
         <img src="back.png" ></img>
