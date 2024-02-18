@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import "../CssAll/PaymentCss.css"
 
 
 function PaymentPage(props) {
+    const { id } = useParams();
     const navigate = useNavigate();
-
+    const CarDetail = (id) => {
+        navigate(`/DetailsPage/${id}`);   
+    };
+    
     return (
         <div>
             <div className="navbar">
@@ -21,7 +25,7 @@ function PaymentPage(props) {
                 </div>
             </div>
             <div>
-                <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+                <button className="buttonback" onClick={() => CarDetail(id)} >
                     <img src="/back.png" />
                 </button>
             </div>

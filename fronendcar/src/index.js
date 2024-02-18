@@ -49,7 +49,7 @@ const router = createBrowserRouter([
     element: <AdDetailsPage />,
   },
   {
-    path: "/PaymentPage",
+    path: "/PaymentPage/:id",
     element: <PaymentPage />,
   },
   {
