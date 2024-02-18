@@ -12,6 +12,7 @@ import DetailsPage from "./PageAll/DetailsPage";
 import DeletePage from "./PageAll/DeletePage"
 import AdminPage from "./PageAll/AdminPage"
 import AdDetailsPage from"./PageAll/AdDetailsPage"
+import PaymentPage from "./PageAll/PaymentPage"
 
 const router = createBrowserRouter([
   {
