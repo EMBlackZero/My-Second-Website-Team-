@@ -422,13 +422,13 @@ export interface ApiCarCar extends Schema.CollectionType {
   attributes: {
     namecar: Attribute.Text & Attribute.Required;
     description: Attribute.Text & Attribute.Required;
-    remaining: Attribute.BigInteger;
+    remaining: Attribute.Integer;
     bookings: Attribute.Relation<
       'api::car.car',
       'oneToMany',
       'api::booking.booking'
     >;
-    price: Attribute.BigInteger & Attribute.Required & Attribute.DefaultTo<'0'>;
+    price: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     imgcar: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

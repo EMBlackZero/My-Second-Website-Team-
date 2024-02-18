@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
-import Nav from "./Nav";
+import AdminNav from "./AdminNav";
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
@@ -29,16 +29,21 @@ const AdminPage = () => {
   const handleCarDetail = (id) => {
     navigate(`/AdDetailsPage/${id}`);
   };
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwtToken')
+    sessionStorage.removeItem('role')
+    navigate('/');
+  }
 
   return (
     <>
-    <Nav/>
+      <AdminNav onlogout={handleLogout}/>
       <Button
         className="bookingcar"
         variant="dark"
         onClick={() => setShowModal(true)}
       >
-        รายละเอียดการเช่า
+        รถที่เช่าทั้งหมด
       </Button>
       <div className="container">
         <div className="products-con">
