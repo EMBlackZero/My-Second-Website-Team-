@@ -61,8 +61,8 @@ const DetailsPage = () => {
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
             </div>
 
-            <Button className="cheakcar" variant="dark">
-              เช่ารถ
+            <Button className="cheakcar" variant="dark" onClick={() => navigate("/PaymentPage")}>
+              เช่ารถ 
             </Button>
           </div>
         </div>
