@@ -14,9 +14,10 @@ const AdDetailsPage = () => {
   const [data, setData] = useState([]);
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
+  console.log(id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ const AdDetailsPage = () => {
             </div>
           </div>
           <div className="layout2">
-            <DeletePage data={id}></DeletePage>
+            <DeletePage id={id}/>
             <div className="detialcar">
               <img src={"http://localhost:1337"+data?.attributes?.imgcar?.data?.attributes?.url  }></img>
             </div>

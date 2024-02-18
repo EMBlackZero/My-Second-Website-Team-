@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../CssAll/DetailsPage.css"
+import "../CssAll/DetailsPage.css";
 function StaticExample({ id }) {
   const navigate = useNavigate();
   const [data1, setData1] = useState([]);
@@ -21,7 +21,7 @@ function StaticExample({ id }) {
     //   navigate("/");
     // }
     axios
-      .get(`http://localhost:1337/api/cars/${id}?populate=*`, config)
+      .get(`http://localhost:1337/api/cars/${id}?populate=*`, config) // ใช้ id ที่ส่งเข้ามาในการเรียก API
       .then(({ data }) => {
         setData2(data.data.attributes.bookings.data.length);
         if (data2 !== 0) {
@@ -57,7 +57,7 @@ function StaticExample({ id }) {
 
       axios.delete(`http://localhost:1337/api/cars/${id}`, config);
       console.log(`Event with ID ${id} deleted successfully`);
-      window.location.reload();
+      navigate("/AdminPage")
     } catch (error) {
       console.error(`Error deleting entries and event: ${error.message}`);
     }
@@ -65,7 +65,7 @@ function StaticExample({ id }) {
 
   return (
     <>
-      <Button className="Delete" variant="primary" onClick={handleShow} >
+      <Button className="Delete" variant="primary" onClick={handleShow}>
         Delete
       </Button>
 
