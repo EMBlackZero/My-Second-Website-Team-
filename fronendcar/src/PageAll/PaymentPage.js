@@ -4,7 +4,10 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../CssAll/PaymentCss.css"
 
+
 function PaymentPage(props) {
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className="navbar">
@@ -17,7 +20,12 @@ function PaymentPage(props) {
 
                 </div>
             </div>
-            <div className = "paytitle"> 
+            <div>
+                <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+                    <img src="/back.png" />
+                </button>
+            </div>
+            <div className="paytitle">
                 <h2>เลือกช่องทางการจ่ายเงิน</h2>
             </div>
 
