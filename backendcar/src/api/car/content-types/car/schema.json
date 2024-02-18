@@ -21,7 +21,7 @@
       "required": true
     },
     "remaining": {
-      "type": "biginteger"
+      "type": "integer"
     },
     "bookings": {
       "type": "relation",
@@ -30,9 +30,9 @@
       "mappedBy": "car"
     },
     "price": {
-      "type": "biginteger",
+      "type": "integer",
       "required": true,
-      "default": "0"
+      "default": 500
     },
     "imgcar": {
       "type": "media",
