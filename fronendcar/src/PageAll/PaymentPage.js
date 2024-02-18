@@ -39,3 +39,4 @@ function PaymentPage(props) {
 
     );
 }
+export default PaymentPage
