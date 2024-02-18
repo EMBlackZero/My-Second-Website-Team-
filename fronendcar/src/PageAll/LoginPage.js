@@ -28,14 +28,14 @@ const LoginForm = () => {
       });
 
       //เก็บ jwt ในฟังก์ชั่นเพื่อเรียกใช้งานในหน้า component อื่น
-      const saveTokenToLocalStorage = (token) => {
-        localStorage.setItem("jwtToken", token); //เก็บ jwt token
+      const saveTokenTosessionStorage = (token) => {
+        sessionStorage.setItem("jwtToken", token); //เก็บ jwt token
       };
-      saveTokenToLocalStorage(result.data.jwt);
+      saveTokenTosessionStorage(result.data.jwt);
 
       const config = {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
         },
       };
 
@@ -48,11 +48,11 @@ const LoginForm = () => {
       // Step 4: Check user's role and navigate accordingly
       if (userResult.data.role) {
         if (userResult.data.role.name === "Member") {
-          localStorage.setItem("role", userResult.data.role.name);
+          sessionStorage.setItem("role", userResult.data.role.name);
           navigate("/");
         }
         if (userResult.data.role.name === "Admin") {
-          localStorage.setItem("role", userResult.data.role.name);
+          sessionStorage.setItem("role", userResult.data.role.name);
           navigate("/");
         }
       }

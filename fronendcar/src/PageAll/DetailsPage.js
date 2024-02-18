@@ -4,18 +4,24 @@ import { Button, Container } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
-
+import MemberNav from "./MemberNav";
+import AdminNav from "./AdminNav";
 
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const role = sessionStorage.getItem('role')
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   };
-
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwtToken')
+    sessionStorage.removeItem('role')
+    navigate('/');
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,10 +37,13 @@ const DetailsPage = () => {
     fetchData();
   }, [id]);
   console.log(data);
+  
 
   return (
     <div>
-      <Nav/>
+      {!role && <Nav/>}
+      {role == 'Member' && <MemberNav onlogout={handleLogout}/>}
+      {role == 'Admin' && <AdminNav onlogout={handleLogout}/>}
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>

@@ -4,17 +4,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
 import Nav from "./Nav";
+import MemberNav from "./MemberNav";
+import AdminNav from "./AdminNav";
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
-
+  const role = sessionStorage.getItem('role')
   const navigate = useNavigate();
+  const [refresh,setrefresh] = useState(true)
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwtToken')
+    sessionStorage.removeItem('role')
+    navigate('/');
+  }
 
   useEffect(() => {
     axios
@@ -24,15 +33,22 @@ const PublicPage = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-  console.log(data);
+
+  useEffect(()=>{
+      console.log('role',role)
+      console.log('data',data);
+  },[data])
+  
 
   const handleCarDetail = (id) => {
     navigate(`/DetailsPage/${id}`);
   };
 
   return (
-    <>
-      <Nav/>
+    <>   
+      {!role && <Nav/>}
+      {role == 'Member' && <MemberNav onlogout={handleLogout}/>}
+      {role == 'Admin' && <AdminNav onlogout={handleLogout}/>}
       <Button
         className="bookingcar"
         variant="dark"
