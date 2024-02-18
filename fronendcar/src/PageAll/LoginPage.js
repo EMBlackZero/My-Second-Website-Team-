@@ -53,7 +53,7 @@ const LoginForm = () => {
         }
         if (userResult.data.role.name === "Admin") {
           localStorage.setItem("role", userResult.data.role.name);
-          navigate("/");
+          navigate("/AdminPage");
         }
       }
 
