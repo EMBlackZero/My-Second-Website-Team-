@@ -6,6 +6,8 @@ import "../CssAll/Public.css";
 import Nav from "./Nav";
 import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
+import History from "./History";
+import PublicNav from "./PublicNav";
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
@@ -18,12 +20,6 @@ const PublicPage = () => {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('jwtToken')
-    sessionStorage.removeItem('role')
-    navigate('/');
-  }
 
   useEffect(() => {
     axios
@@ -43,16 +39,17 @@ const PublicPage = () => {
   const handleCarDetail = (id) => {
     navigate(`/DetailsPage/${id}`);
   };
+  const goHistory = () =>{
+    navigate('/History')
+  }
 
   return (
     <>   
-      {!role && <Nav/>}
-      {role == 'Member' && <MemberNav onlogout={handleLogout}/>}
-      {role == 'Admin' && <AdminNav onlogout={handleLogout}/>}
+      <Nav/>
       <Button
         className="bookingcar"
         variant="dark"
-        onClick={() => setShowModal(true)}
+        onClick={() => goHistory()}
       >
         รายละเอียดการเช่า
       </Button>

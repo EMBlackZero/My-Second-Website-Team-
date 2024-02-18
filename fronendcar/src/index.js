@@ -12,7 +12,8 @@ import DetailsPage from "./PageAll/DetailsPage";
 import DeletePage from "./PageAll/DeletePage"
 import AdminPage from "./PageAll/AdminPage"
 import AdDetailsPage from"./PageAll/AdDetailsPage"
-import PaymentPage from "./PageAll/PaymentPage"
+import PaymentPage from "./PageAll/PaymentPage";
+import History from "./PageAll/History";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/PaymentPage",
     element: <PaymentPage />,
+  },
+  {
+    path: "/History",
+    element: <History />,
   },
 ]);
 
