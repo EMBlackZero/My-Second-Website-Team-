@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from 'react-bootstrap/Button';
 
 function AdminNav(props) {
   return (
@@ -8,7 +9,8 @@ function AdminNav(props) {
           <a href="/">
             <h1>Admin</h1>
           </a>
-          <button onClick={props.onlogout}>Logout</button>
+          <Button variant="danger" onClick={props.onlogout}>Logout</Button>
+      
         </div>
       </div>
   )

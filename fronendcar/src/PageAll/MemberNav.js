@@ -1,5 +1,6 @@
 import React from 'react'
-
+import Button from 'react-bootstrap/Button';
+  
 function MemberNav(props) {
   return (
     <div className="navbar">
@@ -8,7 +9,7 @@ function MemberNav(props) {
           <a href="/">
             <h1>Profile</h1>
           </a>
-          <button onClick={props.onlogout}>Logout</button>
+          <Button variant="danger" onClick={props.onlogout}>Logout</Button>
           
         </div>
       </div>
