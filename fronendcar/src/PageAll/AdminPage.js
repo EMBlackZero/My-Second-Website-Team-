@@ -32,17 +32,7 @@ const AdminPage = () => {
 
   return (
     <>
-      <div class="navbar">
-        <a href="/PublicPage" className="titel">
-          รถเช่าผมไม่เล็กนะครับ
-        </a>
-        <div className="titelogin">
-          <a href="/LoginForm">
-            <h1>Admin</h1>
-            <img></img>
-          </a>
-        </div>
-      </div>
+    <Nav/>
       <Button
         className="bookingcar"
         variant="dark"

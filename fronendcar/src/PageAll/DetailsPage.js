@@ -6,7 +6,7 @@ import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
 import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
-
+import PublicNav from "./PublicNav";
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,11 +17,7 @@ const DetailsPage = () => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   };
-  const handleLogout = () => {
-    sessionStorage.removeItem('jwtToken')
-    sessionStorage.removeItem('role')
-    navigate('/');
-  }
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,9 +37,7 @@ const DetailsPage = () => {
 
   return (
     <div>
-      {!role && <Nav/>}
-      {role == 'Member' && <MemberNav onlogout={handleLogout}/>}
-      {role == 'Admin' && <AdminNav onlogout={handleLogout}/>}
+      <Nav/>
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>
