@@ -10,6 +10,8 @@ import LoginForm from "./PageAll/LoginPage";
 import PublicPage from "./PageAll/PublicPage";
 import DetailsPage from "./PageAll/DetailsPage";
 import DeletePage from "./PageAll/DeletePage"
+import AdminPage from "./PageAll/AdminPage"
+import AdDetailsPage from"./PageAll/AdDetailsPage"
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,18 @@ const router = createBrowserRouter([
   {
     path: "/DeletePage",
     element: <DeletePage />,
+  },
+  {
+    path: "/AdminPage",
+    element: <AdminPage />,
+  },
+  {
+    path: "/AdDetailsPage/:id",
+    element: <AdDetailsPage />,
+  },
+  {
+    path: "/PaymentPage",
+    element: <PaymentPage />,
   },
 ]);
 
