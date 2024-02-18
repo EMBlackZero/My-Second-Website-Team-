@@ -11,7 +11,7 @@ function StaticExample({ id }) {
   const [show, setShow] = useState(false);
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
   useEffect(() => {
@@ -33,9 +33,7 @@ function StaticExample({ id }) {
       });
   }, []);
   console.log(data1);
-  const handleDelete = (e) => {
-    window.location.reload();
-  };
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -80,7 +78,7 @@ function StaticExample({ id }) {
           <Button variant="secondary" onClick={handleClose}>
             ยกเลิก
           </Button>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={handleSubmit}>
             ยืนยัน
           </Button>
         </Modal.Footer>

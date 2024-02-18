@@ -3,7 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
-import Nav from "./Nav";
+import AdminNav from "./AdminNav";
+import DeletePage from "./DeletePage"
+
 
 
 const AdDetailsPage = () => {
@@ -31,11 +33,15 @@ const AdDetailsPage = () => {
     fetchData();
   }, [id]);
   console.log(data);
-
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwtToken')
+    sessionStorage.removeItem('role')
+    navigate('/');
+  }
   return (
     <div>
-      <Nav/>
-      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+      <AdminNav onlogout={handleLogout}/>
+      <button className="buttonback" onClick={() => navigate("/AdminPage")}>
         <img src="/back.png" />
       </button>
       <Container className="detialpage">
@@ -51,6 +57,7 @@ const AdDetailsPage = () => {
             </div>
           </div>
           <div className="layout2">
+            <DeletePage data={id}></DeletePage>
             <div className="detialcar">
               <img src={"http://localhost:1337"+data?.attributes?.imgcar?.data?.attributes?.url  }></img>
             </div>
@@ -62,7 +69,7 @@ const AdDetailsPage = () => {
             </div>
 
             <Button className="cheakcar" variant="dark">
-              เช่ารถ
+              เเก้ไข
             </Button>
           </div>
         </div>
