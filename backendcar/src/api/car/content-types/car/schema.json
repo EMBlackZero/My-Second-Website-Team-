@@ -21,7 +21,7 @@
       "required": true
     },
     "remaining": {
-      "type": "biginteger"
+      "type": "integer"
     },
     "bookings": {
       "type": "relation",

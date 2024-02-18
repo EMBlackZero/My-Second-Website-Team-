@@ -6,6 +6,8 @@ import "../CssAll/Public.css";
 import Nav from "./Nav";
 import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
+import History from "./History";
+import PublicNav from "./PublicNav";
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
@@ -71,6 +73,9 @@ const PublicPage = () => {
   const handleCarDetail = (id) => {
     navigate(`/DetailsPage/${id}`);
   };
+  const goHistory = () =>{
+    navigate('/History')
+  }
 
   return (
     <>
@@ -95,7 +100,7 @@ const PublicPage = () => {
       <Button
         className="bookingcar"
         variant="dark"
-        onClick={() => setShowModal(true)}
+        onClick={() => goHistory()}
       >
         รายละเอียดการเช่า
       </Button>

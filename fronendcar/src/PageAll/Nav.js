@@ -1,18 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import PublicNav from './PublicNav'
+import MemberNav from './MemberNav'
+import AdminNav from './AdminNav'
 
 function Nav() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwtToken')
+    sessionStorage.removeItem('role')
+    navigate('/');
+  }
+  const role = sessionStorage.getItem('role')
   return (
-    <div className="navbar">
-        <a href='/PublicPage' className="titel">รถเช่าผมไม่เล็กนะครับ</a>
-        <div className="titelogin">
-          <a href="/CreateAccount">
-            <h1>สมัครสมาชิก</h1>
-          </a>
-          <a href="/LoginForm">
-            <h1>เข้าสู่ระบบ</h1>
-          </a>
-        </div>
-      </div>
+    <div>
+      {!role && <PublicNav/>}
+      {role === 'Member' && <MemberNav onlogout={handleLogout}/>}
+      {role === 'Admin' && <AdminNav onlogout={handleLogout}/>}
+    </div>
   )
 }
 
