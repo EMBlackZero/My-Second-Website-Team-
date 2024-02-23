@@ -12,13 +12,7 @@ const AdDetailsPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editedData, setEditedData] = useState({
-    namecar: "",
-    description: "",
-    imgcar: "",
-    remaining: 0,
-    price: 0,
-  });
+  
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -40,11 +34,7 @@ const AdDetailsPage = () => {
     fetchData();
   }, [id]);
 
-  const handleEdit = () => {
-    // Set edited data to current data
-    setEditedData(data.attributes);
-    setShowModal(true);
-  };
+  
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -84,7 +74,7 @@ const AdDetailsPage = () => {
             <div>
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
             </div>
-            <AdEditeCar className="cheakcar" variant="dark" onClick={handleEdit} id={id}
+            <AdEditeCar className="cheakcar" variant="dark"  id={id}
               แก้ไข
            />
           </div>

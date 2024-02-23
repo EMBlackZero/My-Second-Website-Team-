@@ -69,7 +69,7 @@ const AdEditeCar = ({ id }) => {
       namecar: carName,
       description: carDescription,
       price: parseInt(carPrice),
-      remaining: parseInt(quantityLeft),
+      remaining: parseInt(quantityLeft),      
     };
 
     try {
@@ -97,7 +97,7 @@ const AdEditeCar = ({ id }) => {
         แก้ไข
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>รายละเอียด</Modal.Title>
         </Modal.Header>
