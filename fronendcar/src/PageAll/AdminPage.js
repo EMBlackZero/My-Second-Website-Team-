@@ -12,7 +12,7 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
 
