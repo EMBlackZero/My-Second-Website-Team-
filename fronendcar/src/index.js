@@ -14,6 +14,7 @@ import AdminPage from "./PageAll/AdminPage"
 import AdDetailsPage from"./PageAll/AdDetailsPage"
 import History from "./PageAll/History";
 import PaymentPage from "./PageAll/PaymentPage"
+import AdcreateCar from "./PageAll/AdcreateCar";
 
 const router = createBrowserRouter([
   {
@@ -49,12 +50,16 @@ const router = createBrowserRouter([
     element: <AdDetailsPage />,
   },
   {
-    path: "/PaymentPage",
+    path: "/PaymentPage/:id",
     element: <PaymentPage />,
   },
   {
     path: "/History",
     element: <History />,
+  },
+  {
+    path: "/AdcreateCar",
+    element: <AdcreateCar />,
   },
 ]);
 

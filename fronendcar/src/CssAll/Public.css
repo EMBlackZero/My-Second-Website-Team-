@@ -61,6 +61,13 @@
   align-items: center;
 
 }
+.spinner-container{
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+  
 
 /* Media Query */
 @media screen and (max-width: 768px) {

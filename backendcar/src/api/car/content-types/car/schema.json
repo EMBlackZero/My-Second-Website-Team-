@@ -32,7 +32,7 @@
     "price": {
       "type": "integer",
       "required": true,
-      "default": 500
+      "default": 0
     },
     "imgcar": {
       "type": "media",

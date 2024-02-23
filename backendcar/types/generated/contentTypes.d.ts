@@ -428,7 +428,7 @@ export interface ApiCarCar extends Schema.CollectionType {
       'oneToMany',
       'api::booking.booking'
     >;
-    price: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<500>;
+    price: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     imgcar: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

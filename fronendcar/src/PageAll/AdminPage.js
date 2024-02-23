@@ -4,11 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
 import AdminNav from "./AdminNav";
+import AdcreateCar from "./AdcreateCar";
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
-  const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
-
   const navigate = useNavigate();
   const config = {
     headers: {
@@ -41,10 +40,12 @@ const AdminPage = () => {
       <Button
         className="bookingcar"
         variant="dark"
-        onClick={() => setShowModal(true)}
+        
       >
         รถที่เช่าทั้งหมด
       </Button>
+      <AdcreateCar/>
+
       <div className="container">
         <div className="products-con">
           {data.map((item) => (
@@ -61,7 +62,6 @@ const AdminPage = () => {
               <div className="car">
                 <div className="namecar">{item.attributes.namecar}</div>
                 <div className="pricecar"> {item.attributes.price}</div>
-                {/*<div className="pricecar"> {item.attributes.imgcar.data.attributes.url}</div>*/}
 
                 <div className="pric2ecar"> บาท</div>
               </div>
@@ -74,19 +74,7 @@ const AdminPage = () => {
           ))}
         </div>
       </div>
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>sgdfgdfgfgdfg</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ปิด
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      
     </>
   );
 };
