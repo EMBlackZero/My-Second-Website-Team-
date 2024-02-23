@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import AdminNav from "./AdminNav";
 import DeletePage from "./DeletePage";
+import AdEditeCar from "./AdEditeCar";
 
 const AdDetailsPage = () => {
   const { id } = useParams();
@@ -54,27 +55,6 @@ const AdDetailsPage = () => {
     sessionStorage.removeItem('role');
     navigate('/');
   };
-
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setEditedData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`http://localhost:1337/api/cars/${id}`, editedData, config);
-      const response = await axios.get(`http://localhost:1337/api/cars/${id}?populate=*`);
-      setData(response.data.data);
-      setShowModal(false);
-    } catch (error) {
-      console.error("Error editing data:", error);
-    }
-  };  
-
   return (
     <div>
       <AdminNav onlogout={handleLogout} />
@@ -104,45 +84,13 @@ const AdDetailsPage = () => {
             <div>
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
             </div>
-            <Button className="cheakcar" variant="dark" onClick={handleEdit}>
+            <AdEditeCar className="cheakcar" variant="dark" onClick={handleEdit} id={id}
               แก้ไข
-            </Button>
+           />
           </div>
         </div>
       </Container>
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Car Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="formNameCar">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter car name"
-                name="namecar"
-                value={editedData.namecar}
-                onChange={handleFormChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Enter car description"
-                name="description"
-                value={editedData.description}
-                onChange={handleFormChange}
-              />
-            </Form.Group>
-            {/* Add other form fields as needed */}
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+     
     </div>
   );
 };
