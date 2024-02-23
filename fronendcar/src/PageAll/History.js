@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
 import { Button, Spinner } from "react-bootstrap";
@@ -10,6 +11,7 @@ const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
 function History() {
+  const navigate = useNavigate()
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,6 +57,9 @@ function History() {
         </div>
       )}
       <Nav />
+      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+        <img src="/back.png" />
+      </button>
       <div className="containerHTR">
         <h2>History</h2>
         {dataHistory.map((booking) => (

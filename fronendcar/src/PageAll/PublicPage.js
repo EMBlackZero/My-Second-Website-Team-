@@ -73,7 +73,11 @@ const PublicPage = () => {
     navigate(`/DetailsPage/${id}`);
   };
   const goHistory = () => {
-    navigate("/History");
+    if (role === null) {
+      setShowModal(true);
+    } else {
+      navigate("/History");
+    }
   };
 
   return (
