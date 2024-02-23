@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
+
 const AdEditeCar = ({ id }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -14,8 +15,9 @@ const AdEditeCar = ({ id }) => {
   const [carPrice, setCarPrice] = useState("");
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [Idimg, setIdimg] = useState("");
 
-  // useEffect สำหรับดึงข้อมูลรถจากเซิร์ฟเวอร์
+  // useEffect to fetch car data from the server
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,6 +30,7 @@ const AdEditeCar = ({ id }) => {
         setCarDescription(fetchedData.attributes.description);
         setCarPrice(fetchedData.attributes.price);
         setQuantityLeft(fetchedData.attributes.remaining);
+        setIdimg(fetchedData.attributes.imgcar.data.id);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,123 +38,132 @@ const AdEditeCar = ({ id }) => {
     fetchData();
   }, [id]);
 
-  // ฟังก์ชัน handleImageChange สำหรับจัดการเมื่อมีการเลือกรูปภาพใหม่
+  // Function to handle image change
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
   };
-
-  // ฟังก์ชัน handlecarName สำหรับจัดการเมื่อมีการเปลี่ยนแปลงชื่อรุ่นรถ
+  console.log(imageFile);
+  // Function to handle car name change
   const handlecarName = (event) => {
     setCarName(event.target.value);
   };
 
-  // ฟังก์ชัน handlecarDescription สำหรับจัดการเมื่อมีการเปลี่ยนแปลงรายละเอียดรถ
+  // Function to handle car description change
   const handlecarDescription = (event) => {
     setCarDescription(event.target.value);
   };
 
-  // ฟังก์ชัน handlecarPrice สำหรับจัดการเมื่อมีการเปลี่ยนแปลงราคารถ
+  // Function to handle car price change
   const handlecarPrice = (event) => {
     setCarPrice(event.target.value);
   };
 
-  // ฟังก์ชัน handlequantityLeft สำหรับจัดการเมื่อมีการเปลี่ยนแปลงจำนวนที่เหลือของรถ
+  // Function to handle quantity left change
   const handlequantityLeft = (event) => {
     setQuantityLeft(event.target.value);
   };
 
-  // ฟังก์ชัน handleSaveChanges สำหรับบันทึกข้อมูลหลังจากทำการแก้ไข
+  // Function to save changes after editing
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-
-    const formData = {
-      namecar: carName,
-      description: carDescription,
-      price: parseInt(carPrice),
-      remaining: parseInt(quantityLeft),      
-    };
-
     try {
-      const response = await axios.put(
+      let formData2 = {
+        namecar: carName,
+        description: carDescription,
+        price: parseInt(carPrice),
+        remaining: parseInt(quantityLeft),
+      };
+      if (imageFile !== null) {
+        const formData = new FormData();
+        formData.append("files", imageFile);
+        const uploadResponse = await axios.post(
+          "http://localhost:1337/api/upload",
+          formData
+        );
+        formData2.imgcar = parseInt(uploadResponse.data[0].id);
+      } else {
+        formData2.imgcar = parseInt(data.attributes.imgcar.data.id);
+      }
+      await axios.put(
         `http://localhost:1337/api/cars/${id}?populate=*`,
-        { data: formData },
+        { data: formData2 },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
           },
         }
       );
-      // สามารถทำต่อได้เช่นแสดงข้อความบันทึกสำเร็จ หรือปิด Modal
+      handleClose();
+      // Optionally, you can add success message or additional actions here
     } catch (error) {
-      console.error("Error creating entry:", error);
-      // จัดการข้อผิดพลาดที่เกิดขึ้น
+      console.error("Error saving changes:", error);
     }
-    window.location.reload();
-    handleClose();
+    //window.location.reload(); // Reload the page
+    handleClose(); // Close modal
   };
 
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        แก้ไข
+        Edit
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>รายละเอียด</Modal.Title>
+          <Modal.Title>Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="carName">
-              <Form.Label>ชื่อรุ่น</Form.Label>
+              <Form.Label>Car Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="ชื่อรุ่น"
+                placeholder="Car Name"
                 value={carName}
                 onChange={handlecarName}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carDescription">
-              <Form.Label>รายละเอียดภายใน</Form.Label>
+              <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder="รายละเอียดภายใน"
+                placeholder="Description"
                 value={carDescription}
                 onChange={handlecarDescription}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carPrice">
-              <Form.Label>ราคา</Form.Label>
+              <Form.Label>Price</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="ราคา"
+                placeholder="Price"
                 value={carPrice}
                 onChange={handlecarPrice}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="quantityLeft">
-              <Form.Label>จำนวนที่เหลือ</Form.Label>
+              <Form.Label>Quantity Left</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="จำนวนที่เหลือ"
+                placeholder="Quantity Left"
                 value={quantityLeft}
                 onChange={handlequantityLeft}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="imageFile">
-              <Form.Label>รูปรถ</Form.Label>
+              <Form.Label>Car Image</Form.Label>
               <Form.Control type="file" onChange={handleImageChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            ปิด
+            Close
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
-            บันทึก
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
