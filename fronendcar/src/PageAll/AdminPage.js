@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
-import AdminNav from "./AdminNav";
 import AdcreateCar from "./AdcreateCar";
+import Nav from "./Nav";
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
@@ -18,31 +18,44 @@ const AdminPage = () => {
   useEffect(() => {
     axios
       .get("http://localhost:1337/api/cars?populate=*", config)
-      .then(({ data }) => setData(data.data))
+      .then(({ data }) => {
+        console.log('data.data',data.data)
+        const mapToset = data.data.map((e)=>{
+            return {
+              key:e.id,
+              id: e.id,
+              ...e.attributes,
+              imgcar : e.attributes.imgcar.data.attributes.url
+            }
+        })
+        setData(mapToset)
+      })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
-  console.log(data);
+  
+  useEffect(()=>{
+    console.log('data',data);
+  },[data])
+  
 
   const handleCarDetail = (id) => {
     navigate(`/AdDetailsPage/${id}`);
   };
-  const handleLogout = () => {
-    sessionStorage.removeItem('jwtToken')
-    sessionStorage.removeItem('role')
-    navigate('/');
-  }
+  const GotoHistory = () => {
+    navigate('/AdminHistory');
+  };
 
   return (
     <>
-      <AdminNav onlogout={handleLogout}/>
+      <Nav/>
       <Button
         className="bookingcar"
         variant="dark"
-        
+        onClick={() => GotoHistory()}
       >
-        รถที่เช่าทั้งหมด
+        ประวัติรถที่เช่าทั้งหมด
       </Button>
       <AdcreateCar/>
 
@@ -53,17 +66,18 @@ const AdminPage = () => {
               <div className="products-img">
                 <img
                   src={
-                    "http://localhost:1337" +
-                    item?.attributes?.imgcar?.data?.attributes?.url
-                  }
+                    "http://localhost:1337" + item?.imgcar}
                   alt="Car Image"
                 ></img>
               </div>
-              <div className="car">
-                <div className="namecar">{item.attributes.namecar}</div>
-                <div className="pricecar"> {item.attributes.price}</div>
-
+              {/* <div className="car">
+                <div className="namecar">{item.namecar}</div>
+                <div className="pricecar"> {item.price}</div>
                 <div className="pric2ecar"> บาท</div>
+              </div> */}
+              <div className="name_price">
+                <p>{item.namecar}</p>
+                <p>{item.price} บาท</p>
               </div>
               <div className="Bcar">
                 <Button variant="dark" onClick={() => handleCarDetail(item.id)}>
@@ -74,7 +88,7 @@ const AdminPage = () => {
           ))}
         </div>
       </div>
-      
+      <footer></footer>
     </>
   );
 };

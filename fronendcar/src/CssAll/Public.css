@@ -67,6 +67,21 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.modal-login{
+    text-align: center;
+}
+.alert{
+    width: 200px;
+    height: 200px;
+}
+.name_price{
+    margin: 0px 10px;
+    margin-top: 15px;
+    font-size: 23px;
+    display: flex;
+    justify-content: space-between;
+}
   
 
 /* Media Query */

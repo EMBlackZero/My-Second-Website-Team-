@@ -24,20 +24,29 @@ const PublicPage = () => {
   };
 
   useEffect(() => {
-    try {
-      setIsLoading(true);
-      axios
-        .get("http://localhost:1337/api/cars?populate=*")
-        .then(({ data }) => setData(data.data))
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    } catch (error) {
-      console.error("Error in useEffect:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    axios
+      .get("http://localhost:1337/api/cars?populate=*")
+      .then(({ data }) => {
+        console.log('data.data',data.data)
+        const mapToset = data.data.map((e)=>{
+            return {
+              key:e.id,
+              id: e.id,
+              ...e.attributes,
+              imgcar : e.attributes.imgcar.data.attributes.url
+            }
+        })
+        setData(mapToset)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+  
 
   useEffect(() => {
     console.log("role", role);
@@ -48,7 +57,17 @@ const PublicPage = () => {
     if (maxPrice === "" && minPrice === "") {
       axios
         .get("http://localhost:1337/api/cars?populate=*")
-        .then(({ data }) => setData(data.data))
+        .then(({ data }) => {
+          const mapToset = data.data.map((e)=>{
+            return {
+              key:e.id,
+              id: e.id,
+              ...e.attributes,
+              imgcar : e.attributes.imgcar.data.attributes.url
+            }
+          })
+          setData(mapToset)
+        })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
@@ -60,7 +79,15 @@ const PublicPage = () => {
         `http://localhost:1337/api/cars?filters[price][$lte]=${maxPrice}&filters[price][$gte]=${minPrice}&populate=*`
       )
       .then(({ data }) => {
-        setData(data.data);
+        const mapToset = data.data.map((e)=>{
+          return {
+            key:e.id,
+            id: e.id,
+            ...e.attributes,
+            imgcar : e.attributes.imgcar.data.attributes.url
+          }
+        })
+        setData(mapToset);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -72,16 +99,22 @@ const PublicPage = () => {
   const handleCarDetail = (id) => {
     navigate(`/DetailsPage/${id}`);
   };
+
+  const gotologin = () =>{
+    navigate('/LoginForm')
+  }
+
   const goHistory = () => {
-    if (role === null) {
-      setShowModal(true);
-    } else {
-      navigate("/History");
-    }
+      role === null ? setShowModal(true) : navigate("/History");
   };
 
   return (
     <>
+      {isLoading && (
+        <div className="spinner-container">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      )}
       <Nav />
       <div className="price-filter">
         <row>minimum price: </row>
@@ -109,18 +142,20 @@ const PublicPage = () => {
               <div className="products-img">
                 <img
                   src={
-                    "http://localhost:1337" +
-                    item?.attributes?.imgcar?.data?.attributes?.url
-                  }
+                    "http://localhost:1337" + item?.imgcar}
                   alt="Car Image"
                 ></img>
               </div>
-              <div className="car">
+              {/* <div className="car">
                 <div className="namecar">{item.attributes.namecar}</div>
                 <div className="pricecar"> {item.attributes.price}</div>
-                {/*<div className="pricecar"> {item.attributes.imgcar.data.attributes.url}</div>*/}
+                <div className="pricecar"> {item.attributes.imgcar.data.attributes.url}</div>
 
                 <div className="pric2ecar"> บาท</div>
+              </div> */}
+              <div className="name_price">
+                <p>{item.namecar}</p>
+                <p>{item.price} บาท</p>
               </div>
               <div className="Bcar">
                 <Button variant="dark" onClick={() => handleCarDetail(item.id)}>
@@ -137,9 +172,14 @@ const PublicPage = () => {
           <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>sgdfgdfgfgdfg</p>
+          <div className="modal-login">
+            <img className="alert" src="/alert.png" />
+            <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+            
+          </div>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="dark" onClick={() => gotologin()}>Login</Button>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             ปิด
           </Button>
