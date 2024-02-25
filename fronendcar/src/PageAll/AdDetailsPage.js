@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Modal, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
-import AdminNav from "./AdminNav";
+import Nav from "./Nav"
 import DeletePage from "./DeletePage";
 import AdEditeCar from "./AdEditeCar";
 
@@ -34,20 +34,13 @@ const AdDetailsPage = () => {
     fetchData();
   }, [id]);
 
-  
-
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('jwtToken');
-    sessionStorage.removeItem('role');
-    navigate('/');
-  };
   return (
     <div>
-      <AdminNav onlogout={handleLogout} />
+      <Nav/>
       <button className="buttonback" onClick={() => navigate("/AdminPage")}>
         <img src="/back.png" />
       </button>
@@ -80,7 +73,7 @@ const AdDetailsPage = () => {
           </div>
         </div>
       </Container>
-     
+      <footer></footer>
     </div>
   );
 };
