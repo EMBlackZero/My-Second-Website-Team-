@@ -70,6 +70,7 @@ const DetailsPage = () => {
           </div>
         </div>
       </Container>
+      <footer></footer>
     </div>
   );
 };

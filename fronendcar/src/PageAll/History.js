@@ -14,6 +14,7 @@ function History() {
   const navigate = useNavigate()
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const iduser = sessionStorage.getItem('iduser')
 
   const fetchHistory = async () => {
     try {
@@ -33,7 +34,13 @@ function History() {
           ...e.attributes,
         };
       });
-      setDataHistory(await Promise.all(maptoSet));
+      
+      const alldata = await Promise.all(maptoSet)
+      const filter = alldata.filter((e)=> {
+        return e.user.data.id === parseInt(iduser)
+      })
+      console.log('filter',filter)
+      setDataHistory(filter);
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,6 +54,7 @@ function History() {
 
   useEffect(() => {
     console.log("datahistory", dataHistory);
+    console.log('iduser',iduser)
   }, [dataHistory]);
 
   return (
@@ -61,7 +69,7 @@ function History() {
         <img src="/back.png" />
       </button>
       <div className="containerHTR">
-        <h2>History</h2>
+        <h2>Your History</h2>
         {dataHistory.map((booking) => (
           <div key={booking.id} className="container-Booking">
             <div className="booking-img">
@@ -82,6 +90,7 @@ function History() {
               <p>
                 status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
               </p>
+              
             </div>
           </div>
         ))}

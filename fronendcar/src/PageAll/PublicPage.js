@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Spinner } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Modal, Row } from "react-bootstrap";
+import { Spinner } from "react-bootstrap"; 
+import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
 import Nav from "./Nav";
 
@@ -16,7 +16,7 @@ const PublicPage = () => {
 
   const navigate = useNavigate();
 
-  const [refresh, setrefresh] = useState(true);
+  
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -51,7 +51,7 @@ const PublicPage = () => {
   useEffect(() => {
     console.log("role", role);
     console.log("data", data);
-  }, [data]);
+  }, [data,role]);
 
   const handlePriceFilter = () => {
     if (maxPrice === "" && minPrice === "") {
@@ -109,7 +109,7 @@ const PublicPage = () => {
   };
 
   return (
-    <>
+    <div>
       {isLoading && (
         <div className="spinner-container">
           <Spinner animation="border" variant="secondary" />
@@ -117,19 +117,21 @@ const PublicPage = () => {
       )}
       <Nav />
       <div className="price-filter">
-        <row>minimum price: </row>
+        <div className="item-infilter">minimum price: </div>
         <input
           type="text"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
+          className="item-infilter"
         />
-        <row>maximum price: </row>
+        <div className="item-infilter">maximum price: </div>
         <input
           type="text"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
+          className="item-infilter"
         />
-        <button onClick={handlePriceFilter}>Filter</button>
+        <button onClick={handlePriceFilter} className="btn-infilter">Filter</button>
       </div>
 
       <Button className="bookingcar" variant="dark" onClick={() => goHistory()}>
@@ -185,7 +187,7 @@ const PublicPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

@@ -74,14 +74,9 @@ function AdHistory() {
               <p>Start : {booking.startdate}</p>
               <p>End : {booking.enddate}</p>
               <p>
-                Where :{" "}
-                <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
-                  เปิดในเเมพ
-                </a>
-              </p>
-              <p>
                 status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
               </p>
+              <p>ผู้เช่า : {booking.user.data.attributes.username}</p>
             </div>
           </div>
         ))}

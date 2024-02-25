@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import {  Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../CssAll/LoginCss.css";
@@ -22,7 +22,7 @@ const LoginForm = () => {
     setSubmitEnabled(false);
 
     try {
-      let result = await axios.post("http://localhost:1337/api/auth/local", {
+      const result = await axios.post("http://localhost:1337/api/auth/local", {
         identifier: username,
         password: password,
       });
@@ -32,7 +32,8 @@ const LoginForm = () => {
         sessionStorage.setItem("jwtToken", token); //เก็บ jwt token
       };
       saveTokenTosessionStorage(result.data.jwt);
-
+      sessionStorage.setItem('username',result.data.user.username)
+      sessionStorage.setItem('iduser',result.data.user.id)
       const config = {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -57,10 +58,11 @@ const LoginForm = () => {
         }
       }
 
-      console.log(userResult);
+      console.log('userresult',userResult);
     } catch (e) {
       console.log(e);
       console.log("wrong username & password");
+      alert("Wrong username or password");
       setSubmitEnabled(true);
     }
   };
@@ -70,7 +72,7 @@ const LoginForm = () => {
       <h1 className="name1">เข้าสู่ระบบ</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicUsername">
-          <Form.Label>email</Form.Label>
+          <Form.Label>Email or Username</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter username"

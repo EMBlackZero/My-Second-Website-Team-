@@ -9,6 +9,7 @@ function Nav() {
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken')
     sessionStorage.removeItem('role')
+    sessionStorage.removeItem('username')
     navigate('/');
   }
   const role = sessionStorage.getItem('role')

@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import "../CssAll/PaymentCss.css";
+import Nav from "./Nav";
 
 function PaymentPage(props) {
   const { id } = useParams();
@@ -69,17 +70,7 @@ function PaymentPage(props) {
 
   return (
     <div>
-      <div className="navbar">
-        <a href="/PublicPage" className="titel">
-          รถเช่าผมไม่เล็กนะครับ
-        </a>
-        <div className="titelogin">
-          <a href="/">
-            <h1>Profile</h1>
-          </a>
-          <button onClick={props.onlogout}>Logout</button>
-        </div>
-      </div>
+      <Nav/>
       <div>
         <button className="buttonback" onClick={() => CarDetail(id)}>
           <img src="/back.png" />
@@ -100,6 +91,7 @@ function PaymentPage(props) {
           <span>เงินสด (ชำระหน้าร้าน)</span>
         </button>
       </div>
+      <footer></footer>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>หลักฐานการชำระเงิน</Modal.Title>
