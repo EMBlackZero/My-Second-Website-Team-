@@ -67,6 +67,10 @@
     flex-direction: column;
     align-items: center; /* จัดให้เรียงตรงกลางแนวตั้ง */
 }
+.custom-datepicker {
+    width: 300px; /* Adjust the width as needed */
+}
+  
 
   
 
