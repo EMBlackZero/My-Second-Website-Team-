@@ -41,6 +41,13 @@
       "type": "text",
       "required": true,
       "default": "https://maps.app.goo.gl/ymMhmqjas8LMjVtf8"
+    },
+    "payment": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
