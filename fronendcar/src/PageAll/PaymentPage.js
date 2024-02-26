@@ -44,16 +44,9 @@ function PaymentPage(props) {
         payment: parseInt(fileId),
       };
 
-      const carResponse = await axios.get(
-        `http://localhost:1337/api/cars/${id}?populate=*`,
-        config
-      );
-      const carData = carResponse.data.data; // Assuming this structure based on your usage
-      const bookingId = carData.attributes.bookings.data[0].id;
-      console.log(bookingId);
 
       const putResponse = await axios.put(
-        `http://localhost:1337/api/bookings/${bookingId}?populate=*`,
+        `http://localhost:1337/api/bookings/${id}?populate=*`,
         { data: formData2 },
         {
           headers: {

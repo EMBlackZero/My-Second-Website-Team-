@@ -17,7 +17,6 @@ import PaymentPage from "./PageAll/PaymentPage"
 import AdcreateCar from "./PageAll/AdcreateCar";
 import AdHistory from "./PageAll/AdHistory";
 import Comfirmcar1 from "./PageAll/Comfirmcar1";
-import Comfirmcar2 from "./PageAll/Comfirmcar2";
 
 const router = createBrowserRouter([
   {
@@ -72,10 +71,7 @@ const router = createBrowserRouter([
     path: "/Comfirmcar1/:id",
     element: <Comfirmcar1 />,
   },
-  {
-    path: "/Comfirmcar2/:id",
-    element: <Comfirmcar2 />,
-  },
+ 
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

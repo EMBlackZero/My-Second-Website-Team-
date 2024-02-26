@@ -43,11 +43,15 @@
       "default": "https://maps.app.goo.gl/ymMhmqjas8LMjVtf8"
     },
     "payment": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "Total": {
+      "type": "integer"
     }
   }
 }

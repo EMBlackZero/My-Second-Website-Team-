@@ -391,6 +391,7 @@ export interface ApiBookingBooking extends Schema.CollectionType {
       Attribute.Required &
       Attribute.DefaultTo<'https://maps.app.goo.gl/ymMhmqjas8LMjVtf8'>;
     payment: Attribute.Media;
+    Total: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
