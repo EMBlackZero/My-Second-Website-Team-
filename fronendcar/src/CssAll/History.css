@@ -16,7 +16,7 @@
     padding: 20px;
     display: flex;
     border-radius: 10px;
-    max-width: 700px;
+    max-width: 800px;
     height: 270px;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     
@@ -32,7 +32,8 @@
 
 }
 .booking-detail{
-    margin: auto 20px;
+    margin: 0px 20px;
+    
 }
 footer{
     height: 100px;
