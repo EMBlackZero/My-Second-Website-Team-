@@ -9,6 +9,7 @@
     border: none; /* ลบเส้นขอบ */
     cursor: pointer; /* เปลี่ยนเป็นรูปปุ่ม */
     margin: 20px;
+    margin-bottom: 0px;
 }
 
 .buttonback img {

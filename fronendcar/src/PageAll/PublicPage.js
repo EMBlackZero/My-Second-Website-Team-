@@ -6,6 +6,10 @@ import { Button, Modal } from "react-bootstrap";
 import "../CssAll/Public.css";
 import Nav from "./Nav";
 
+
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+  
 const PublicPage = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

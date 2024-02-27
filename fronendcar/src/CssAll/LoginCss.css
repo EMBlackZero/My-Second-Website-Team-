@@ -50,6 +50,7 @@
     height: 40px;
     
 }
+
 @media screen and (max-width: 768px) {
     .login {
         max-width: 80%; /* เปลี่ยนความกว้างของ .login เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */

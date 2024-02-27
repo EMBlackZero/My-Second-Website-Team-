@@ -16,6 +16,10 @@ function History() {
   const [isLoading, setIsLoading] = useState(false);
   const iduser = sessionStorage.getItem('iduser')
 
+  const gotoHistoryDetail = (id) => {
+    navigate(`/Historydetail/${id}`);
+  };
+
   const fetchHistory = async () => {
     try {
       setIsLoading(true);
@@ -25,8 +29,10 @@ function History() {
         const find_img = await axios.get(
           `${URL_CAR}/${e.attributes.car.data.id}?populate=*`
         );
+
         console.log("find_img", find_img.data.data.attributes.imgcar.data);
-        const img = find_img.data.data.attributes.imgcar.data;
+        const img = find_img.data.data.attributes.imgcar.data.attributes.url;
+        console.log(img)
         return {
           id: e.id,
           key: e.id,
@@ -74,7 +80,8 @@ function History() {
           <div key={booking.id} className="container-Booking">
             <div className="booking-img">
               <img
-                src={"http://localhost:1337" + booking?.image?.attributes?.url}
+                src={"http://localhost:1337" + booking?.image}
+                alt="Car Image"
               ></img>
             </div>
             <div className="booking-detail">
@@ -90,6 +97,12 @@ function History() {
               <p>
                 status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
               </p>
+              <div>
+                <Button variant="dark" onClick={() => gotoHistoryDetail(booking.id)}>
+                รีวิวรถคันนี้
+                </Button>
+              </div>
+              
               
             </div>
           </div>
