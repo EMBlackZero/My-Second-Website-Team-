@@ -142,7 +142,7 @@ const PublicPage = () => {
         variant="dark"
         onClick={() => goHistory()}
       >
-        รายละเอียดการเช่า
+        ประวัติการเช่าของฉัน
       </Button>
       <div className="container">
         <div className="products-con">
