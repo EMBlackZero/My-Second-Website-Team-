@@ -7,7 +7,6 @@ import axios from "axios";
 import "../CssAll/Historydetail.css";
 import Form from "react-bootstrap/Form";
 
-
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
@@ -18,21 +17,30 @@ function HistoryDetail() {
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
-  
   const fetchHistorydetail = async () => {
     try {
       setIsLoading(true);
-      
-      const [response] = await Promise.all([axios.get(`${URL_BOOKING}/${id}?populate=*`)]);
-      console.log('response',response.data.data)
-      const find_img = await axios.get(`${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`)
-      console.log('findimage',find_img.data.data.attributes.imgcar.data.attributes.url)
+
+      const [response] = await Promise.all([
+        axios.get(`${URL_BOOKING}/${id}?populate=*`),
+      ]);
+      console.log("response", response.data.data);
+      const find_img = await axios.get(
+        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
+      );
+      console.log(
+        "findimage",
+        find_img.data.data.attributes.imgcar.data.attributes.url
+      );
 
       const Detailcar = response.data.data.attributes.car.data.attributes;
 
       console.log("response", response.data.data);
       console.log("detail", Detailcar.description);
-      console.log("find_img",find_img.data.data.attributes.imgcar.data.attributes.url);
+      console.log(
+        "find_img",
+        find_img.data.data.attributes.imgcar.data.attributes.url
+      );
 
       const usedata = {
         key: response.data.data.id,
@@ -43,6 +51,7 @@ function HistoryDetail() {
       };
       console.log("data", usedata);
       setData(usedata);
+      setComment(response.data.data.attributes.comment)
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,7 +72,17 @@ function HistoryDetail() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    axios.put(
+      `${URL_BOOKING}/${id}?populate=*`,
+      { data: { comment: comment } },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+        },
+      }
+    );
     console.log("Submitted comment:", comment);
+
     setComment("");
   };
   return (
@@ -75,20 +94,17 @@ function HistoryDetail() {
       )}
       <Nav />
       <button className="buttonback" onClick={() => navigate("/History")}>
-        <img src="/back.png" alt='button' />
+        <img src="/back.png" alt="button" />
       </button>
       <div className="history-detail-container">
         <div className="history-detail-detail">
           <h1>History Detail</h1>
           <h2>หมายเลขคำสั่งจอง {data.id}</h2>
-          <h4>รายละเอียดรถของท่าน</h4>
+          <h4>รายละเอียดรถของท่าน</h4>       
           <p>- {data.detail}</p>
         </div>
         <div className="history-datail-image">
-          <img
-            src={"http://localhost:1337" + data?.image}
-            alt="Car"
-          ></img>
+          <img src={"http://localhost:1337" + data?.image} alt="Car"></img>
         </div>
       </div>
       <div className="add-comment">

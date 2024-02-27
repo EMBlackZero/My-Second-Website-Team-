@@ -80,7 +80,7 @@ const PublicPage = () => {
 
     axios
       .get(
-        `http://localhost:1337/api/cars?filters[price][$lte]=${maxPrice}&filters[price][$gte]=${minPrice}&populate=*`
+        `http://localhost:1337/api/cars?filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}&populate=*`
       )
       .then(({ data }) => {
         const mapToset = data.data.map((e)=>{

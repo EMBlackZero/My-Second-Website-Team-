@@ -52,6 +52,9 @@
     },
     "Total": {
       "type": "integer"
+    },
+    "comment": {
+      "type": "text"
     }
   }
 }
