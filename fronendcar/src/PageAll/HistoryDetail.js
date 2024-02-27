@@ -15,6 +15,8 @@ function HistoryDetail() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState("");
+  const [havecomment, setHavecomment] = useState(false)
+  const [send,setSend] = useState(false)
   const navigate = useNavigate();
 
   const fetchHistorydetail = async () => {
@@ -65,6 +67,12 @@ function HistoryDetail() {
 
   useEffect(() => {
     console.log("data", data);
+    if (data.comment){
+      console.log('you comment',data.comment)
+      setHavecomment(true)
+    }else{
+      console.log('Not comment')
+    }
   }, [data]);
 
   const handleCommentChange = (e) => {
@@ -72,18 +80,22 @@ function HistoryDetail() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.put(
-      `${URL_BOOKING}/${id}?populate=*`,
-      { data: { comment: comment } },
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-        },
-      }
-    );
-    console.log("Submitted comment:", comment);
-
-    setComment("");
+    if (comment){
+      axios.put(
+        `${URL_BOOKING}/${id}?populate=*`,
+        { data: { comment: comment } },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+          },
+        }
+      );
+      console.log("Submitted comment:", comment);
+      setSend(true)
+    }else{
+      console.log('please comment')
+    }
+    
   };
   return (
     <div>
@@ -114,6 +126,7 @@ function HistoryDetail() {
               <legend>
                 <span className="number">1</span> แสดงความคิดเห็น
               </legend>
+              {havecomment === true && <p>ความคิดเห็นที่คุณเขียนไว้</p> }
               <textarea
                 name="field3"
                 placeholder="เขียนความรู้ศึกของคุณหลังจากใช้งานรถคันนี้"
@@ -121,10 +134,16 @@ function HistoryDetail() {
                 onChange={handleCommentChange} // Handle change in textarea
               ></textarea>
             </fieldset>
-            <input type="submit" value="Apply" />
+            
+            {havecomment === true && <input type="submit" value="ส่งใหม่" /> }
+            {havecomment === false && <input  type="submit" value="ส่ง" /> }
+            {send === true && <h4 className="sended">เราได้รับรีวิวของคุณแล้ว</h4>}
           </form>
+          
         </div>
+        
       </div>
+      
 
       <footer></footer>
     </div>

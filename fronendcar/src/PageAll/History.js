@@ -16,6 +16,8 @@ function History() {
   const [isLoading, setIsLoading] = useState(false);
   const iduser = sessionStorage.getItem("iduser");
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  
+
 
   const gotoHistoryDetail = (id) => {
     navigate(`/Historydetail/${id}`);
