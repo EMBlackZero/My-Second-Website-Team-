@@ -54,6 +54,13 @@ function PaymentPage(props) {
           },
         }
       );
+      console.log('asd',putResponse.data.data.attributes.car.data.id)
+      //decrease_remaining
+      const remaining = await axios.get(
+        `http://localhost:1337/api/cars/${putResponse.data.data.attributes.car.data.id}/decrease_remaining`,config
+        
+      );
+      
       handleClose();
     } catch (error) {
       console.error("Error saving changes:", error);
