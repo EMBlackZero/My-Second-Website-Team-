@@ -105,7 +105,11 @@ const AdEditeCar = ({ id }) => {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow}>
+      <Button
+        variant="dark"
+        onClick={handleShow}
+        style={{ display: "block", margin: "auto", marginTop: "21px" }}
+      >
         Edit
       </Button>
 

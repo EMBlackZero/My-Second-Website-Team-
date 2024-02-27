@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner,Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 
 axios.defaults.baseURL =
@@ -11,10 +11,11 @@ const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
 function History() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const iduser = sessionStorage.getItem('iduser')
+  const iduser = sessionStorage.getItem("iduser");
+  const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
 
   const fetchHistory = async () => {
     try {
@@ -34,12 +35,12 @@ function History() {
           ...e.attributes,
         };
       });
-      
-      const alldata = await Promise.all(maptoSet)
-      const filter = alldata.filter((e)=> {
-        return e.user.data.id === parseInt(iduser)
-      })
-      console.log('filter',filter)
+
+      const alldata = await Promise.all(maptoSet);
+      const filter = alldata.filter((e) => {
+        return e.user.data.id === parseInt(iduser);
+      });
+      console.log("filter", filter);
       setDataHistory(filter);
     } catch (error) {
       console.log(error);
@@ -54,7 +55,7 @@ function History() {
 
   useEffect(() => {
     console.log("datahistory", dataHistory);
-    console.log('iduser',iduser)
+    console.log("iduser", iduser);
   }, [dataHistory]);
 
   return (
@@ -71,7 +72,11 @@ function History() {
       <div className="containerHTR">
         <h2>Your History</h2>
         {dataHistory.map((booking) => (
-          <div key={booking.id} className="container-Booking">
+          <div
+            key={booking.id}
+            className="container-Booking"
+            //onClick={() => setShowModal(true)}
+          >
             <div className="booking-img">
               <img
                 src={"http://localhost:1337" + booking?.image?.attributes?.url}
@@ -90,11 +95,29 @@ function History() {
               <p>
                 status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
               </p>
-              
             </div>
           </div>
         ))}
       </div>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="modal-login">
+            <img className="alert" src="/alert.png" />
+            <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={() => navigate("/LoginForm")}>
+            Login
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            ปิด
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

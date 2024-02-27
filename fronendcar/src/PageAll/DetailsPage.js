@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container,Modal } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
@@ -11,13 +11,14 @@ const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const role = sessionStorage.getItem('role')
+  const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  const role = sessionStorage.getItem("role");
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,11 +34,13 @@ const DetailsPage = () => {
     fetchData();
   }, [id]);
   console.log(data);
-  
+  const Comfirmcar = () => {
+    role === null ? setShowModal(true) : navigate(`/Comfirmcar1/${id}`);
+  };
 
   return (
     <div>
-      <Nav/>
+      <Nav />
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>
@@ -55,7 +58,12 @@ const DetailsPage = () => {
           </div>
           <div className="layout2">
             <div className="detialcar">
-              <img src={"http://localhost:1337"+data?.attributes?.imgcar?.data?.attributes?.url  }></img>
+              <img
+                src={
+                  "http://localhost:1337" +
+                  data?.attributes?.imgcar?.data?.attributes?.url
+                }
+              ></img>
             </div>
             <div>
               จำนวนที่เหลือ :{data.attributes && data.attributes.remaining} คัน
@@ -64,13 +72,32 @@ const DetailsPage = () => {
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
             </div>
 
-            <Button className="cheakcar" variant="dark" onClick={() => navigate(`/Comfirmcar1/${id}`)}>
-              เช่ารถ 
+            <Button className="cheakcar" variant="dark" onClick={Comfirmcar}>
+              เช่ารถ
             </Button>
           </div>
         </div>
       </Container>
       <footer></footer>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="modal-login">
+            <img className="alert" src="/alert.png" />
+            <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={() => navigate('/LoginForm')}>
+            Login
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            ปิด
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

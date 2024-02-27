@@ -67,13 +67,12 @@ const AdDetailsPage = () => {
             <div>
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
             </div>
-            <AdEditeCar className="cheakcar" variant="dark"  id={id}
+            <AdEditeCar className="cheakcar"   id={id}
               แก้ไข
            />
           </div>
         </div>
       </Container>
-      <footer></footer>
     </div>
   );
 };

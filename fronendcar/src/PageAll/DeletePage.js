@@ -57,7 +57,7 @@ function StaticExample({ id }) {
 
       axios.delete(`http://localhost:1337/api/cars/${id}`, config);
       console.log(`Event with ID ${id} deleted successfully`);
-      navigate("/AdminPage")
+      navigate("/AdminPage");
     } catch (error) {
       console.error(`Error deleting entries and event: ${error.message}`);
     }
@@ -65,7 +65,12 @@ function StaticExample({ id }) {
 
   return (
     <>
-      <Button className="Delete" variant="primary" onClick={handleShow}>
+      <Button
+        className="Delete"
+        variant="danger"
+        onClick={handleShow}
+        style={{ float:"left" }}
+      >
         Delete
       </Button>
 
