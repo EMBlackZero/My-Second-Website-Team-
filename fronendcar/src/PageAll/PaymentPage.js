@@ -77,7 +77,7 @@ function PaymentPage(props) {
         </button>
       </div>
       <div className="paytitle">
-        <h2>เลือกช่องทางการจ่ายเงิน</h2>
+        <h2>เลือกช่องทางการชำระเงิน</h2>
       </div>
 
       <div className="button-container">
