@@ -23,7 +23,7 @@ const DetailsPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
+          `/api/cars/${id}?populate=*`
         );
         setData(response.data.data);
       } catch (error) {
@@ -35,6 +35,7 @@ const DetailsPage = () => {
   }, [id]);
   console.log(data);
   const Comfirmcar = () => {
+    sessionStorage.setItem("wrap",`/Comfirmcar1/${id}`)
     role === null ? setShowModal(true) : navigate(`/Comfirmcar1/${id}`);
   };
 

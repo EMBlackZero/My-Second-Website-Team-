@@ -79,6 +79,7 @@
 .products-img img{
     width: 100%;
     height: 250px;
+    object-fit: contain;
 }
 .navbar {
     background: linear-gradient(to right, #000000, #737373);
@@ -138,6 +139,7 @@
     font-size: 23px;
     display: flex;
     justify-content: space-between;
+
 }
   
 

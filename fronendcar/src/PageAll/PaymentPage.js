@@ -9,13 +9,15 @@ import Nav from "./Nav";
 function PaymentPage(props) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const CarDetail = (id) => {
-    navigate(`/DetailsPage/${id}`);
+  const CarDetail = (id1) => {
+    axios.delete(`http://localhost:1337/api/bookings/${id1}`,config)
+    navigate(page);
   };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [imageFile, setImageFile] = useState(null);
+  const page =sessionStorage.getItem("wrap")
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);

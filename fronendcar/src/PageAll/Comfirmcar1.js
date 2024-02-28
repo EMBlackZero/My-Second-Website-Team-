@@ -46,6 +46,8 @@ const Comfirmcar1 = () => {
     fetchData();
   }, [id]);
   console.log(data);
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -169,7 +171,7 @@ const Comfirmcar1 = () => {
           <Button variant="secondary" onClick={handleClose}>
             ยกเลิก
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="primary" onClick={handleSaveChanges} >
             ยืนยัน
           </Button>
         </Modal.Footer>

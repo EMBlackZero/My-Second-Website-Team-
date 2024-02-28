@@ -10,6 +10,10 @@ function Nav() {
     sessionStorage.removeItem('jwtToken')
     sessionStorage.removeItem('role')
     sessionStorage.removeItem('username')
+    sessionStorage.removeItem('iduser')
+    sessionStorage.removeItem('wrap')
+
+
     navigate('/');
   }
   const role = sessionStorage.getItem('role')
