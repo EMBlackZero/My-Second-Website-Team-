@@ -1,44 +1,100 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import "../CssAll/SuccessPaymentCss.css";
+import { Spinner, Button } from "react-bootstrap";
 import Nav from "./Nav";
+import axios from "axios";
+import "../CssAll/Historydetail.css";
 
-function SuccessfulPaymentPage(props) {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const CarDetail = (id) => {
-        navigate(`/DetailsPage/${id}`);
-    };
+const URL_CAR = "/api/cars";
+const URL_BOOKING = "/api/bookings";
 
-    const config = {
-        headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-        },
-    };
+function SuccessfulPayment() {
+  const { id } = useParams();
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
+  const fetchSuccessfulPayment = async () => {
+    try {
+      setIsLoading(true);
 
-    return (
-        <div>
-            <Nav />
+      const [response] = await Promise.all([
+        axios.get(`${URL_BOOKING}/${id}?populate=*`),
+      ]);
 
-            <div className="paytitle">
-                <h2>ใบเสร็จการจองรถเช่า</h2>
-            </div>
-            <div className="title">
-                <h1>ขั้นตอนการจองรถเช่าเสร็จสิ้น</h1>
-            </div>
-            <div>
-                <h4>ท่านได้ทำการจองรถเช่าเรียบร้อยเเล้ว กรุณานำใบเสร็จนี้มาเเสดงก่อนรับรถ</h4>
-                
-            </div>
-            <div>
-                <button className="buttonback" onClick={() => CarDetail(id)}>
-                    กลับสู่หน้าหลัก
-                </button>
-            </div>
+      const findImg = await axios.get(
+        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
+      );
+
+      const detailCar =
+        response.data.data.attributes.car.data.attributes;
+
+      const usedata = {
+        key: response.data.data.id,
+        id: response.data.data.id,
+        ...response.data.data.attributes,
+        detail:
+          response.data.data.attributes.car.data.attributes.description,
+        image:
+          findImg.data.data.attributes.imgcar.data.attributes.url,
+      };
+
+      setData(usedata);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuccessfulPayment(); // corrected function call
+  }, []);
+
+  return (
+    <div>
+      {isLoading && (
+        <div className="spinner-container">
+          <Spinner animation="border" variant="secondary" />
         </div>
-    );
+      )}
+      <Nav />
+      <div className="history-detail-container">
+        <div className="history-detail-detail">
+          <h1>ชำระหน้าเงินเสร็จสิ้น</h1>
+          <h2>หมายเลขคำสั่งจอง {data.id}</h2>
+          <h4>ราคาทั้งหมด {data.Total} บาท</h4>
+          {data.startdate && data.enddate && (
+            <h4>
+              ระยะเวลาทั้งหมด{" "}
+              {(new Date(data.enddate).getTime() - new Date(data.startdate).getTime()) /
+                (1000 * 3600 * 24)}{" "}
+              วัน
+            </h4>
+          )}
+          <p>- {data.detail}</p>
+        </div>
+        <div className="history-datail-image">
+          <img src={"http://localhost:1337" + data?.image} alt="Car" />
+        </div>
+        <div className="button-container">
+          <Button
+            variant="dark"
+            onClick={() => navigate("/History")}
+          >
+            ไปหน้าประวัติการเช่ารถ
+          </Button>
+          <Button
+            variant="dark"
+            onClick={() => navigate("/PublicPage")}
+          >
+            กลับหน้าหลัก
+          </Button>
+        </div>
+      </div>
+      <footer></footer>
+    </div>
+  );
 }
-export default SuccessfulPaymentPage;
+
+export default SuccessfulPayment;

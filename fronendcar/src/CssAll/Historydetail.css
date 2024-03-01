@@ -115,3 +115,13 @@
 .sended{
 	color: rgb(0, 123, 0);
 }
+.button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .button-container Button {
+	margin: 0 10px;
+  }
+  

@@ -9,29 +9,21 @@ import Nav from "./Nav";
 function PaymentPage(props) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const CarDetail = (id1) => {
-    axios.delete(`http://localhost:1337/api/bookings/${id1}`,config)
-    navigate(page);
-  };
   const [show, setShow] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [imageFile, setImageFile] = useState(null);
-  const page =sessionStorage.getItem("wrap")
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
   };
-  const config = {
-    headers: {
-      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-    },
-  };
+
   const handleSaveChanges = async (e) => {
     e.preventDefault();
 
     try {
-      // Upload the image to Strapi
       const formData = new FormData();
       formData.append("files", imageFile);
 
@@ -39,43 +31,54 @@ function PaymentPage(props) {
         "http://localhost:1337/api/upload",
         formData
       );
+
       const fileId = uploadResponse.data[0].id;
 
-      // Create or update the car entry in Strapi
       const formData2 = {
         payment: parseInt(fileId),
       };
-
 
       const putResponse = await axios.put(
         `http://localhost:1337/api/bookings/${id}?populate=*`,
         { data: formData2 },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
           },
         }
       );
-      console.log('asd',putResponse.data.data.attributes.car.data.id)
-      //decrease_remaining
+
       const remaining = await axios.get(
-        `http://localhost:1337/api/cars/${putResponse.data.data.attributes.car.data.id}/decrease_remaining`,config
-        
+        `http://localhost:1337/api/cars/${putResponse.data.data.attributes.car.data.id}/decrease_remaining`,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+          },
+        }
       );
-      
+
       handleClose();
+      navigate(`/SuccessfulPayment/${id}`);
     } catch (error) {
       console.error("Error saving changes:", error);
-      // Handle errors here
     }
+  };
+
+  const CarDetail = () => {
+    axios.delete(`http://localhost:1337/api/bookings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+      },
+    });
+    navigate(sessionStorage.getItem("wrap"));
   };
 
   return (
     <div>
-      <Nav/>
+      <Nav />
       <div>
-        <button className="buttonback" onClick={() => CarDetail(id)}>
-          <img src="/back.png" />
+        <button className="buttonback" onClick={CarDetail}>
+          <img src="/back.png" alt="Back" />
         </button>
       </div>
       <div className="paytitle">
@@ -83,17 +86,19 @@ function PaymentPage(props) {
       </div>
 
       <div className="button-container">
-        <button class="image-button" onClick={() => handleShow()}>
-          <img src="/creditcard.png"></img>
+        <button className="image-button" onClick={handleShow}>
+          <img src="/creditcard.png" alt="Credit Card" />
           <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
         </button>
 
-        <button class="image-button" onClick={() => handleShow()}>
-          <img src="/money.png"></img>
+        <button className="image-button" onClick={handleShow}>
+          <img src="/money.png" alt="Cash" />
           <span>เงินสด (ชำระหน้าร้าน)</span>
         </button>
       </div>
+
       <footer></footer>
+
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>หลักฐานการชำระเงิน</Modal.Title>
@@ -107,14 +112,15 @@ function PaymentPage(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            ปิด
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
+            บันทึก
           </Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 }
+
 export default PaymentPage;

@@ -18,6 +18,7 @@ import AdcreateCar from "./PageAll/AdcreateCar";
 import AdHistory from "./PageAll/AdHistory";
 import Comfirmcar1 from "./PageAll/Comfirmcar1";
 import HistoryDetail from "./PageAll/HistoryDetail";
+import SuccessfulPaymentPage from "./PageAll/SuccessfulPayment";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: "/Historydetail/:id",
     element: <HistoryDetail />,
+  },
+  {
+    path: "/SuccessfulPayment/:id",
+    element: <SuccessfulPaymentPage />,
   },
  
 ]);
