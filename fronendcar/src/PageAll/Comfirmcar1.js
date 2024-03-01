@@ -12,10 +12,7 @@ const Comfirmcar1 = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [data2, setData2] = useState([]);
   const [Length, setLength] = useState();
-
-  const [pricee, setpricee] = useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const idu = sessionStorage.getItem("iduser");
@@ -158,7 +155,7 @@ const Comfirmcar1 = () => {
               <Button
                 variant="dark"
                 disabled={
-                  (data.attributes && data.attributes.remaining) - Length < 0
+                  (data.attributes && data.attributes.remaining) - Length > 0 ?  false:true
                 }
                 onClick={handleSubmit}
                 style={{ display: "block", margin: "auto", marginTop: "21px" }}
