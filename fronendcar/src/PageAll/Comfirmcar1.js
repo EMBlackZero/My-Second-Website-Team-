@@ -12,6 +12,9 @@ const Comfirmcar1 = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [Length, setLength] = useState();
+
   const [pricee, setpricee] = useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -45,14 +48,22 @@ const Comfirmcar1 = () => {
 
     fetchData();
   }, [id]);
-  console.log(data);
-  
-  
+  //console.log(data.attributes.bookings.data);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { name, value } = e.target;
     setRenterInfo({ ...renterInfo, [name]: value });
   };
+  const Check = () => {
+    const filteredData = data.attributes.bookings.data.filter(
+      (item) =>
+        new Date(renterInfo.startdate) < new Date(item.attributes.startdate) &&
+        new Date(renterInfo.enddate) > new Date(item.attributes.startdate) &&
+        item.attributes.status === false
+    );
+    setLength(filteredData.length === undefined ? 0 : filteredData.length);
+  };
+  console.log("test", Length);
 
   const handleSubmit = () => {
     // Convert start date and end date strings to Date objects
@@ -130,13 +141,25 @@ const Comfirmcar1 = () => {
                   type="date"
                   placeholder="โปรดกรอก เลือกวันที่"
                   name="enddate"
+                  disabled={renterInfo.startdate === ""}
                   value={renterInfo.enddate}
                   onChange={handleInputChange}
                 />
               </Form.Group>
+              <Button
+                variant="dark"
+                disabled={renterInfo.enddate === ""}
+                onClick={() => Check()}
+                style={{ display: "block", margin: "auto", marginTop: "21px" }}
+              >
+                เช็คจำนวนรถ
+              </Button>
 
               <Button
                 variant="dark"
+                disabled={
+                  (data.attributes && data.attributes.remaining) - Length < 0
+                }
                 onClick={handleSubmit}
                 style={{ display: "block", margin: "auto", marginTop: "21px" }}
               >
@@ -154,7 +177,13 @@ const Comfirmcar1 = () => {
               ></img>
             </div>
             <div>
-              จำนวนที่เหลือ :{data.attributes && data.attributes.remaining} คัน
+              จำนวนที่เหลือ:{" "}
+              {isNaN((data.attributes && data.attributes.remaining) - Length)
+                ? " "
+                : (data.attributes && data.attributes.remaining) - Length < 0
+                ? 0
+                : (data.attributes && data.attributes.remaining) - Length}{" "}
+              คัน
             </div>
             <div>
               Price per day : {data.attributes && data.attributes.price} บาท/วัน
@@ -171,7 +200,7 @@ const Comfirmcar1 = () => {
           <Button variant="secondary" onClick={handleClose}>
             ยกเลิก
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges} >
+          <Button variant="primary" onClick={handleSaveChanges}>
             ยืนยัน
           </Button>
         </Modal.Footer>

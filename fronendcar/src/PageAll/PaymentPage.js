@@ -52,16 +52,13 @@ function PaymentPage(props) {
         { data: formData2 },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
           },
         }
       );
       console.log('asd',putResponse.data.data.attributes.car.data.id)
       //decrease_remaining
-      const remaining = await axios.get(
-        `http://localhost:1337/api/cars/${putResponse.data.data.attributes.car.data.id}/decrease_remaining`,config
-        
-      );
+      
       
       handleClose();
     } catch (error) {
