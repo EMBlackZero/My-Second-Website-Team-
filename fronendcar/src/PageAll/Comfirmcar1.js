@@ -27,7 +27,7 @@ const Comfirmcar1 = () => {
   const role = sessionStorage.getItem("role");
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
 
@@ -54,9 +54,15 @@ const Comfirmcar1 = () => {
   const Check = () => {
     const filteredData = data.attributes.bookings.data.filter(
       (item) =>
-        new Date(renterInfo.startdate) < new Date(item.attributes.startdate) &&
-        new Date(renterInfo.enddate) > new Date(item.attributes.startdate) &&
-        item.attributes.status === false
+        (new Date(renterInfo.startdate) <=
+          new Date(item.attributes.startdate) &&
+          new Date(renterInfo.enddate) >=
+            new Date(item.attributes.startdate)) ||
+        (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
+          new Date(renterInfo.enddate) >= new Date(item.attributes.enddate)) ||
+        (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
+          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate)) &&
+          item.attributes.status === false
     );
     setLength(filteredData.length === undefined ? 0 : filteredData.length);
   };
@@ -155,7 +161,9 @@ const Comfirmcar1 = () => {
               <Button
                 variant="dark"
                 disabled={
-                  (data.attributes && data.attributes.remaining) - Length > 0 ?  false:true
+                  (data.attributes && data.attributes.remaining) - Length > 0
+                    ? false
+                    : true
                 }
                 onClick={handleSubmit}
                 style={{ display: "block", margin: "auto", marginTop: "21px" }}
