@@ -26,17 +26,14 @@ function SuccessfulPayment() {
         `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
       );
 
-      const detailCar =
-        response.data.data.attributes.car.data.attributes;
+      const detailCar = response.data.data.attributes.car.data.attributes;
 
       const usedata = {
         key: response.data.data.id,
         id: response.data.data.id,
         ...response.data.data.attributes,
-        detail:
-          response.data.data.attributes.car.data.attributes.description,
-        image:
-          findImg.data.data.attributes.imgcar.data.attributes.url,
+        detail: response.data.data.attributes.car.data.attributes.description,
+        image: findImg.data.data.attributes.imgcar.data.attributes.url,
       };
 
       setData(usedata);
@@ -59,39 +56,37 @@ function SuccessfulPayment() {
         </div>
       )}
       <Nav />
-      <div className="history-detail-container">
-        <div className="history-detail-detail">
-          <h1>ชำระเงินเสร็จสิ้น</h1>
-          <h2>หมายเลขคำสั่งจอง {data.id}</h2>
-          <h4>ราคาทั้งหมด {data.Total} บาท</h4>
-          {data.startdate && data.enddate && (
-            <h4>
-              ระยะเวลาทั้งหมด{" "}
-              {(new Date(data.enddate).getTime() - new Date(data.startdate).getTime()) /
-                (1000 * 3600 * 24)}{" "}
-              วัน
-            </h4>
-          )}
-          <p>- {data.detail}</p>
-        </div>
-        <div className="history-datail-image">
-          <img src={"http://localhost:1337" + data?.image} alt="Car" />
-        </div>
-        <div className="button-container">
-          <Button
-            variant="dark"
-            onClick={() => navigate("/History")}
-          >
-            ไปหน้าประวัติการเช่ารถ
-          </Button>
-          <Button
-            variant="dark"
-            onClick={() => navigate("/PublicPage")}
-          >
-            กลับหน้าหลัก
-          </Button>
+      <div className="content">
+        <div className="history-detail-container">
+          <div className="history-detail-detail">
+            <h1>ชำระเงินเสร็จสิ้น</h1>
+            <h2>หมายเลขคำสั่งจอง {data.id}</h2>
+            <h4>ราคาทั้งหมด {data.Total} บาท</h4>
+            {data.startdate && data.enddate && (
+              <h4>
+                ระยะเวลาทั้งหมด{" "}
+                {(new Date(data.enddate).getTime() -
+                  new Date(data.startdate).getTime()) /
+                  (1000 * 3600 * 24)}{" "}
+                วัน
+              </h4>
+            )}
+            <p>- {data.detail}</p>
+          </div>
+          <div className="history-datail-image">
+            <img src={"http://localhost:1337" + data?.image} alt="Car" />
+          </div>
+          <div className="button-container">
+            <Button variant="dark" onClick={() => navigate("/History")}>
+              ไปหน้าประวัติการเช่ารถ
+            </Button>
+            <Button variant="dark" onClick={() => navigate("/PublicPage")}>
+              กลับหน้าหลัก
+            </Button>
+          </div>
         </div>
       </div>
+
       <footer></footer>
     </div>
   );

@@ -74,6 +74,7 @@ function History() {
         </div>
       )}
       <Nav />
+      <div className="content">
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>
@@ -132,6 +133,8 @@ function History() {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
+      
     </div>
   );
 }

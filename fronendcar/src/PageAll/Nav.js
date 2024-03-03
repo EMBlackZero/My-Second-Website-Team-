@@ -4,7 +4,15 @@ import PublicNav from './PublicNav'
 import MemberNav from './MemberNav'
 import AdminNav from './AdminNav'
 
-function Nav() {
+function Nav(props) {
+  // senddatatoPublicPage.js
+  const NavtoPBP=(text)=>{
+    props.onSearch(text)
+  }
+  // senddatatoAdminPage.js
+  const NavtoAMP=(text)=>{
+    props.onSearch(text)
+  }
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken')
@@ -12,16 +20,14 @@ function Nav() {
     sessionStorage.removeItem('username')
     sessionStorage.removeItem('iduser')
     sessionStorage.removeItem('wrap')
-
-
     navigate('/');
   }
   const role = sessionStorage.getItem('role')
   return (
     <div>
-      {!role && <PublicNav/>}
-      {role === 'Member' && <MemberNav onlogout={handleLogout}/>}
-      {role === 'Admin' && <AdminNav onlogout={handleLogout}/>}
+      {!role && <PublicNav  onSearch={NavtoPBP}/>}
+      {role === 'Member' && <MemberNav onlogout={handleLogout} onSearch={NavtoPBP}/>}
+      {role === 'Admin' && <AdminNav onlogout={handleLogout} onSearch={NavtoAMP}/>}
     </div>
   )
 }

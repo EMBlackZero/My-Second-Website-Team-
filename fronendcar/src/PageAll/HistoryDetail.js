@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Col, Spinner } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
@@ -126,7 +126,7 @@ function HistoryDetail() {
               <legend>
                 <span className="number">1</span> แสดงความคิดเห็น
               </legend>
-              {havecomment === true && <p>ความคิดเห็นที่คุณเขียนไว้</p> }
+              {havecomment === true && <p className="commented">ความคิดเห็นที่คุณเขียนไว้ !</p> }
               <textarea
                 name="field3"
                 placeholder="เขียนความรู้ศึกของคุณหลังจากใช้งานรถคันนี้"

@@ -76,6 +76,7 @@ function PaymentPage(props) {
   return (
     <div>
       <Nav />
+      <div className="content">
       <div>
         <button className="buttonback" onClick={CarDetail}>
           <img src="/back.png" alt="Back" />
@@ -119,6 +120,8 @@ function PaymentPage(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
+      
     </div>
   );
 }

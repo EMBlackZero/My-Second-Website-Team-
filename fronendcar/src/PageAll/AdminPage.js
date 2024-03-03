@@ -46,10 +46,14 @@ const AdminPage = () => {
   const GotoHistory = () => {
     navigate('/AdminHistory');
   };
+  // getdatafromnav
+  const handlesearch=(txt)=>{
+    console.log('adminpage get from serch',txt)
+  }
 
   return (
     <>
-      <Nav/>
+      <Nav onSearch={handlesearch}/>
       <Button
         className="bookingcar"
         variant="dark"

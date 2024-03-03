@@ -1,22 +1,60 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { useState } from "react";
 
 function AdminNav(props) {
+  const [searchQuery, setSearchQuery] = useState("");
+  // senddatatoNav.js
+  const sendtoNAV = (text) => {
+    props.onSearch(text)
+  };
   return (
-    <div className="navbar">
-      <a href='/AdminPage' className="titel">รถเช่าผมไม่เล็กนะครับ</a>
-      <div className="titelogin">
-        
-        <DropdownButton
-          id="admin-dropdown"
-          title="Admin"
-          className="dropdown-with-image"
-        >
-          <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
-        </DropdownButton>
-      </div>
+    <div className="sticky-nav">
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container fluid>
+          <Navbar.Brand href="/PublicPage">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            ></Nav>
+            <Form className="d-flex">
+              <Form.Control
+                value={searchQuery}
+                type="search"
+                placeholder="Search by car brand "
+                className="me-2"
+                aria-label="Search"
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button
+                variant="dark"
+                className="search-btn"
+                onClick={() => sendtoNAV(searchQuery)}
+              >
+                Search
+              </Button>
+              <div className="titelogin">
+                <DropdownButton
+                  id="admin-dropdown"
+                  title="Admin"
+                  className="dropdown-with-image"
+                >
+                  <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
+                </DropdownButton>
+              </div>
+            </Form>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </div>
   );
 }

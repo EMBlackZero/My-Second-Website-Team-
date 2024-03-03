@@ -42,6 +42,7 @@ const DetailsPage = () => {
   return (
     <div>
       <Nav />
+      <div className="content">
       <button className="buttonback" onClick={() => navigate("/PublicPage")}>
         <img src="/back.png" />
       </button>
@@ -99,6 +100,8 @@ const DetailsPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
+      
     </div>
   );
 };

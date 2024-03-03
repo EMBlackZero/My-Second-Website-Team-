@@ -14,7 +14,6 @@ const PublicPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [maxPrice, setMaxPrice] = useState("");
   const [minPrice, setMinPrice] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const role = sessionStorage.getItem("role");
   const navigate = useNavigate();
@@ -82,8 +81,8 @@ const PublicPage = () => {
     role === null ? setShowModal(true) : navigate("/History");
   };
 
-  const handleSearch = () => {
-    const query = searchQuery.trim().toLowerCase();
+  const handleSearch = (txt) => {
+    const query = txt.trim().toLowerCase();
     if (query === "") {
       // If the search query is empty, reset filtered data to all data
       setFilteredData(data);
@@ -103,99 +102,94 @@ const PublicPage = () => {
           <Spinner animation="border" variant="secondary" />
         </div>
       )}
-      <Nav />
-
-      <div className="price-filter">
-        <div className="item-infilter">minimum price: </div>
+      <Nav onSearch={handleSearch} />
+      <div className="content">
+        <div className="price-filter">
+          <div className="item-infilter">minimum price: </div>
+          <input
+            type="text"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="item-infilter"
+          />
+          <div className="item-infilter">maximum price: </div>
+          <input
+            type="text"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="item-infilter"
+          />
+          <button onClick={handlePriceFilter} className="btn-infilter">
+            Filter
+          </button>
+        </div>
+        {/* <div className="search-container">
         <input
           type="text"
-          value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
-          className="item-infilter"
-        />
-        <div className="item-infilter">maximum price: </div>
-        <input
-          type="text"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-          className="item-infilter"
-        />
-        <button onClick={handlePriceFilter} className="btn-infilter">
-          Filter
-        </button>
-      </div>
-      <div className="search-container">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          
+          
           placeholder="Search by car brand"
           className="search-input"
         />
         <button onClick={handleSearch} className="search-button">
           Search
         </button>
-      </div>
-      
-      <Button
-        className="bookingcar"
-        variant="dark"
-        onClick={() => goHistory()}
-      >
-        ประวัติการเช่าของฉัน
-      </Button>
-      <div className="container">
-        <div className="products-con">
-          {filteredData.map((item) => (
-            <div className="products-item" key={item.id}>
-              <div className="products-img">
-                <img
-                  src={"http://localhost:1337" + item?.imgcar}
-                  alt="Car Image"
-                ></img>
+      </div> */}
+
+        <Button
+          className="bookingcar"
+          variant="dark"
+          onClick={() => goHistory()}
+        >
+          ประวัติการเช่าของฉัน
+        </Button>
+        <div className="container">
+          <div className="products-con">
+            {filteredData.map((item) => (
+              <div className="products-item" key={item.id}>
+                <div className="products-img">
+                  <img
+                    src={"http://localhost:1337" + item?.imgcar}
+                    alt="Car Image"
+                  ></img>
+                </div>
+                <div className="name_price">
+                  <p>{item.namecar}</p>
+                  <p>{item.price} บาท</p>
+                </div>
+                <div className="Bcar">
+                  <Button
+                    variant="dark"
+                    onClick={() => handleCarDetail(item.id)}
+                  >
+                    ดูรายละเอียดรถ
+                  </Button>
+                </div>
               </div>
-              <div className="name_price">
-                <p>{item.namecar}</p>
-                <p>{item.price} บาท</p>
-              </div>
-              <div className="Bcar">
-                <Button
-                  variant="dark"
-                  onClick={() => handleCarDetail(item.id)}
-                >
-                  ดูรายละเอียดรถ
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <footer></footer>
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title className="text-white">
-            รายละเอียดการเช่า
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-login">
-            <img className="alert" src="/alert.png" alt="Alert" />
-            <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+            ))}
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={() => gotologin()}>
-            Login
-          </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ปิด
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+        <footer></footer>
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="modal-login">
+              <img className="alert" src="/alert.png" alt="Alert" />
+              <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="dark" onClick={() => gotologin()}>
+              Login
+            </Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              ปิด
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };
