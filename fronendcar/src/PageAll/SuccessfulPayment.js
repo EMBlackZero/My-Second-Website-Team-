@@ -4,6 +4,7 @@ import { Spinner, Button } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
+import Contact from "./Contact";
 
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
@@ -26,17 +27,14 @@ function SuccessfulPayment() {
         `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
       );
 
-      const detailCar =
-        response.data.data.attributes.car.data.attributes;
+      const detailCar = response.data.data.attributes.car.data.attributes;
 
       const usedata = {
         key: response.data.data.id,
         id: response.data.data.id,
         ...response.data.data.attributes,
-        detail:
-          response.data.data.attributes.car.data.attributes.description,
-        image:
-          findImg.data.data.attributes.imgcar.data.attributes.url,
+        detail: response.data.data.attributes.car.data.attributes.description,
+        image: findImg.data.data.attributes.imgcar.data.attributes.url,
       };
 
       setData(usedata);
@@ -92,7 +90,8 @@ function SuccessfulPayment() {
           </Button>
         </div>
       </div>
-      <footer></footer>
+
+      <Contact/>
     </div>
   );
 }

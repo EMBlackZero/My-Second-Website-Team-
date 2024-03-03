@@ -124,4 +124,6 @@
   .button-container Button {
 	margin: 0 10px;
   }
-  
+  .commented{
+	color: rgb(0, 155, 8);
+  }

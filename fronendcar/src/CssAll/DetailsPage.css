@@ -46,11 +46,10 @@
     padding: 10px; /* เพิ่มขอบ */
     border-radius: 21px; /* เพิ่มขอบเขต */
     width: 550px; /* กำหนดความกว้างของ div */
-    height: 300px;
+    height: 200px;
     word-wrap: break-word; /* ทำให้ข้อความขึ้นบรรทัดใหม่เมื่อเกินขนาด */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* เพิ่มเงา */
 }
-
 .layout1 div {
     font-size: 32px; /* ปรับขนาดฟอนต์ตามที่ต้องการ */
     margin-top: 12px;

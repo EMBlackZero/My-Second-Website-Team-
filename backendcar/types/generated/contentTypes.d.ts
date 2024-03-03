@@ -393,6 +393,7 @@ export interface ApiBookingBooking extends Schema.CollectionType {
     payment: Attribute.Media;
     Total: Attribute.Integer;
     comment: Attribute.Text;
+    adminconfirm: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

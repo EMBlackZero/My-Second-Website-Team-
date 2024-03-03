@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
-import { Button, Spinner,Modal } from "react-bootstrap";
+import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
+import Contact from "./Contact";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -12,12 +13,11 @@ const URL_BOOKING = "/api/bookings";
 
 function History() {
   const navigate = useNavigate();
-  const [dataHistory, setDataHistory] = useState([]);
+  const [dataHistory, setDataHistory] = useState([]); // เก็บไว้อ่านเพื่อฟิลเตอร์
+  const [dataforfilter, setDataforfilter] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const iduser = sessionStorage.getItem("iduser");
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
-  
-
 
   const gotoHistoryDetail = (id) => {
     navigate(`/Historydetail/${id}`);
@@ -35,7 +35,7 @@ function History() {
 
         console.log("find_img", find_img.data.data.attributes.imgcar.data);
         const img = find_img.data.data.attributes.imgcar.data.attributes.url;
-        console.log(img)
+        console.log(img);
         return {
           id: e.id,
           key: e.id,
@@ -50,11 +50,30 @@ function History() {
       });
       console.log("filter", filter);
       setDataHistory(filter);
+      setDataforfilter(filter); //ตอนโหลดมาครั้งแรกเซตทั้งหมดเอาไว้
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const filteradminnotconfirm = () => {
+    const notconfirm = dataHistory.filter((e) => {
+      return e.adminconfirm !== true;
+    });
+    console.log("nc", notconfirm);
+    setDataforfilter(notconfirm);
+  };
+  const filteradminconfirm = () => {
+    const confirm = dataHistory.filter((e) => {
+      return e.adminconfirm === true;
+    });
+    console.log("nc", confirm);
+    setDataforfilter(confirm);
+  };
+  const allpurchase = () => {
+    setDataforfilter(dataHistory);
   };
 
   useEffect(() => {
@@ -74,64 +93,102 @@ function History() {
         </div>
       )}
       <Nav />
-      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
-        <img src="/back.png" />
-      </button>
-      <div className="containerHTR">
-        <h2>Your History</h2>
-        {dataHistory.map((booking) => (
-          <div
-            key={booking.id}
-            className="container-Booking"
-            //onClick={() => setShowModal(true)}
-          >
-            <div className="booking-img">
-              <img
-                src={"http://localhost:1337" + booking?.image}
-                alt="Car Image"
-              ></img>
-            </div>
-            <div className="booking-detail">
-              <p>Name : {booking.car.data.attributes.namecar}</p>
-              <p>Start : {booking.startdate}</p>
-              <p>End : {booking.enddate}</p>
-              <p>
-                Where :{" "}
-                <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
-                  เปิดในเเมพ
-                </a>
-              </p>
-              <p>
-                status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
-              </p>
-              <div>
-                <Button variant="dark" onClick={() => gotoHistoryDetail(booking.id)}>
-                รีวิวรถคันนี้
-                </Button>
+      <div className="content">
+        <div className="Topmenu">
+          <div className="backmenu">
+            <button className="buttonback" onClick={() => navigate("/")}>
+              <img src="/back.png" />
+            </button>
+          </div>
+          <div className="filtermenu">
+            <Button variant="light" onClick={filteradminnotconfirm}>
+              รอการยืนยัน
+            </Button>
+            <Button variant="primary" onClick={filteradminconfirm}>
+              ยืนยันแล้ว
+            </Button>
+            <Button variant="dark" onClick={allpurchase}>
+              คำสั่งซื้อทั้งหมด
+            </Button>
+          </div>
+        </div>
+
+        <div className="containerHTR">
+          <h2>Your History</h2>
+          {dataforfilter.map((booking) => (
+            <div
+              key={booking.id}
+              className="container-Booking"
+              //onClick={() => setShowModal(true)}
+            >
+              <div className="booking-img">
+                <img
+                  src={"http://localhost:1337" + booking?.image}
+                  alt="Car Image"
+                ></img>
+                <div className="adminconfirm">
+                  สถานะคำสั่งซื้อ :{" "}
+                  {booking.adminconfirm === true ? (
+                    <p className="confirm">ยืนยันแล้ว</p>
+                  ) : (
+                    <p className="notconfirm">รอการยืนยัน</p>
+                  )}
+                </div>
+              </div>
+              <div className="booking-detail">
+                <p>Name : {booking.car.data.attributes.namecar}</p>
+                <p>Start : {booking.startdate}</p>
+                <p>End : {booking.enddate}</p>
+                <p>
+                  Where :{" "}
+                  <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
+                    เปิดในเเมพ
+                  </a>
+                </p>
+                <div className="status">
+                  status :{" "}
+                  {booking.status === false ? (
+                    <p className="notReturn">ยังไม่คืน</p>
+                  ) : (
+                    <p className="Return">คืนแล้ว</p>
+                  )}
+                </div>
+                <div>
+                  {booking.adminconfirm === true && (
+                    <Button
+                      className="review-btn"
+                      variant="dark"
+                      onClick={() => gotoHistoryDetail(booking.id)}
+                    >
+                      รีวิวรถคันนี้
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="modal-login">
+              <img className="alert" src="/alert.png" />
+              <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="dark" onClick={() => navigate("/LoginForm")}>
+              Login
+            </Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              ปิด
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-login">
-            <img className="alert" src="/alert.png" />
-            <p>ไม่พบบัญชีกรุณาเข้าสู่ระบบนะครับ</p>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={() => navigate("/LoginForm")}>
-            Login
-          </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ปิด
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <Contact />
     </div>
   );
 }

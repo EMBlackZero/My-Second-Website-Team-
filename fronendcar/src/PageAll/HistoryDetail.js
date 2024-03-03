@@ -142,7 +142,7 @@ function HistoryDetail() {
                 numberOfStars={5}
                 name='rating'
                 starDimension="40px"
-                starSpacing="7px"
+                starSpacing="8px"
               />
             </fieldset>
             {havecomment && <input type="submit" value="ส่งใหม่" />}

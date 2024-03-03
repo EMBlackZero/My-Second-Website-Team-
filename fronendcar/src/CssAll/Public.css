@@ -8,19 +8,32 @@
     font-weight: 400;
     font-style: normal;
 }
+footer{
+    color: white;
+    margin-top: 30px;
+    background-color: rgb(63, 63, 63);
+}
+.contact{
+    
+    text-align: center;
+    padding: 20px;
+}
+.contact h3{
+    margin-top: 15px;
+}
 
 .price-filter{
     display: flex;
-	 padding: 10px;
+	padding: 10px;
     margin: 10px 350px;
     justify-content: center;
-    border: 5px groove #40679E;
     border-radius: 2px;
     box-sizing: border-box;
 
 }
 .item-infilter{
     margin-right: 5px;
+    max-width: 100%;
 }
 .btn-infilter{
   padding: 5px 10px;
@@ -85,25 +98,59 @@
     background: linear-gradient(to right, #000000, #737373);
     width: 100%;
     height: 100%;
+    position: fixed;
+    
 }
-.titel{
+
+.sticky-nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.content{
+    padding-top:65px;
+    
+
+}
+/* เปลี่ยนสีตัวหนังสือที่nav */
+.navbar .navbar-brand, .navbar .navbar-nav .nav-link {
+    color: white;
+    font-size: 18px;
+}
+
+.navbar .navbar-brand{
+    font-size: 25px;
+    padding: 7px;
+}
+.navbar .navbar-brand:hover{
+    color: #e6e6e6;
+}
+/* .titel{
     padding: 0.5rem;
     color: white;
     text-decoration: none;
     font-size: 30px;
     margin-left: 10px;
-}
+} */
 .bookingcar{
     margin: 20px;
 }
-.titelogin {
-    padding: 0.5rem;
+.search-btn{
+    margin-right: 10px;
+}
+.titleogin {
+    
+    align-items: center;
     display: flex;
 }
-.titelogin a h1 {
-    font-size: 20px;
+.titleogin a h1 {
+    font-size: 17px;
     color: white;
-    margin-right: 10px; /* เปลี่ยนค่าตามที่ต้องการ */
+    width: 100px;
+    text-align: center;
+    margin-top: 10px;
+    justify-content: center;
 }
 .car{
     display: flex;
@@ -155,7 +202,19 @@
         grid-gap: 1rem;
     }
 
-    .titelogin a h1 {
+    .titleogin a h1 {
         font-size: 16px;
+    }
+    .price-filter{
+        max-width: 100%;
+        margin: 10px 50px;
+
+    }
+    .item-infilter{
+        margin-right: 5px;
+        max-width: 30%;
+    }
+    .container-contact{
+        max-width: 100%;
     }
 }
