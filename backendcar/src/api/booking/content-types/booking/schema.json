@@ -59,6 +59,10 @@
     "adminconfirm": {
       "type": "boolean",
       "default": false
+    },
+    "rating": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

@@ -8,11 +8,14 @@ import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
 import PublicNav from "./PublicNav";
 import Contact from "./Contact";
+import Slide from "./Slide";
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+
   const role = sessionStorage.getItem("role");
   const config = {
     headers: {
@@ -51,12 +54,12 @@ const DetailsPage = () => {
               <div>รายละเอียดรถ</div>
               <div>Name : {data.attributes && data.attributes.namecar}</div>
               <div>
-                Car’s engine detail :
+                Car’s engine detail :{" "}
+                <Button onClick={() => setShowModal1(true)}>ตำหนิ</Button>
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
-              
             </div>
             <div className="layout2">
               <div className="detialcar">
@@ -95,6 +98,21 @@ const DetailsPage = () => {
               Login
             </Button>
             <Button variant="secondary" onClick={() => setShowModal(false)}>
+              ปิด
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={showModal1} onHide={() => setShowModal1(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="modal-login">
+              <Slide id={id} />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal1(false)}>
               ปิด
             </Button>
           </Modal.Footer>

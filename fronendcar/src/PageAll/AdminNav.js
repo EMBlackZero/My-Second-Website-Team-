@@ -27,26 +27,25 @@ function AdminNav(props) {
               navbarScroll
             ></Nav>
             <div className="search-area">
-              {props.onhome === true && 
-              <Form className="d-flex">
-              <Form.Control
-                value={searchQuery}
-                type="search"
-                placeholder="Search by car brand "
-                className="me-2"
-                aria-label="Search"
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button
-                variant="dark"
-                className="search-btn"
-                onClick={() => sendtoNAV(searchQuery)}
-              >
-                Search
-              </Button>
-            </Form>
-              }
-              
+              {props.onhome === true && (
+                <Form className="d-flex">
+                  <Form.Control
+                    value={searchQuery}
+                    type="search"
+                    placeholder="Search by car brand "
+                    className="me-2"
+                    aria-label="Search"
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <Button
+                    variant="dark"
+                    className="search-btn"
+                    onClick={() => sendtoNAV(searchQuery)}
+                  >
+                    Search
+                  </Button>
+                </Form>
+              )}
             </div>
 
             <div className="titelogin">

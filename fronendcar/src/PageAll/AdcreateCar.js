@@ -6,6 +6,8 @@ import Modal from "react-bootstrap/Modal";
 
 const AdcreateCar = ({ id }) => {
   const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [carName, setCarName] = useState("");
@@ -13,10 +15,18 @@ const AdcreateCar = ({ id }) => {
   const [carPrice, setCarPrice] = useState("");
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [images, setImages] = useState(null);
+
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
+  };
+  const handleslideImageChange = (event) => {
+    const selectedImages = Array.from(event.target.files);
+    setImages(selectedImages);
+
+    console.log(event.target.files);
   };
   console.log(imageFile);
   const handlecarName = (event) => {
@@ -34,6 +44,7 @@ const AdcreateCar = ({ id }) => {
   const handlequantityLeft = (event) => {
     setQuantityLeft(event.target.value);
   };
+ 
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
@@ -43,11 +54,23 @@ const AdcreateCar = ({ id }) => {
       const formData = new FormData();
       formData.append("files", imageFile);
 
-      const uploadResponse = await axios.post(
+      const uploadResponses = await axios.post(
         "http://localhost:1337/api/upload",
         formData
       );
-      const fileId = uploadResponse.data[0].id;
+      const fileId = uploadResponses.data[0].id;
+
+      const formDatas = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        formDatas.append("files", images[i]);
+      }
+
+      const uploadResponse = await axios.post(
+        "http://localhost:1337/api/upload",
+        formDatas
+      );
+      const fileIds = uploadResponse.data.map((d) => d.id);
+      console.log(uploadResponse.data.map((d) => d.id));
 
       // Create or update the car entry in Strapi
       const formData2 = {
@@ -56,6 +79,7 @@ const AdcreateCar = ({ id }) => {
         price: parseInt(carPrice),
         remaining: parseInt(quantityLeft),
         imgcar: parseInt(fileId),
+        imgslide: fileIds,
       };
 
       const carResponse = await axios.post(
@@ -67,8 +91,10 @@ const AdcreateCar = ({ id }) => {
           },
         }
       );
-
-      console.log("Car entry created/updated successfully:", carResponse.data);
+      console.log(
+        "Car entry created/updated successfully:",
+        carResponse.data.data.id
+      );
 
       handleClose();
     } catch (error) {
@@ -82,6 +108,7 @@ const AdcreateCar = ({ id }) => {
       <Button variant="danger" onClick={handleShow}>
         เพิ่มรถ
       </Button>
+     
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
@@ -130,13 +157,21 @@ const AdcreateCar = ({ id }) => {
               <Form.Label>รูปรถ</Form.Label>
               <Form.Control type="file" onChange={handleImageChange} />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="imageFile">
+              <Form.Label>รูปตำหนิรถ</Form.Label>
+              <Form.Control
+                type="file"
+                multiple
+                onChange={handleslideImageChange}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="primary" onClick={handleSaveChanges} disabled={images === null}>
             Create
           </Button>
         </Modal.Footer>

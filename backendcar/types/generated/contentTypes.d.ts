@@ -394,6 +394,7 @@ export interface ApiBookingBooking extends Schema.CollectionType {
     Total: Attribute.Integer;
     comment: Attribute.Text;
     adminconfirm: Attribute.Boolean & Attribute.DefaultTo<false>;
+    rating: Attribute.Integer & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -434,6 +435,7 @@ export interface ApiCarCar extends Schema.CollectionType {
     >;
     price: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     imgcar: Attribute.Media;
+    imgslide: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
