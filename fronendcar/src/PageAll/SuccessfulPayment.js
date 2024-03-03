@@ -61,7 +61,7 @@ function SuccessfulPayment() {
       <Nav />
       <div className="history-detail-container">
         <div className="history-detail-detail">
-          <h1>ชำระหน้าเงินเสร็จสิ้น</h1>
+          <h1>การชำระเงินเสร็จสิ้น</h1>
           <h2>หมายเลขคำสั่งจอง {data.id}</h2>
           <h4>ราคาทั้งหมด {data.Total} บาท</h4>
           {data.startdate && data.enddate && (

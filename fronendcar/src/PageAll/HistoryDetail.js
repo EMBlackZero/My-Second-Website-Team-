@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Form } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
-import Form from "react-bootstrap/Form";
+import StarRatings from 'react-star-ratings';
 
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
@@ -15,8 +15,9 @@ function HistoryDetail() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState("");
-  const [havecomment, setHavecomment] = useState(false)
-  const [send,setSend] = useState(false)
+  const [rating, setRating] = useState(0);
+  const [havecomment, setHavecomment] = useState(false);
+  const [send, setSend] = useState(false);
   const navigate = useNavigate();
 
   const fetchHistorydetail = async () => {
@@ -26,23 +27,12 @@ function HistoryDetail() {
       const [response] = await Promise.all([
         axios.get(`${URL_BOOKING}/${id}?populate=*`),
       ]);
-      console.log("response", response.data.data);
+
       const find_img = await axios.get(
         `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
       );
-      console.log(
-        "findimage",
-        find_img.data.data.attributes.imgcar.data.attributes.url
-      );
 
       const Detailcar = response.data.data.attributes.car.data.attributes;
-
-      console.log("response", response.data.data);
-      console.log("detail", Detailcar.description);
-      console.log(
-        "find_img",
-        find_img.data.data.attributes.imgcar.data.attributes.url
-      );
 
       const usedata = {
         key: response.data.data.id,
@@ -51,9 +41,10 @@ function HistoryDetail() {
         detail: response.data.data.attributes.car.data.attributes.description,
         image: find_img.data.data.attributes.imgcar.data.attributes.url,
       };
-      console.log("data", usedata);
+
       setData(usedata);
-      setComment(response.data.data.attributes.comment)
+      setComment(response.data.data.attributes.comment);
+      setRating(response.data.data.attributes.rating);
     } catch (error) {
       console.log(error);
     } finally {
@@ -66,37 +57,42 @@ function HistoryDetail() {
   }, []);
 
   useEffect(() => {
-    console.log("data", data);
-    if (data.comment){
-      console.log('you comment',data.comment)
-      setHavecomment(true)
-    }else{
-      console.log('Not comment')
+    if (data.comment) {
+      setHavecomment(true);
     }
   }, [data]);
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (comment){
-      axios.put(
+    if (comment && rating) {
+      await axios.put(
         `${URL_BOOKING}/${id}?populate=*`,
-        { data: { comment: comment } },
+        {
+          data: {
+            comment: comment,
+            rating: rating
+          },
+        },
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
           },
         }
       );
-      console.log("Submitted comment:", comment);
-      setSend(true)
-    }else{
-      console.log('please comment')
+      setSend(true);
+    } else {
+      console.log('กรุณาใส่ความคิดเห็นและให้คะแนนดาว');
     }
-    
   };
+
   return (
     <div>
       {isLoading && (
@@ -112,7 +108,7 @@ function HistoryDetail() {
         <div className="history-detail-detail">
           <h1>History Detail</h1>
           <h2>หมายเลขคำสั่งจอง {data.id}</h2>
-          <h4>รายละเอียดรถของท่าน</h4>       
+          <h4>รายละเอียดรถของท่าน</h4>
           <p>- {data.detail}</p>
         </div>
         <div className="history-datail-image">
@@ -126,25 +122,35 @@ function HistoryDetail() {
               <legend>
                 <span className="number">1</span> แสดงความคิดเห็น
               </legend>
-              {havecomment === true && <p>ความคิดเห็นที่คุณเขียนไว้</p> }
+              {havecomment && <p>ความคิดเห็นที่คุณเขียนไว้</p>}
               <textarea
                 name="field3"
                 placeholder="เขียนความรู้ศึกของคุณหลังจากใช้งานรถคันนี้"
-                value={comment} // Bind the value of the textarea to the comment state
-                onChange={handleCommentChange} // Handle change in textarea
+                value={comment}
+                onChange={handleCommentChange}
               ></textarea>
             </fieldset>
-            
-            {havecomment === true && <input type="submit" value="ส่งใหม่" /> }
-            {havecomment === false && <input  type="submit" value="ส่ง" /> }
-            {send === true && <h4 className="sended">เราได้รับรีวิวของคุณแล้ว</h4>}
+            <fieldset>
+              <legend>
+                <span className="number">2</span> ให้คะแนนดาว
+              </legend>
+              <StarRatings
+                rating={rating}
+                starRatedColor="#ffb400"
+                starHoverColor="#f9c74f"
+                changeRating={handleRatingChange}
+                numberOfStars={5}
+                name='rating'
+                starDimension="40px"
+                starSpacing="7px"
+              />
+            </fieldset>
+            {havecomment && <input type="submit" value="ส่งใหม่" />}
+            {!havecomment && <input type="submit" value="ส่ง" />}
+            {send && <h4 className="sended">เราได้รับรีวิวของคุณแล้ว</h4>}
           </form>
-          
         </div>
-        
       </div>
-      
-
       <footer></footer>
     </div>
   );
