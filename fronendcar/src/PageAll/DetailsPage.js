@@ -7,6 +7,7 @@ import Nav from "./Nav";
 import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
 import PublicNav from "./PublicNav";
+import Contact from "./Contact";
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const DetailsPage = () => {
     <div>
       <Nav />
       <div className="content">
-      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+      <button className="buttonback" onClick={() => navigate("/")}>
         <img src="/back.png" />
       </button>
       <Container className="detialpage">
@@ -80,7 +81,7 @@ const DetailsPage = () => {
           </div>
         </div>
       </Container>
-      <footer></footer>
+      <Contact></Contact>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>

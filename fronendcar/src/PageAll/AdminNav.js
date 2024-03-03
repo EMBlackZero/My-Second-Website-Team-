@@ -12,13 +12,13 @@ function AdminNav(props) {
   const [searchQuery, setSearchQuery] = useState("");
   // senddatatoNav.js
   const sendtoNAV = (text) => {
-    props.onSearch(text)
+    props.onSearch(text);
   };
   return (
     <div className="sticky-nav">
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
-          <Navbar.Brand href="/PublicPage">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
+          <Navbar.Brand href="/AdminPage">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -26,7 +26,9 @@ function AdminNav(props) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             ></Nav>
-            <Form className="d-flex">
+            <div className="search-area">
+              {props.onhome === true && 
+              <Form className="d-flex">
               <Form.Control
                 value={searchQuery}
                 type="search"
@@ -42,16 +44,20 @@ function AdminNav(props) {
               >
                 Search
               </Button>
-              <div className="titelogin">
-                <DropdownButton
-                  id="admin-dropdown"
-                  title="Admin"
-                  className="dropdown-with-image"
-                >
-                  <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
-                </DropdownButton>
-              </div>
             </Form>
+              }
+              
+            </div>
+
+            <div className="titelogin">
+              <DropdownButton
+                id="admin-dropdown"
+                title="Admin"
+                className="dropdown-with-image"
+              >
+                <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
+              </DropdownButton>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

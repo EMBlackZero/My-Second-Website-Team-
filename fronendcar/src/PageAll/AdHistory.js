@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import axios from "axios";
 import { Button, Spinner } from "react-bootstrap";
 import "../CssAll/History.css";
+import Contact from "./Contact";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -57,6 +58,7 @@ function AdHistory() {
         </div>
       )}
       <Nav />
+      <div className="content">
       <button className="buttonback" onClick={() => navigate("/AdminPage")}>
         <img src="/back.png" />
       </button>
@@ -81,6 +83,8 @@ function AdHistory() {
           </div>
         ))}
       </div>
+      </div>
+      <Contact/>
     </div>
   );
 }

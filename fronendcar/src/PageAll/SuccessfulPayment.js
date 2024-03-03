@@ -4,6 +4,7 @@ import { Spinner, Button } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
+import Contact from "./Contact";
 
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
@@ -80,14 +81,14 @@ function SuccessfulPayment() {
             <Button variant="dark" onClick={() => navigate("/History")}>
               ไปหน้าประวัติการเช่ารถ
             </Button>
-            <Button variant="dark" onClick={() => navigate("/PublicPage")}>
+            <Button variant="dark" onClick={() => navigate("/")}>
               กลับหน้าหลัก
             </Button>
           </div>
         </div>
       </div>
 
-      <footer></footer>
+      <Contact/>
     </div>
   );
 }

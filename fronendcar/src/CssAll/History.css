@@ -35,6 +35,20 @@
     margin: 0px 20px;
     
 }
-footer{
-    height: 100px;
+.status{
+    display: flex;
 }
+.Return{
+    margin-left: 5px;
+    padding: 2px 10px;
+    background-color: rgb(1, 151, 4);
+    color: white;
+    border-radius: 5px;
+}
+.notReturn{
+    margin-left: 5px;
+    padding: 2px 10px;
+    background-color: rgb(185, 15, 15);
+    color: white;
+    border-radius: 5px;
+}   

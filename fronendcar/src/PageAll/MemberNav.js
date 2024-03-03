@@ -20,7 +20,7 @@ function MemberNav(props) {
     <div className="sticky-nav">
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
-          <Navbar.Brand href="/PublicPage">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
+          <Navbar.Brand href="/">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -28,7 +28,9 @@ function MemberNav(props) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             ></Nav>
-            <Form className="d-flex">
+            <div className="search-area">
+              {props.onhome === true && 
+              <Form className="d-flex">
               <Form.Control
                 value={searchQuery}
                 type="search"
@@ -44,16 +46,20 @@ function MemberNav(props) {
               >
                 Search
               </Button>
-              <div className="titelogin">
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  title={username}
-                  className="dropdown-with-image"
-                >
-                  <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
-                </DropdownButton>
-              </div>
             </Form>
+              }
+              
+            </div>
+
+            <div className="titelogin">
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={username}
+                className="dropdown-with-image"
+              >
+                <Dropdown.Item onClick={props.onlogout}>Logout</Dropdown.Item>
+              </DropdownButton>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

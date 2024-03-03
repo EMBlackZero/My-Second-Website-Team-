@@ -7,43 +7,56 @@ import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
 
 function PublicNav(props) {
+  const onhome = props.onhome;
   const [searchQuery, setSearchQuery] = useState("");
   // senddatatoNav.js
-  const sendtoNAV = (text) =>{
-    props.onSearch(text)
-  }
+  const sendtoNAV = (text) => {
+    props.onSearch(text);
+  };
   return (
     <div className="sticky-nav">
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
-          <Navbar.Brand href="/PublicPage">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
+          <Navbar.Brand href="/">รถเช่าผมไม่เล็กนะครับ</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
               navbarScroll
-            >
-            </Nav>
-            <Form className="d-flex">
+            ></Nav>
+
+            <div className="search-area">
+              {props.onhome === true &&
+              <Form className="d-flex">
               <Form.Control
-              value={searchQuery}
+                value={searchQuery}
                 type="search"
                 placeholder="Search by car brand "
                 className="me-2"
                 aria-label="Search"
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Button variant="dark" className="search-btn" onClick={() => sendtoNAV(searchQuery)}>Search</Button>
-              <div className="titleogin">
-                <a href="/CreateAccount" >
-                  <h1>สมัครสมาชิก</h1>
-                </a>
-                <a href="/LoginForm" >
-                  <h1>เข้าสู่ระบบ</h1>
-                </a>
-              </div>
+              <Button
+                variant="dark"
+                className="search-btn"
+                onClick={() => sendtoNAV(searchQuery)}
+              >
+                Search
+              </Button>
             </Form>
+              }
+              
+            </div>
+
+            <div className="titleogin">
+              <a href="/CreateAccount">
+                <h1>สมัครสมาชิก</h1>
+              </a>
+              <a href="/LoginForm">
+                <h1>เข้าสู่ระบบ</h1>
+              </a>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

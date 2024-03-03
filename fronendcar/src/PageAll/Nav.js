@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PublicNav from './PublicNav'
 import MemberNav from './MemberNav'
 import AdminNav from './AdminNav'
+import { useLocation } from 'react-router-dom';
 
 function Nav(props) {
+  // เรียกใช้ hook useLocation เพื่อเข้าถึงข้อมูลของ URL
+  const location = useLocation();
+  // ตรวจสอบว่าอยู่ที่หน้าโฮมหรือไม่
+  const isHome = location.pathname === '/';
+  const isHomeAD = location.pathname === '/AdminPage';
+  useState(()=>{
+    console.log('ishome',isHome)
+  },[])
   // senddatatoPublicPage.js
   const NavtoPBP=(text)=>{
     props.onSearch(text)
@@ -25,9 +34,9 @@ function Nav(props) {
   const role = sessionStorage.getItem('role')
   return (
     <div>
-      {!role && <PublicNav  onSearch={NavtoPBP}/>}
-      {role === 'Member' && <MemberNav onlogout={handleLogout} onSearch={NavtoPBP}/>}
-      {role === 'Admin' && <AdminNav onlogout={handleLogout} onSearch={NavtoAMP}/>}
+      {!role && <PublicNav  onSearch={NavtoPBP} onhome={isHome}/>}
+      {role === 'Member' && <MemberNav onlogout={handleLogout} onSearch={NavtoPBP} onhome={isHome}/>}
+      {role === 'Admin' && <AdminNav onlogout={handleLogout} onSearch={NavtoAMP} onhome={isHomeAD}/>}
     </div>
   )
 }

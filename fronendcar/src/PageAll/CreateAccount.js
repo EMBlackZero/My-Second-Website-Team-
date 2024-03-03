@@ -132,7 +132,7 @@ const CreateAccount = () => {
           <h1 className="account">เป็นสมาชิกอยู่แล้ว</h1>
         </a>
       </Form>
-      <button className="icon-button" onClick={() => navigate("/PublicPage")}>
+      <button className="icon-button" onClick={() => navigate("/")}>
         <img src="back.png"></img>
       </button>
     </div>

@@ -34,10 +34,6 @@ const router = createBrowserRouter([
     element: <LoginForm />,
   },
   {
-    path: "/PublicPage",
-    element: <PublicPage />,
-  },
-  {
     path: "/DetailsPage/:id",
     element: <DetailsPage />,
   },

@@ -119,7 +119,7 @@ const Comfirmcar1 = () => {
   return (
     <div>
       <Nav />
-      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+      <button className="buttonback" onClick={() => navigate("/")}>
         <img src="/back.png" />
       </button>
       <Container className="detialpage">

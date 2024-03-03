@@ -4,6 +4,8 @@ import { Spinner, Button, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../CssAll/Public.css";
 import Nav from "./Nav";
+import Contact from "./Contact";
+
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -16,6 +18,8 @@ const PublicPage = () => {
   const [minPrice, setMinPrice] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const role = sessionStorage.getItem("role");
+  
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -169,7 +173,7 @@ const PublicPage = () => {
             ))}
           </div>
         </div>
-        <footer></footer>
+        <Contact/>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>

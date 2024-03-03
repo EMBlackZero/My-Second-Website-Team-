@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import axios from "axios";
 import { Button, Spinner,Modal } from "react-bootstrap";
 import "../CssAll/History.css";
+import Contact from "./Contact";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
@@ -75,7 +76,7 @@ function History() {
       )}
       <Nav />
       <div className="content">
-      <button className="buttonback" onClick={() => navigate("/PublicPage")}>
+      <button className="buttonback" onClick={() => navigate("/")}>
         <img src="/back.png" />
       </button>
       <div className="containerHTR">
@@ -102,9 +103,9 @@ function History() {
                   เปิดในเเมพ
                 </a>
               </p>
-              <p>
-                status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
-              </p>
+              <div className="status">
+                status : {booking.status === false ? <p className="notReturn">ยังไม่คืน</p> : <p className="Return">คืนแล้ว</p>}
+              </div>
               <div>
                 <Button variant="dark" onClick={() => gotoHistoryDetail(booking.id)}>
                 รีวิวรถคันนี้
@@ -134,7 +135,7 @@ function History() {
         </Modal.Footer>
       </Modal>
       </div>
-      
+      <Contact/>
     </div>
   );
 }

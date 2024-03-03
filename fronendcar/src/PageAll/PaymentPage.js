@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import "../CssAll/PaymentCss.css";
 import Nav from "./Nav";
+import Contact from "./Contact";
 
 function PaymentPage(props) {
   const { id } = useParams();
@@ -98,7 +99,7 @@ function PaymentPage(props) {
         </button>
       </div>
 
-      <footer></footer>
+      <Contact/>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
