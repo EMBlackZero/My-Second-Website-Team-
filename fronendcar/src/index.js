@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateAccount from "./PageAll/CreateAccount";
 import LoginForm from "./PageAll/LoginPage";
-import PublicPage from "./PageAll/PublicPage";
 import DetailsPage from "./PageAll/DetailsPage";
 import DeletePage from "./PageAll/DeletePage"
 import AdminPage from "./PageAll/AdminPage"

@@ -31,6 +31,7 @@ const AdminPage = () => {
           };
         });
         setData(mapToset);
+        setFilteredData(mapToset);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -107,7 +108,7 @@ const AdminPage = () => {
         </div>
       </div>
 
-      <Contact/>
+      <Contact />
     </div>
   );
 };

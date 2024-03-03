@@ -41,6 +41,13 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "imgslide": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }

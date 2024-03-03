@@ -16,6 +16,7 @@ const AdEditeCar = ({ id }) => {
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [Idimg, setIdimg] = useState("");
+  const [Idimg2, setIdimg2] = useState();
 
   // useEffect to fetch car data from the server
   useEffect(() => {
@@ -37,6 +38,7 @@ const AdEditeCar = ({ id }) => {
     };
     fetchData();
   }, [id]);
+  console.log(Idimg2);
 
   // Function to handle image change
   const handleImageChange = (event) => {
@@ -83,14 +85,14 @@ const AdEditeCar = ({ id }) => {
         );
         formData2.imgcar = parseInt(uploadResponse.data[0].id);
       } else {
-        formData2.imgcar = parseInt(data.attributes.imgcar.data.id);
+        formData2.imgcar = parseInt(Idimg);
       }
       await axios.put(
         `http://localhost:1337/api/cars/${id}?populate=*`,
         { data: formData2 },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
           },
         }
       );

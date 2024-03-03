@@ -434,6 +434,7 @@ export interface ApiCarCar extends Schema.CollectionType {
     >;
     price: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     imgcar: Attribute.Media;
+    imgslide: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
