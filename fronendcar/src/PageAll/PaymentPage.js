@@ -89,12 +89,12 @@ function PaymentPage(props) {
 
       <div className="button-container">
         <button className="image-button" onClick={handleShow}>
-          <img src="/creditcard.png" alt="Credit Card" />
+          <img src="/creditcard.jpg" alt="Credit Card" />
           <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
         </button>
 
         <button className="image-button" onClick={handleShow}>
-          <img src="/money.png" alt="Cash" />
+          <img src="/money.jpg" alt="Cash" />
           <span>เงินสด (ชำระหน้าร้าน)</span>
         </button>
       </div>
