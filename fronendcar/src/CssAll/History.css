@@ -17,19 +17,18 @@
     display: flex;
     border-radius: 10px;
     max-width: 800px;
-    height: 270px;
+    height: 300px;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     
 }
 
 .booking-img{
-    margin: auto 20px;
+    margin: 0 20px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .booking-img img{
     width: 300px;
     height: 200px;
-
 }
 .booking-detail{
     margin: 0px 20px;
@@ -52,3 +51,40 @@
     color: white;
     border-radius: 5px;
 }   
+.Topmenu{
+    display: flex;
+    justify-content: space-between;
+}
+.filtermenu{
+    margin-top: 22px;
+    margin-right: 10px;
+}
+.adminconfirm{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.confirm{
+    margin-left: 10px;
+    margin-top: 15px;
+    background-color: rgb(0, 243, 65);
+    color: rgb(0, 0, 0);
+    padding: 4px;
+    border-radius: 5px;
+}   
+.notconfirm{
+    margin-left: 10px;
+    margin-top: 15px;
+    background-color: rgb(229, 252, 235);
+    color: rgb(94, 94, 94);
+    padding: 4px;
+    border-radius: 5px;
+}
+.filtermenu Button{
+    margin-left: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.review-btn{
+    margin: 7px 0px;
+    
+}

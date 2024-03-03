@@ -7,6 +7,7 @@ import Nav from "./Nav";
 import MemberNav from "./MemberNav";
 import AdminNav from "./AdminNav";
 import PublicNav from "./PublicNav";
+import Contact from "./Contact";
 
 const Comfirmcar1 = () => {
   const { id } = useParams();
@@ -119,6 +120,7 @@ const Comfirmcar1 = () => {
   return (
     <div>
       <Nav />
+      <div className="content">
       <button className="buttonback" onClick={() => navigate("/")}>
         <img src="/back.png" />
       </button>
@@ -210,6 +212,9 @@ const Comfirmcar1 = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
+      <Contact/>
+      
     </div>
   );
 };
