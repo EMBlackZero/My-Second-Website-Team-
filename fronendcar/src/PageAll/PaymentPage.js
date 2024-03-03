@@ -78,51 +78,54 @@ function PaymentPage(props) {
     <div>
       <Nav />
       <div className="content">
-      <div>
-        <button className="buttonback" onClick={CarDetail}>
-          <img src="/back.png" alt="Back" />
-        </button>
-      </div>
-      <div className="paytitle">
-        <h2>เลือกช่องทางการชำระเงิน</h2>
+        <div>
+          <button className="buttonback" onClick={CarDetail}>
+            <img src="/back.png" alt="Back" />
+          </button>
+        </div>
+        <div className="paytitle">
+          <h2>เลือกช่องทางการชำระเงิน</h2>
+        </div>
+
+        <div className="button-container">
+          <button className="image-button" onClick={handleShow}>
+            <img src="/creditcard.jpg" alt="Credit Card" />
+            <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
+          </button>
+
+          <button className="image-button" onClick={handleShow}>
+            <img src="/money.jpg" alt="Cash" />
+            <span>เงินสด (ชำระหน้าร้าน ค่ามัดจำ 1000 บาท)</span>
+          </button>
+        </div>
+
+        <Contact />
+
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>หลักฐานการชำระเงิน</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="qr-code" >
+                <img src="/myqr.jpg" alt="qr-code" style={{ width: '400px', height: '400px' }}/>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="imageFile">
+                <Form.Control type="file" onChange={handleImageChange} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              ปิด
+            </Button>
+            <Button variant="primary" onClick={handleSaveChanges}>
+              บันทึก
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
 
-      <div className="button-container">
-        <button className="image-button" onClick={handleShow}>
-          <img src="/creditcard.png" alt="Credit Card" />
-          <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
-        </button>
-
-        <button className="image-button" onClick={handleShow}>
-          <img src="/money.png" alt="Cash" />
-          <span>เงินสด (ชำระหน้าร้าน)</span>
-        </button>
-      </div>
-
-      <Contact/>
-
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>หลักฐานการชำระเงิน</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="imageFile">
-              <Form.Control type="file" onChange={handleImageChange} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            ปิด
-          </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            บันทึก
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      </div>
-      
     </div>
   );
 }
