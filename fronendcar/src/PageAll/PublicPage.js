@@ -6,7 +6,6 @@ import "../CssAll/Public.css";
 import Nav from "./Nav";
 import Contact from "./Contact";
 
-
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 
@@ -18,8 +17,7 @@ const PublicPage = () => {
   const [minPrice, setMinPrice] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const role = sessionStorage.getItem("role");
-  
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -123,9 +121,9 @@ const PublicPage = () => {
             onChange={(e) => setMaxPrice(e.target.value)}
             className="item-infilter"
           />
-          <button onClick={handlePriceFilter} className="btn-infilter">
+          <Button onClick={handlePriceFilter} className="btn-infilter">
             Filter
-          </button>
+          </Button>
         </div>
         {/* <div className="search-container">
         <input
@@ -173,7 +171,7 @@ const PublicPage = () => {
             ))}
           </div>
         </div>
-        <Contact/>
+
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
@@ -194,6 +192,7 @@ const PublicPage = () => {
           </Modal.Footer>
         </Modal>
       </div>
+      <Contact></Contact>
     </div>
   );
 };

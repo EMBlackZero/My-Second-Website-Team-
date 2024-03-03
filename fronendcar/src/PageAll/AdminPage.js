@@ -10,6 +10,7 @@ import Contact from "./Contact";
 const AdminPage = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [filteredData, setFilteredData] = useState([]);
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -48,7 +49,17 @@ const AdminPage = () => {
   };
   // getdatafromnav
   const handlesearch = (txt) => {
-    console.log("adminpage.js get from serch", txt);
+    const query = txt.trim().toLowerCase();
+    if (query === "") {
+      // If the search query is empty, reset filtered data to all data
+      setFilteredData(data);
+    } else {
+      // Filter data based on search query
+      const filtered = data.filter((item) =>
+        item.namecar.toLowerCase().includes(query)
+      );
+      setFilteredData(filtered);
+    }
   };
 
   return (
@@ -65,7 +76,7 @@ const AdminPage = () => {
         <AdcreateCar />
         <div className="container">
           <div className="products-con">
-            {data.map((item) => (
+            {filteredData.map((item) => (
               <div className="products-item" key={item.id}>
                 <div className="products-img">
                   <img

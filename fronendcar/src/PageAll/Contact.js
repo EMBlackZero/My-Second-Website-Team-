@@ -1,4 +1,5 @@
 import React from "react";
+import "../CssAll/Public.css";
 
 function Contact() {
   return (
