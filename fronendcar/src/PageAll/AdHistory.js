@@ -15,6 +15,7 @@ function AdHistory() {
   const navigate = useNavigate()
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [dataforfilter, setDataforfilter] = useState([]);
 
   const fetchHistory = async () => {
     try {
@@ -35,11 +36,30 @@ function AdHistory() {
         };
       });
       setDataHistory(await Promise.all(maptoSet));
+      setDataforfilter(await Promise.all(maptoSet)); //ตอนโหลดมาครั้งแรกเซตทั้งหมดเอาไว้
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const filteradminnotconfirm = () => {
+    const notconfirm = dataHistory.filter((e) => {
+      return e.adminconfirm !== true;
+    });
+    console.log("nc", notconfirm);
+    setDataforfilter(notconfirm);
+  };
+  const filteradminconfirm = () => {
+    const confirm = dataHistory.filter((e) => {
+      return e.adminconfirm === true;
+    });
+    console.log("nc", confirm);
+    setDataforfilter(confirm);
+  };
+  const allpurchase = () => {
+    setDataforfilter(dataHistory);
   };
 
   useEffect(() => {
@@ -59,25 +79,53 @@ function AdHistory() {
       )}
       <Nav />
       <div className="content">
-      <button className="buttonback" onClick={() => navigate("/AdminPage")}>
-        <img src="/back.png" />
-      </button>
+      <div className="Topmenu">
+          <div className="backmenu">
+            <button className="buttonback" onClick={() => navigate("/AdminPage")}>
+              <img src="/back.png" />
+            </button>
+          </div>
+          <div className="filtermenu">
+            <Button variant="light" onClick={filteradminnotconfirm}>
+              รอการยืนยัน
+            </Button>
+            <Button variant="primary" onClick={filteradminconfirm}>
+              ยืนยันแล้ว
+            </Button>
+            <Button variant="dark" onClick={allpurchase}>
+              คำสั่งซื้อทั้งหมด
+            </Button>
+          </div>
+        </div>
       <div className="containerHTR">
         <h2>History</h2>
-        {dataHistory.map((booking) => (
+        {dataforfilter.map((booking) => (
           <div key={booking.id} className="container-Booking">
             <div className="booking-img">
               <img
                 src={"http://localhost:1337" + booking?.image?.attributes?.url}
               ></img>
+              <div className="adminconfirm">
+                  สถานะคำสั่งซื้อ :{" "}
+                  {booking.adminconfirm === true ? (
+                    <p className="confirm">ยืนยันแล้ว</p>
+                  ) : (
+                    <p className="notconfirm">รอการยืนยัน</p>
+                  )}
+                </div>
             </div>
             <div className="booking-detail">
               <p>Name : {booking.car.data.attributes.namecar}</p>
               <p>Start : {booking.startdate}</p>
               <p>End : {booking.enddate}</p>
-              <p>
-                status : {booking.status === false ? "ยังไม่คืน" : "คืนแล้ว"}
-              </p>
+              <div className="status">
+                status : {" "}
+                  {booking.status === false ? (
+                    <p className="notReturn">ยังไม่คืน</p>
+                  ) : (
+                    <p className="Return">คืนแล้ว</p>
+                  )}
+              </div>
               <p>ผู้เช่า : {booking.user.data.attributes.username}</p>
             </div>
           </div>
