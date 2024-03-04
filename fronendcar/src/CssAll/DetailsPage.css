@@ -74,6 +74,13 @@
 .custom-datepicker {
     width: 300px; /* Adjust the width as needed */
 }
+.backmenu{
+    display: flex;
+}
+.breadcrumb{
+    margin-top: 35px;
+    margin-left: 35px;
+}
   
 
   

@@ -35,7 +35,7 @@ function AdHistory() {
           ...e.attributes,
         };
       });
-      setDataHistory(await Promise.all(maptoSet));
+      setDataHistory(await Promise.all(maptoSet)); // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
       setDataforfilter(await Promise.all(maptoSet)); //ตอนโหลดมาครั้งแรกเซตทั้งหมดเอาไว้
     } catch (error) {
       console.log(error);
@@ -66,9 +66,15 @@ function AdHistory() {
     fetchHistory();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
     console.log("datahistory", dataHistory);
-  }, [dataHistory]);
+    const notconfirm = dataHistory.filter((e) => { //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
+      return e.adminconfirm !== true;
+    });
+    console.log("nc", notconfirm);
+    setDataforfilter(notconfirm);
+  }, [dataHistory]); 
+  
 
   return (
     <div>

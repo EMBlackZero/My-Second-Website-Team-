@@ -45,12 +45,11 @@ function History() {
       });
 
       const alldata = await Promise.all(maptoSet);
-      const filter = alldata.filter((e) => {
+      const filter = alldata.filter((e) => { //เอาแค่user id ที่ลอกอินอยู่
         return e.user.data.id === parseInt(iduser);
       });
-      console.log("filter", filter);
-      setDataHistory(filter);
-      setDataforfilter(filter); //ตอนโหลดมาครั้งแรกเซตทั้งหมดเอาไว้
+      console.log("filter", (filter));
+      setDataHistory(filter); // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
     } catch (error) {
       console.log(error);
     } finally {
@@ -65,6 +64,7 @@ function History() {
     console.log("nc", notconfirm);
     setDataforfilter(notconfirm);
   };
+
   const filteradminconfirm = () => {
     const confirm = dataHistory.filter((e) => {
       return e.adminconfirm === true;
@@ -72,6 +72,7 @@ function History() {
     console.log("nc", confirm);
     setDataforfilter(confirm);
   };
+
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
@@ -80,10 +81,15 @@ function History() {
     fetchHistory();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
     console.log("datahistory", dataHistory);
     console.log("iduser", iduser);
-  }, [dataHistory]);
+    const notconfirm = dataHistory.filter((e) => { //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
+      return e.adminconfirm !== true;
+    });
+    console.log("nc", notconfirm);
+    setDataforfilter(notconfirm);
+  }, [dataHistory]); 
 
   return (
     <div>
@@ -108,13 +114,13 @@ function History() {
               ยืนยันแล้ว
             </Button>
             <Button variant="dark" onClick={allpurchase}>
-              คำสั่งซื้อทั้งหมด
+              การเช่าทั้งหมด
             </Button>
           </div>
         </div>
 
         <div className="containerHTR">
-          <h2>Your History</h2>
+          <h2>ประวัติการเช่าของฉัน</h2>
           {dataforfilter.map((booking) => (
             <div
               key={booking.id}
@@ -127,7 +133,7 @@ function History() {
                   alt="Car Image"
                 ></img>
                 <div className="adminconfirm">
-                  สถานะคำสั่งซื้อ :{" "}
+                  สถานะการเช่า :{" "}
                   {booking.adminconfirm === true ? (
                     <p className="confirm">ยืนยันแล้ว</p>
                   ) : (

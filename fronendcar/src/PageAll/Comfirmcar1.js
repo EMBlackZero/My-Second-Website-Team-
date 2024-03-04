@@ -4,10 +4,8 @@ import { Button, Container, Form, Modal } from "react-bootstrap"; // Import Form
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
-import MemberNav from "./MemberNav";
-import AdminNav from "./AdminNav";
-import PublicNav from "./PublicNav";
 import Contact from "./Contact";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 const Comfirmcar1 = () => {
   const { id } = useParams();
@@ -62,8 +60,8 @@ const Comfirmcar1 = () => {
         (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
           new Date(renterInfo.enddate) >= new Date(item.attributes.enddate)) ||
         (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
-          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate)) &&
-          item.attributes.status === false
+          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate) &&
+          item.attributes.status === false)
     );
     setLength(filteredData.length === undefined ? 0 : filteredData.length);
   };
@@ -121,100 +119,118 @@ const Comfirmcar1 = () => {
     <div>
       <Nav />
       <div className="content">
-      <button className="buttonback" onClick={() => navigate("/")}>
-        <img src="/back.png" />
-      </button>
-      <Container className="detialpage">
-        <div className="layoutobj">
-          <div className="layout1">
-            <div>รายละเอียดข้อมูลเพื่อเช่ารถ</div>
-            <Form>
-              <Form.Group controlId="date">
-                <Form.Label>เริ่ม</Form.Label>
-                <Form.Control
-                  type="date"
-                  placeholder="โปรดกรอก เลือกวันที่"
-                  name="startdate"
-                  value={renterInfo.startdate}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="date">
-                <Form.Label>สิ้นสุด</Form.Label>
-                <Form.Control
-                  type="date"
-                  placeholder="โปรดกรอก เลือกวันที่"
-                  name="enddate"
-                  disabled={renterInfo.startdate === ""}
-                  value={renterInfo.enddate}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Button
-                variant="dark"
-                disabled={renterInfo.enddate === ""}
-                onClick={() => Check()}
-                style={{ display: "block", margin: "auto", marginTop: "21px" }}
-              >
-                เช็คจำนวนรถ
-              </Button>
-
-              <Button
-                variant="dark"
-                disabled={
-                  (data.attributes && data.attributes.remaining) - Length > 0
-                    ? false
-                    : true
-                }
-                onClick={handleSubmit}
-                style={{ display: "block", margin: "auto", marginTop: "21px" }}
-              >
-                ตกลง
-              </Button>
-            </Form>
-          </div>
-          <div className="layout2">
-            <div className="detialcar">
-              <img
-                src={
-                  "http://localhost:1337" +
-                  data?.attributes?.imgcar?.data?.attributes?.url
-                }
-              ></img>
-            </div>
-            <div>
-              จำนวนที่เหลือ:{" "}
-              {isNaN((data.attributes && data.attributes.remaining) - Length)
-                ? " "
-                : (data.attributes && data.attributes.remaining) - Length < 0
-                ? 0
-                : (data.attributes && data.attributes.remaining) - Length}{" "}
-              คัน
-            </div>
-            <div>
-              Price per day : {data.attributes && data.attributes.price} บาท/วัน
-            </div>
-          </div>
+        <div className="backmenu">
+          <button className="buttonback" onClick={() => navigate(`/DetailsPage/${id}`)}>
+            <img src="/back.png" />
+          </button>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/">หน้าหลัก</Breadcrumb.Item>
+            <Breadcrumb.Item href={`/DetailsPage/${id}`}>รายละเอียด</Breadcrumb.Item>
+            <Breadcrumb.Item active>เลือกช่วงเวลา</Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: 'lightgray' }}>ชำระเงิน</Breadcrumb.Item>
+          </Breadcrumb>
         </div>
-      </Container>
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>ราคารวม</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>ราคารวมทั้งหมด{renterInfo.Total}บาท</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            ยกเลิก
-          </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+        <Container className="detialpage">
+          <div className="layoutobj">
+            <div className="layout1">
+              <div>รายละเอียดข้อมูลเพื่อเช่ารถ</div>
+              <Form>
+                <Form.Group controlId="date">
+                  <Form.Label>เริ่ม</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="โปรดกรอก เลือกวันที่"
+                    name="startdate"
+                    value={renterInfo.startdate}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="date">
+                  <Form.Label>สิ้นสุด</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="โปรดกรอก เลือกวันที่"
+                    name="enddate"
+                    disabled={renterInfo.startdate === ""}
+                    value={renterInfo.enddate}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Button
+                  variant="dark"
+                  disabled={renterInfo.enddate === ""}
+                  onClick={() => Check()}
+                  style={{
+                    display: "block",
+                    margin: "auto",
+                    marginTop: "21px",
+                  }}
+                >
+                  เช็คจำนวนรถ
+                </Button>
+
+                <Button
+                  variant="dark"
+                  disabled={
+                    (data.attributes && data.attributes.remaining) - Length > 0
+                      ? false
+                      : true
+                  }
+                  onClick={handleSubmit}
+                  style={{
+                    display: "block",
+                    margin: "auto",
+                    marginTop: "21px",
+                  }}
+                >
+                  ยืนยันการเช่า
+                </Button>
+              </Form>
+            </div>
+            <div className="layout2">
+              <div className="detialcar">
+                <img
+                  src={
+                    "http://localhost:1337" +
+                    data?.attributes?.imgcar?.data?.attributes?.url
+                  }
+                ></img>
+              </div>
+              <div>
+                จำนวนที่เหลือ:{" "}
+                {isNaN((data.attributes && data.attributes.remaining) - Length)
+                  ? " "
+                  : (data.attributes && data.attributes.remaining) - Length < 0
+                  ? 0
+                  : (data.attributes && data.attributes.remaining) -
+                    Length}{" "}
+                คัน
+              </div>
+              <div>
+                Price per day : {data.attributes && data.attributes.price}{" "}
+                บาท/วัน
+              </div>
+            </div>
+          </div>
+        </Container>
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>ราคารวม</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>ราคารวมทั้งหมด {renterInfo.Total} บาท</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              ยกเลิก
+            </Button>
+            <Button variant="primary" onClick={handleSaveChanges}>
+              ยืนยัน
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      <Contact/>
-      
+      <Contact />
     </div>
   );
 };
