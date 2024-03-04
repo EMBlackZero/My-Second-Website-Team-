@@ -14,6 +14,7 @@ const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [dataU, setDataU] = useState([]);
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
   const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
 
@@ -30,14 +31,18 @@ const DetailsPage = () => {
       try {
         const response = await axios.get(`/api/cars/${id}?populate=*`);
         setData(response.data.data);
+        const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
+        setDataU(responU.data.data);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+    
     fetchData();
   }, [id]);
   console.log(data);
+  console.log(dataU);
   const Comfirmcar = () => {
     sessionStorage.setItem("wrap", `/Comfirmcar1/${id}`);
     role === null ? setShowModal(true) : navigate(`/Comfirmcar1/${id}`);
@@ -75,9 +80,9 @@ const DetailsPage = () => {
               Comment:
               </div>
               <div class="comment-wrapper">
-              {data?.attributes?.bookings?.data.map((booking) => (
+              {dataU?.attributes?.bookings?.data.map((booking) => (
               <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
-                {`${user}: ${booking.attributes.comment}`}
+                {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
                 </textarea>
               ))}
 
