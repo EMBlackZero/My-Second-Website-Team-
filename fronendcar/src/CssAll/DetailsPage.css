@@ -75,7 +75,22 @@
     width: 300px; /* Adjust the width as needed */
 }
   
+.comment-wrapper {
+    padding: auto;
+    max-height: 150px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
+  }
+
+  .insCom {
+    width: 100%;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #000000;
+    resize: none;
+    background-color: #cccccc
+  }
   
 
 @media (max-width: 768px) {
