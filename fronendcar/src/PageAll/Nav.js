@@ -36,7 +36,7 @@ function Nav(props) {
     <div>
       {!role && <PublicNav  onSearch={NavtoPBP} onhome={isHome}/>}
       {role === 'Member' && <MemberNav onlogout={handleLogout} onSearch={NavtoPBP} onhome={isHome}/>}
-      {role === 'Admin' && <AdminNav onlogout={handleLogout} onSearch={NavtoAMP} onhome={isHomeAD}/>}
+      {role === 'Admin' && <AdminNav onlogout={handleLogout} onSearch={NavtoAMP} onhome={isHomeAD} at={props.at} />}
     </div>
   )
 }

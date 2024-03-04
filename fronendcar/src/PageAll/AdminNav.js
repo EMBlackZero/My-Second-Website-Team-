@@ -14,6 +14,8 @@ function AdminNav(props) {
   const sendtoNAV = (text) => {
     props.onSearch(text);
   };
+
+  
   return (
     <div className="sticky-nav">
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -47,6 +49,28 @@ function AdminNav(props) {
                 </Form>
               )}
             </div>
+            <div className="search-area">
+              {props.at === '1' && (
+                <Form className="d-flex">
+                  <Form.Control
+                    value={searchQuery}
+                    type="search"
+                    placeholder="Search by id "
+                    className="me-2"
+                    aria-label="Search"
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <Button
+                    variant="dark"
+                    className="search-btn"
+                    onClick={() => sendtoNAV(searchQuery)}
+                  >
+                    Search
+                  </Button>
+                </Form>
+              )}
+            </div>
+
 
             <div className="titelogin">
               <DropdownButton

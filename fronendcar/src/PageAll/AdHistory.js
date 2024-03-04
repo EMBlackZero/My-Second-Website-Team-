@@ -64,6 +64,13 @@ function AdHistory() {
     console.log("nc", confirm);
     setDataforfilter(confirm);
   };
+  const filteradminstatus = () => {
+    const confirm = dataHistory.filter((e) => {
+      return e.status === true;
+    });
+    console.log("nc", confirm);
+    setDataforfilter(confirm);
+  };
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
@@ -105,6 +112,18 @@ function AdHistory() {
     console.log("nc", notconfirm);
     setDataforfilter(notconfirm);
   }, [dataHistory]);
+  const handlesearch = (txt) => {
+    const query = txt;
+    if (query === '') {
+      // If the search query is not a number or empty, reset filtered data to all data
+      setDataforfilter(dataHistory);
+    } else {
+      // Filter data based on search query
+      const filtered = dataHistory.filter((e) => e.id == txt);
+
+      setDataforfilter(filtered);
+    }
+  };
 
   return (
     <div>
@@ -113,7 +132,7 @@ function AdHistory() {
           <Spinner animation="border" variant="secondary" />
         </div>
       )}
-      <Nav />
+      <Nav at={"1"} onSearch={handlesearch} />
       <div className="content">
         <div className="Topmenu">
           <div className="backmenu">
@@ -130,6 +149,9 @@ function AdHistory() {
             </Button>
             <Button variant="primary" onClick={filteradminconfirm}>
               ยืนยันแล้ว
+            </Button>
+            <Button variant="primary" onClick={filteradminstatus}>
+              คืนแล้ว
             </Button>
             <Button variant="dark" onClick={allpurchase}>
               คำสั่งซื้อทั้งหมด
@@ -195,14 +217,15 @@ function AdHistory() {
               .filter((booking) => booking.id === confirmid)
               .map((booking) => (
                 <div className="booking-img">
-                <img
-                  key={booking.id}
-                  src={
-                    "http://localhost:1337" +
-                    booking?.payment?.data.attributes?.url
-                  }
-                  alt="Payment"
-                /></div>
+                  <img
+                    key={booking.id}
+                    src={
+                      "http://localhost:1337" +
+                      booking?.payment?.data.attributes?.url
+                    }
+                    alt="Payment"
+                  />
+                </div>
               ))}
           </div>
         </Modal.Body>
