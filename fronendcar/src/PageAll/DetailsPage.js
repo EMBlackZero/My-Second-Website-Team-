@@ -76,18 +76,18 @@ const DetailsPage = () => {
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
+
               <div>
               Comment:
               </div>
               <div class="comment-wrapper">
               {dataU?.attributes?.bookings?.data.map((booking) => (
               <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
-                {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
+                {`${booking?.attributes?.user?.data?.attributes?.username}: ${booking?.attributes?.comment}`}
                 </textarea>
               ))}
-
-
               </div>
+
             </div>
             <div className="layout2">
               <div className="detialcar">
