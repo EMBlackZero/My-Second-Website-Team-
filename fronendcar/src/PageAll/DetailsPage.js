@@ -9,12 +9,16 @@ import AdminNav from "./AdminNav";
 import PublicNav from "./PublicNav";
 import Contact from "./Contact";
 import Slide from "./Slide";
+import StarRatings from "react-star-ratings";
+
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [dataU, setDataU] = useState([]);
+  const [datastar, setDatastar] = useState();
+
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
   const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
 
@@ -34,7 +38,16 @@ const DetailsPage = () => {
         const responU = await axios.get(
           `/api/cars/${id}?populate=bookings.user.username`
         );
+
         setDataU(responU.data.data);
+        const ratings = responU.data.data.attributes?.bookings?.data.map(
+          (d) => d.attributes.rating 
+        );
+
+        const averageRating =
+          ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+        setDatastar(averageRating);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,6 +57,8 @@ const DetailsPage = () => {
   }, [id]);
   console.log(data);
   console.log(dataU);
+  console.log(datastar);
+
   const Comfirmcar = () => {
     sessionStorage.setItem("wrap", `/Comfirmcar1/${id}`);
     role === null ? setShowModal(true) : navigate(`/Comfirmcar1/${id}`);
@@ -81,21 +96,31 @@ const DetailsPage = () => {
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
-              <div>Comment:</div>
+              <div>Comment: <StarRatings
+                  rating={datastar}
+                  starRatedColor="#ffb400"
+                  starHoverColor="#f9c74f"
+                  numberOfStars={5}
+                  name="rating"
+                  starDimension="40px"
+                  starSpacing="8px"
+                /> </div>
               <div class="comment-wrapper">
-                {dataU?.attributes?.bookings?.data.map((booking) => (
-                  (booking.attributes.comment !== null) &&
-                  <textarea
-                      rows="2"
-                      cols="20"
-                      id="comment"
-                      className="insCom"
-                      key={booking.id}
-                      readOnly
-                  >
-                      {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
-                  </textarea>
-                ))}
+                {dataU?.attributes?.bookings?.data.map(
+                  (booking) =>
+                    booking.attributes.comment !== null && (
+                      <textarea
+                        rows="2"
+                        cols="20"
+                        id="comment"
+                        className="insCom"
+                        key={booking.id}
+                        readOnly
+                      >
+                        {`${booking.attributes.user.data.attributes.username} : ${booking.attributes.comment}`}
+                      </textarea>
+                    )
+                )}
               </div>
             </div>
             <div className="layout2">
