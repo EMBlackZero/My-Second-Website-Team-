@@ -68,12 +68,36 @@ function AdHistory() {
     setDataforfilter(dataHistory);
   };
   const unreturncar = () => {
-    const notreturn = dataHistory.filter((e) => {
+    const unreturn = dataHistory.filter((e) => {
       return e.status === false;
     });
-    console.log("nc", notreturn);
-    setDataforfilter(notreturn);
+    console.log("nc", unreturn);
+    setDataforfilter(unreturn);
   };
+  const adminconfirm = async (t, id, st) => {
+    console.log(id);
+    if (t === true) {
+      setShowModal(t);
+      setconfirmid(id);
+    } else if (t === false && st === "1") {
+      console.log(confirmid);
+      setShowModal(false);
+      await axios.put(`${URL_BOOKING}/${confirmid}`, {
+        data: {
+          adminconfirm: true,
+        },
+      });
+    } else if (t === false && st === "2") {
+      console.log(confirmid);
+      setShowModal(false);
+      await axios.put(`${URL_BOOKING}/${confirmid}`, {
+        data: {
+          status: true,
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     fetchHistory();
   }, []);
