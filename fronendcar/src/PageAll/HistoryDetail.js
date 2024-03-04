@@ -5,7 +5,8 @@ import { Button, Spinner, Form } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
-import StarRatings from 'react-star-ratings';
+import StarRatings from "react-star-ratings";
+import Contact from "./Contact";
 
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
@@ -78,7 +79,7 @@ function HistoryDetail() {
         {
           data: {
             comment: comment,
-            rating: rating
+            rating: rating,
           },
         },
         {
@@ -89,7 +90,7 @@ function HistoryDetail() {
       );
       setSend(true);
     } else {
-      console.log('กรุณาใส่ความคิดเห็นและให้คะแนนดาว');
+      console.log("กรุณาใส่ความคิดเห็นและให้คะแนนดาว");
     }
   };
 
@@ -101,57 +102,65 @@ function HistoryDetail() {
         </div>
       )}
       <Nav />
-      <button className="buttonback" onClick={() => navigate("/History")}>
-        <img src="/back.png" alt="button" />
-      </button>
-      <div className="history-detail-container">
-        <div className="history-detail-detail">
-          <h1>History Detail</h1>
-          <h2>หมายเลขคำสั่งจอง {data.id}</h2>
-          <h4>รายละเอียดรถของท่าน</h4>
-          <p>- {data.detail}</p>
+      <div className="content">
+        <button className="buttonback" onClick={() => navigate("/History")}>
+          <img src="/back.png" alt="button" />
+        </button>
+        <div className="history-detail-container">
+          <div className="history-detail-detail">
+            <h1>History Detail</h1>
+            <h2>หมายเลขคำสั่งจอง {data.id}</h2>
+            <h4>รายละเอียดรถของท่าน</h4>
+            <p>- {data.detail}</p>
+          </div>
+          <div className="history-datail-image">
+            <img src={"http://localhost:1337" + data?.image} alt="Car"></img>
+          </div>
         </div>
-        <div className="history-datail-image">
-          <img src={"http://localhost:1337" + data?.image} alt="Car"></img>
+        <div className="add-comment">
+          <div className="form-style-5">
+            <form onSubmit={handleSubmit}>
+            
+              <fieldset>
+                <legend>
+                  <span className="number">1</span> ให้คะแนนดาว
+                </legend>
+                <StarRatings
+                  rating={rating}
+                  starRatedColor="#ffb400"
+                  starHoverColor="#f9c74f"
+                  changeRating={handleRatingChange}
+                  numberOfStars={5}
+                  name="rating"
+                  starDimension="40px"
+                  starSpacing="8px"
+                />
+              </fieldset>
+
+              <fieldset className="comment">
+                <legend>
+                  <span className="number">2</span> แสดงความคิดเห็น
+                </legend>
+                {havecomment && <p className="commented">ความคิดเห็นที่คุณเขียนไว้</p>}
+                <textarea
+                  name="field3"
+                  placeholder="เขียนความรู้ศึกของคุณหลังจากใช้งานรถคันนี้"
+                  value={comment}
+                  onChange={handleCommentChange}
+                ></textarea>
+              </fieldset>
+
+              <div className="send-btn">
+                {havecomment && <input type="submit" value="ส่งใหม่" />}
+                {!havecomment && <input type="submit" value="ส่ง" />}
+                {send && <h4 className="sended">เราได้รับรีวิวของคุณแล้ว</h4>}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <div className="add-comment">
-        <div className="form-style-5">
-          <form onSubmit={handleSubmit}>
-            <fieldset>
-              <legend>
-                <span className="number">1</span> แสดงความคิดเห็น
-              </legend>
-              {havecomment && <p>ความคิดเห็นที่คุณเขียนไว้</p>}
-              <textarea
-                name="field3"
-                placeholder="เขียนความรู้ศึกของคุณหลังจากใช้งานรถคันนี้"
-                value={comment}
-                onChange={handleCommentChange}
-              ></textarea>
-            </fieldset>
-            <fieldset>
-              <legend>
-                <span className="number">2</span> ให้คะแนนดาว
-              </legend>
-              <StarRatings
-                rating={rating}
-                starRatedColor="#ffb400"
-                starHoverColor="#f9c74f"
-                changeRating={handleRatingChange}
-                numberOfStars={5}
-                name='rating'
-                starDimension="40px"
-                starSpacing="8px"
-              />
-            </fieldset>
-            {havecomment && <input type="submit" value="ส่งใหม่" />}
-            {!havecomment && <input type="submit" value="ส่ง" />}
-            {send && <h4 className="sended">เราได้รับรีวิวของคุณแล้ว</h4>}
-          </form>
-        </div>
-      </div>
-      <footer></footer>
+
+      <Contact />
     </div>
   );
 }

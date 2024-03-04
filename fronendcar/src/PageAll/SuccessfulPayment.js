@@ -4,6 +4,7 @@ import { Spinner, Button } from "react-bootstrap";
 import Nav from "./Nav";
 import axios from "axios";
 import "../CssAll/Historydetail.css";
+import "../CssAll/SuccessPayment.css";
 import Contact from "./Contact";
 
 const URL_CAR = "/api/cars";
@@ -58,10 +59,24 @@ function SuccessfulPayment() {
       )}
       <Nav />
       <div className="content">
+        <div className="alert-success">
+        <h1>คุณได้จองเรียบร้อยแล้ว!!</h1>
+        </div>
+        <div className="button-container">
+            <Button variant="dark" onClick={() => navigate("/History")}>
+              ไปหน้าประวัติการเช่ารถ
+            </Button>
+            <Button variant="dark" onClick={() => navigate("/")}>
+              กลับหน้าหลัก
+            </Button>
+          </div>
         <div className="history-detail-container">
           <div className="history-detail-detail">
-            <h1>ชำระเงินเสร็จสิ้น</h1>
-            <h2>หมายเลขคำสั่งจอง {data.id}</h2>
+            <div className="success-payment">
+              <h1>ชำระเงินเสร็จสิ้น</h1>
+            </div>
+            <h4 className="waiting">กรุณารอแอดมินตรวจสอบสลิปการโอน</h4>
+            <h2>หมายเลขคำสั่งจอง " {data.id} "</h2>
             <h4>ราคาทั้งหมด {data.Total} บาท</h4>
             {data.startdate && data.enddate && (
               <h4>
@@ -77,18 +92,11 @@ function SuccessfulPayment() {
           <div className="history-datail-image">
             <img src={"http://localhost:1337" + data?.image} alt="Car" />
           </div>
-          <div className="button-container">
-            <Button variant="dark" onClick={() => navigate("/History")}>
-              ไปหน้าประวัติการเช่ารถ
-            </Button>
-            <Button variant="dark" onClick={() => navigate("/")}>
-              กลับหน้าหลัก
-            </Button>
-          </div>
+          
         </div>
       </div>
 
-      <Contact/>
+      <Contact />
     </div>
   );
 }

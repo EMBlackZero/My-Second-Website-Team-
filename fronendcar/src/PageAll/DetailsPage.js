@@ -9,6 +9,7 @@ import AdminNav from "./AdminNav";
 import PublicNav from "./PublicNav";
 import Contact from "./Contact";
 import Slide from "./Slide";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -46,9 +47,18 @@ const DetailsPage = () => {
     <div>
       <Nav />
       <div className="content">
-        <button className="buttonback" onClick={() => navigate("/")}>
-          <img src="/back.png" />
-        </button>
+        <div className="backmenu">
+          <button className="buttonback" onClick={() => navigate("/")}>
+            <img src="/back.png" />
+          </button>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/">หน้าหลัก</Breadcrumb.Item>
+            <Breadcrumb.Item active >รายละเอียด</Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: 'lightgray' }}>เลือกช่วงเวลา</Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: 'lightgray' }}>ชำระเงิน</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+
         <Container className="detialpage">
           <div className="layoutobj">
             <div className="layout1">

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../CssAll/PaymentCss.css";
 import Nav from "./Nav";
 import Contact from "./Contact";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 function PaymentPage(props) {
   const { id } = useParams();
@@ -65,24 +66,34 @@ function PaymentPage(props) {
     }
   };
 
-  const CarDetail = () => {
+  const backtoCarDetail = () => {
     axios.delete(`http://localhost:1337/api/bookings/${id}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
       },
     });
-    navigate(sessionStorage.getItem("wrap"));
+    const cardetailPage_previous = sessionStorage.getItem("wrap")
+    navigate(cardetailPage_previous);
   };
 
   return (
     <div>
       <Nav />
       <div className="content">
-        <div>
-          <button className="buttonback" onClick={CarDetail}>
+        <div className="backmenu">
+          <button className="buttonback" onClick={backtoCarDetail}>
             <img src="/back.png" alt="Back" />
           </button>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/">หน้าหลัก</Breadcrumb.Item>
+            <Breadcrumb.Item href={`/DetailsPage/${id}`}>
+              รายละเอียด
+            </Breadcrumb.Item>
+            <Breadcrumb.Item onClick={backtoCarDetail}>เลือกช่วงเวลา</Breadcrumb.Item>
+            <Breadcrumb.Item active>ชำระเงิน</Breadcrumb.Item>
+          </Breadcrumb>
         </div>
+        
         <div className="paytitle">
           <h2>เลือกช่องทางการชำระเงิน</h2>
         </div>
@@ -107,8 +118,12 @@ function PaymentPage(props) {
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group className="qr-code" >
-                <img src="/myqr.jpg" alt="qr-code" style={{ width: '400px', height: '400px' }}/>
+              <Form.Group className="qr-code">
+                <img
+                  src="/myqr.jpg"
+                  alt="qr-code"
+                  style={{ width: "400px", height: "400px" }}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="imageFile">
                 <Form.Control type="file" onChange={handleImageChange} />
@@ -125,7 +140,6 @@ function PaymentPage(props) {
           </Modal.Footer>
         </Modal>
       </div>
-
     </div>
   );
 }
