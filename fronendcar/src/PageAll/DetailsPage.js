@@ -31,14 +31,15 @@ const DetailsPage = () => {
       try {
         const response = await axios.get(`/api/cars/${id}?populate=*`);
         setData(response.data.data);
-        const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
+        const responU = await axios.get(
+          `/api/cars/${id}?populate=bookings.user.username`
+        );
         setDataU(responU.data.data);
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    
+
     fetchData();
   }, [id]);
   console.log(data);
@@ -58,9 +59,13 @@ const DetailsPage = () => {
           </button>
           <Breadcrumb>
             <Breadcrumb.Item href="/">หน้าหลัก</Breadcrumb.Item>
-            <Breadcrumb.Item active >รายละเอียด</Breadcrumb.Item>
-            <Breadcrumb.Item active style={{ color: 'lightgray' }}>เลือกช่วงเวลา</Breadcrumb.Item>
-            <Breadcrumb.Item active style={{ color: 'lightgray' }}>ชำระเงิน</Breadcrumb.Item>
+            <Breadcrumb.Item active>รายละเอียด</Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: "lightgray" }}>
+              เลือกช่วงเวลา
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: "lightgray" }}>
+              ชำระเงิน
+            </Breadcrumb.Item>
           </Breadcrumb>
         </div>
 
@@ -76,17 +81,21 @@ const DetailsPage = () => {
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
-              <div>
-              Comment:
-              </div>
+              <div>Comment:</div>
               <div class="comment-wrapper">
-              {dataU?.attributes?.bookings?.data.map((booking) => (
-              <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
-                {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
-                </textarea>
-              ))}
-
-
+                {dataU?.attributes?.bookings?.data.map((booking) => (
+                  (booking.attributes.comment !== null) &&
+                  <textarea
+                      rows="2"
+                      cols="20"
+                      id="comment"
+                      className="insCom"
+                      key={booking.id}
+                      readOnly
+                  >
+                      {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
+                  </textarea>
+                ))}
               </div>
             </div>
             <div className="layout2">
