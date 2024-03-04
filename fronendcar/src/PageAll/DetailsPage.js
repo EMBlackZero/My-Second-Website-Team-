@@ -18,6 +18,7 @@ const DetailsPage = () => {
   const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
 
   const role = sessionStorage.getItem("role");
+  const user = sessionStorage.getItem("username");
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -69,6 +70,18 @@ const DetailsPage = () => {
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
+              </div>
+              <div>
+              Comment:
+              </div>
+              <div class="comment-wrapper">
+              {data?.attributes?.bookings?.data.map((booking) => (
+              <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
+                {`${user}: ${booking.attributes.comment}`}
+                </textarea>
+              ))}
+
+
               </div>
             </div>
             <div className="layout2">
