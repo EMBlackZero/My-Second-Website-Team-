@@ -12,6 +12,7 @@ const AdDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [dataU, setDataU] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   const config = {
@@ -27,6 +28,8 @@ const AdDetailsPage = () => {
           `http://localhost:1337/api/cars/${id}?populate=*`
         );
         setData(response.data.data);
+        const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
+        setDataU(responU.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -56,6 +59,16 @@ const AdDetailsPage = () => {
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
+              </div>
+              <div>
+              Comment:
+              </div>
+              <div class="comment-wrapper">
+              {dataU?.attributes?.bookings?.data.map((booking) => (
+              <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
+                {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
+                </textarea>
+              ))}
               </div>
             </div>
             <div className="layout2">

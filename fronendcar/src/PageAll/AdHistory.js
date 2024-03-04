@@ -61,7 +61,13 @@ function AdHistory() {
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
-
+  const unreturncar = () => {
+    const notreturn = dataHistory.filter((e) => {
+      return e.status === false;
+    });
+    console.log("nc", notreturn);
+    setDataforfilter(notreturn);
+  };
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -92,14 +98,17 @@ function AdHistory() {
             </button>
           </div>
           <div className="filtermenu">
+          <Button variant="dark" onClick={allpurchase}>
+              คำสั่งซื้อทั้งหมด
+            </Button>
             <Button variant="light" onClick={filteradminnotconfirm}>
               รอการยืนยัน
             </Button>
             <Button variant="primary" onClick={filteradminconfirm}>
               ยืนยันแล้ว
             </Button>
-            <Button variant="dark" onClick={allpurchase}>
-              คำสั่งซื้อทั้งหมด
+            <Button variant="warning" onClick={unreturncar}>
+              รถที่ยังไม่คืน
             </Button>
           </div>
         </div>
