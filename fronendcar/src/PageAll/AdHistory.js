@@ -74,6 +74,13 @@ function AdHistory() {
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
+  const unreturncar = () => {
+    const unreturn = dataHistory.filter((e) => {
+      return e.status === false;
+    });
+    console.log("nc", unreturn);
+    setDataforfilter(unreturn);
+  };
   const adminconfirm = async (t, id, st) => {
     console.log(id);
     if (t === true) {
@@ -114,7 +121,7 @@ function AdHistory() {
   }, [dataHistory]);
   const handlesearch = (txt) => {
     const query = txt;
-    if (query === '') {
+    if (query === "") {
       // If the search query is not a number or empty, reset filtered data to all data
       setDataforfilter(dataHistory);
     } else {
@@ -144,17 +151,21 @@ function AdHistory() {
             </button>
           </div>
           <div className="filtermenu">
+            <Button variant="dark" onClick={allpurchase}>
+              คำสั่งซื้อทั้งหมด
+            </Button>
             <Button variant="light" onClick={filteradminnotconfirm}>
               รอการยืนยัน
             </Button>
             <Button variant="primary" onClick={filteradminconfirm}>
               ยืนยันแล้ว
             </Button>
-            <Button variant="primary" onClick={filteradminstatus}>
+            <Button variant="success" onClick={filteradminstatus}>
               คืนแล้ว
             </Button>
-            <Button variant="dark" onClick={allpurchase}>
-              คำสั่งซื้อทั้งหมด
+            
+            <Button variant="warning" onClick={unreturncar}>
+              รถที่ยังไม่คืน
             </Button>
           </div>
         </div>
