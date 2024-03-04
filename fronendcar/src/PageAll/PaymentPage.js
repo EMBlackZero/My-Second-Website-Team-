@@ -95,7 +95,7 @@ function PaymentPage(props) {
 
           <button className="image-button" onClick={handleShow}>
             <img src="/money.jpg" alt="Cash" />
-            <span>เงินสด (ชำระหน้าร้าน ค่ามัดจำ 1000 บาท)</span>
+            <span>เงินสด (ชำระหน้าร้าน ต้องจ่ายมัดจำ 1000 บาท)</span>
           </button>
         </div>
 
