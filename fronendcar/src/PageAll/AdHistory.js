@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 import Contact from "./Contact";
-
+import { v4 as uuidv4 } from "uuid";
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 const URL_CAR = "/api/cars";
@@ -17,7 +17,8 @@ function AdHistory() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
   const [confirmid, setconfirmid] = useState(); // เพิ่ม state สำหรับจัดการการแสดง Modal
-
+  const [forcerefresh, setForcerefresh] = useState(false);
+  const [forcerefresh2, setForcerefresh2] = useState(false);
   const [dataforfilter, setDataforfilter] = useState([]);
 
   const fetchHistory = async () => {
@@ -42,7 +43,6 @@ function AdHistory() {
         };
       });
       setDataHistory(await Promise.all(maptoSet)); // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
-      setDataforfilter(await Promise.all(maptoSet)); //ตอนโหลดมาครั้งแรกเซตทั้งหมดเอาไว้
     } catch (error) {
       console.log(error);
     } finally {
@@ -50,6 +50,7 @@ function AdHistory() {
     }
   };
 
+  //filter
   const filteradminnotconfirm = () => {
     const notconfirm = dataHistory.filter((e) => {
       return e.adminconfirm !== true;
@@ -61,50 +62,76 @@ function AdHistory() {
     const confirm = dataHistory.filter((e) => {
       return e.adminconfirm === true;
     });
-    console.log("nc", confirm);
+    console.log("confirmed", confirm);
     setDataforfilter(confirm);
   };
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
+
+  //event
+  const cancelconfirm = async (id) => {
+    const response = await axios.put(`${URL_BOOKING}/${id}`, {
+      data: { adminconfirm: false },
+    });
+    console.log(response);
+    setShowModal(false);
+    setForcerefresh((prev) => !prev);
+  };
+
   const adminconfirm = async (t, id, st) => {
-    console.log(id);
+    console.log("id", id);
     if (t === true) {
       setShowModal(t);
       setconfirmid(id);
     } else if (t === false && st === "1") {
-      console.log(confirmid);
+      //ยืนยันการเช่า
+      console.log("confirm id ", confirmid);
       setShowModal(false);
       await axios.put(`${URL_BOOKING}/${confirmid}`, {
         data: {
           adminconfirm: true,
         },
       });
+      setForcerefresh((prev) => !prev);
     } else if (t === false && st === "2") {
-      console.log(confirmid);
+      //ยืนยันว่าลูกค้าคืนรถ
+      console.log("confirm id ", confirmid);
       setShowModal(false);
       await axios.put(`${URL_BOOKING}/${confirmid}`, {
         data: {
           status: true,
         },
       });
+      setForcerefresh((prev) => !prev);
     }
   };
 
-  useEffect(() => {
+  //do when load
+  useEffect(() => { //ทำอย่างแรก
     fetchHistory();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { //ทำอย่างสอง
     //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
     console.log("datahistory", dataHistory);
     const notconfirm = dataHistory.filter((e) => {
       //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
       return e.adminconfirm !== true;
     });
-    console.log("nc", notconfirm);
+    console.log("not confirm", notconfirm);
     setDataforfilter(notconfirm);
   }, [dataHistory]);
+
+  //สั่งรีเฟรชข้อมูลหลังกดบางปุ่ม
+  useEffect(() => {
+    console.log("cancel change");
+    fetchHistory();
+  }, [forcerefresh]);
+
+  
+
+
 
   return (
     <div>
@@ -139,7 +166,7 @@ function AdHistory() {
         <div className="containerHTR">
           <h2>History</h2>
           {dataforfilter.map((booking) => (
-            <div key={booking.id} className="container-Booking">
+            <div key={uuidv4()} className="container-Booking">
               <div className="booking-img">
                 <img
                   src={
@@ -147,7 +174,7 @@ function AdHistory() {
                   }
                 ></img>
                 <div className="adminconfirm">
-                  สถานะคำสั่งซื้อ :{" "}
+                  สถานะการเช่า :{" "}
                   {booking.adminconfirm === true ? (
                     <p className="confirm">ยืนยันแล้ว</p>
                   ) : (
@@ -175,8 +202,9 @@ function AdHistory() {
                       className="review-btn"
                       variant="dark"
                       onClick={() => adminconfirm(true, booking.id)}
+                      key={uuidv4()}
                     >
-                      ยืนยันสถานะ
+                      จัดการการเช่า
                     </Button>
                   }
                 </div>
@@ -187,35 +215,77 @@ function AdHistory() {
       </div>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+          <Modal.Title>ตรวจสอบสลิปโอนเงิน</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="modal-login">
             {dataforfilter
               .filter((booking) => booking.id === confirmid)
               .map((booking) => (
-                <div className="booking-img">
-                <img
-                  key={booking.id}
-                  src={
-                    "http://localhost:1337" +
-                    booking?.payment?.data.attributes?.url
-                  }
-                  alt="Payment"
-                /></div>
+                <div key={uuidv4()}>
+                  <h4>รหัสคำสั่งจอง : {booking.id}</h4>
+                  <p>สลิปของลูกค้า</p>
+                  <div className="booking-img">
+                    <img
+                      key={uuidv4()}
+                      src={
+                        "http://localhost:1337" +
+                        booking?.payment?.data.attributes?.url
+                      }
+                      alt="Payment"
+                    />
+                  </div>
+                </div>
               ))}
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="dark" onClick={() => adminconfirm(false, "", "1")}>
-            ยืนยันการเช่า
-          </Button>
-          <Button variant="dark" onClick={() => adminconfirm(false, "", "2")}>
-            คืนรถ
-          </Button>
-          <Button variant="danger" onClick={() => setShowModal(false)}>
-            ยกเลิก
-          </Button>
+          {dataforfilter
+            .filter((booking) => booking.id === confirmid)
+            .map((booking) => (
+              <div key={uuidv4()}>
+                {/* ถ้ายังไม่ยืนยันจะแสดงปุ่มนี้ */}
+                {booking.adminconfirm !== true && (
+                  <Button
+                    key={uuidv4()}
+                    variant="dark"
+                    onClick={() => adminconfirm(false, "", "1")}
+                  >
+                    ยืนยันการเช่า
+                  </Button>
+                )}
+                {/* ถ้ายืนยันแล้วจะแสดงปุ่มนี้ */}
+
+                {booking.adminconfirm === true && (
+                  <Button
+                    key={uuidv4()}
+                    variant="secondary"
+                    onClick={() => cancelconfirm(booking.id)}
+                  >
+                    ยกเลิกยืนยันการเช่า
+                  </Button>
+                )}
+
+                {booking.adminconfirm === true && booking.status !== true && (
+                  <Button
+                    key={uuidv4()}
+                    variant="dark"
+                    onClick={() => adminconfirm(false, "", "2")}
+                    className="btn-marginleft"
+                  >
+                    คืนรถ
+                  </Button>
+                )}
+
+                <Button
+                  variant="danger"
+                  className="btn-marginleft"
+                  onClick={() => setShowModal(false)}
+                >
+                  ยกเลิก
+                </Button>
+              </div>
+            ))}
         </Modal.Footer>
       </Modal>
       <Contact />
