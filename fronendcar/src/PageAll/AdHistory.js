@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 import Contact from "./Contact";
 
@@ -12,9 +12,12 @@ const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
 function AdHistory() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  const [confirmid, setconfirmid] = useState(); // เพิ่ม state สำหรับจัดการการแสดง Modal
+
   const [dataforfilter, setDataforfilter] = useState([]);
 
   const fetchHistory = async () => {
@@ -28,10 +31,13 @@ function AdHistory() {
         );
         console.log("find_img", find_img.data.data.attributes.imgcar.data);
         const img = find_img.data.data.attributes.imgcar.data;
+        const img2 = e.attributes.payment.data;
+
         return {
           id: e.id,
           key: e.id,
           image: img,
+          payment: img2,
           ...e.attributes,
         };
       });
@@ -72,15 +78,16 @@ function AdHistory() {
     fetchHistory();
   }, []);
 
-  useEffect(() => { //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
+  useEffect(() => {
+    //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
     console.log("datahistory", dataHistory);
-    const notconfirm = dataHistory.filter((e) => { //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
+    const notconfirm = dataHistory.filter((e) => {
+      //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
       return e.adminconfirm !== true;
     });
     console.log("nc", notconfirm);
     setDataforfilter(notconfirm);
-  }, [dataHistory]); 
-  
+  }, [dataHistory]);
 
   return (
     <div>
@@ -91,9 +98,12 @@ function AdHistory() {
       )}
       <Nav />
       <div className="content">
-      <div className="Topmenu">
+        <div className="Topmenu">
           <div className="backmenu">
-            <button className="buttonback" onClick={() => navigate("/AdminPage")}>
+            <button
+              className="buttonback"
+              onClick={() => navigate("/AdminPage")}
+            >
               <img src="/back.png" />
             </button>
           </div>
@@ -112,15 +122,17 @@ function AdHistory() {
             </Button>
           </div>
         </div>
-      <div className="containerHTR">
-        <h2>History</h2>
-        {dataforfilter.map((booking) => (
-          <div key={booking.id} className="container-Booking">
-            <div className="booking-img">
-              <img
-                src={"http://localhost:1337" + booking?.image?.attributes?.url}
-              ></img>
-              <div className="adminconfirm">
+        <div className="containerHTR">
+          <h2>History</h2>
+          {dataforfilter.map((booking) => (
+            <div key={booking.id} className="container-Booking">
+              <div className="booking-img">
+                <img
+                  src={
+                    "http://localhost:1337" + booking?.image?.attributes?.url
+                  }
+                ></img>
+                <div className="adminconfirm">
                   สถานะคำสั่งซื้อ :{" "}
                   {booking.adminconfirm === true ? (
                     <p className="confirm">ยืนยันแล้ว</p>
@@ -128,26 +140,71 @@ function AdHistory() {
                     <p className="notconfirm">รอการยืนยัน</p>
                   )}
                 </div>
-            </div>
-            <div className="booking-detail">
-              <p>Name : {booking.car.data.attributes.namecar}</p>
-              <p>Start : {booking.startdate}</p>
-              <p>End : {booking.enddate}</p>
-              <div className="status">
-                status : {" "}
+              </div>
+              <div className="booking-detail">
+                <p>ID : {booking.id}</p>
+                <p>Name : {booking.car.data.attributes.namecar}</p>
+                <p>Start : {booking.startdate}</p>
+                <p>End : {booking.enddate}</p>
+                <div className="status">
+                  status :{" "}
                   {booking.status === false ? (
                     <p className="notReturn">ยังไม่คืน</p>
                   ) : (
                     <p className="Return">คืนแล้ว</p>
                   )}
+                </div>
+                <p>ผู้เช่า : {booking.user.data.attributes.username}</p>
+                <div>
+                  {
+                    <Button
+                      className="review-btn"
+                      variant="dark"
+                      onClick={() => adminconfirm(true, booking.id)}
+                    >
+                      ยืนยันสถานะ
+                    </Button>
+                  }
+                </div>
               </div>
-              <p>ผู้เช่า : {booking.user.data.attributes.username}</p>
             </div>
+          ))}
+        </div>
+      </div>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="modal-login">
+            {dataforfilter
+              .filter((booking) => booking.id === confirmid)
+              .map((booking) => (
+                <div className="booking-img">
+                <img
+                  key={booking.id}
+                  src={
+                    "http://localhost:1337" +
+                    booking?.payment?.data.attributes?.url
+                  }
+                  alt="Payment"
+                /></div>
+              ))}
           </div>
-        ))}
-      </div>
-      </div>
-      <Contact/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={() => adminconfirm(false, "", "1")}>
+            ยืนยันการเช่า
+          </Button>
+          <Button variant="dark" onClick={() => adminconfirm(false, "", "2")}>
+            คืนรถ
+          </Button>
+          <Button variant="danger" onClick={() => setShowModal(false)}>
+            ยกเลิก
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Contact />
     </div>
   );
 }

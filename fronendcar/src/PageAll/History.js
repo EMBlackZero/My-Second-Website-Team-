@@ -142,6 +142,7 @@ function History() {
                 </div>
               </div>
               <div className="booking-detail">
+              <p>ID : {booking.id}</p>
                 <p>Name : {booking.car.data.attributes.namecar}</p>
                 <p>Start : {booking.startdate}</p>
                 <p>End : {booking.enddate}</p>
