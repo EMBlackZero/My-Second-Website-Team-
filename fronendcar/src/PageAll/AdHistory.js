@@ -65,9 +65,17 @@ function AdHistory() {
     console.log("confirmed", confirm);
     setDataforfilter(confirm);
   };
+  const filteradminstatus = () => {
+    const confirm = dataHistory.filter((e) => {
+      return e.status === true;
+    });
+    console.log("nc", confirm);
+    setDataforfilter(confirm);
+  };
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
+<<<<<<< HEAD
 
   //event
   const cancelconfirm = async (id) => {
@@ -79,6 +87,15 @@ function AdHistory() {
     setForcerefresh((prev) => !prev);
   };
 
+=======
+  const unreturncar = () => {
+    const unreturn = dataHistory.filter((e) => {
+      return e.status === false;
+    });
+    console.log("nc", unreturn);
+    setDataforfilter(unreturn);
+  };
+>>>>>>> c117acd63bae196727c90a7da9d38e506b892cdf
   const adminconfirm = async (t, id, st) => {
     console.log("id", id);
     if (t === true) {
@@ -122,6 +139,18 @@ function AdHistory() {
     console.log("not confirm", notconfirm);
     setDataforfilter(notconfirm);
   }, [dataHistory]);
+  const handlesearch = (txt) => {
+    const query = txt;
+    if (query === "") {
+      // If the search query is not a number or empty, reset filtered data to all data
+      setDataforfilter(dataHistory);
+    } else {
+      // Filter data based on search query
+      const filtered = dataHistory.filter((e) => e.id == txt);
+
+      setDataforfilter(filtered);
+    }
+  };
 
   //สั่งรีเฟรชข้อมูลหลังกดบางปุ่ม
   useEffect(() => {
@@ -140,7 +169,7 @@ function AdHistory() {
           <Spinner animation="border" variant="secondary" />
         </div>
       )}
-      <Nav />
+      <Nav at={"1"} onSearch={handlesearch} />
       <div className="content">
         <div className="Topmenu">
           <div className="backmenu">
@@ -152,14 +181,21 @@ function AdHistory() {
             </button>
           </div>
           <div className="filtermenu">
+            <Button variant="dark" onClick={allpurchase}>
+              คำสั่งซื้อทั้งหมด
+            </Button>
             <Button variant="light" onClick={filteradminnotconfirm}>
               รอการยืนยัน
             </Button>
             <Button variant="primary" onClick={filteradminconfirm}>
               ยืนยันแล้ว
             </Button>
-            <Button variant="dark" onClick={allpurchase}>
-              คำสั่งซื้อทั้งหมด
+            <Button variant="success" onClick={filteradminstatus}>
+              คืนแล้ว
+            </Button>
+            
+            <Button variant="warning" onClick={unreturncar}>
+              รถที่ยังไม่คืน
             </Button>
           </div>
         </div>
@@ -222,6 +258,7 @@ function AdHistory() {
             {dataforfilter
               .filter((booking) => booking.id === confirmid)
               .map((booking) => (
+<<<<<<< HEAD
                 <div key={uuidv4()}>
                   <h4>รหัสคำสั่งจอง : {booking.id}</h4>
                   <p>สลิปของลูกค้า</p>
@@ -235,6 +272,17 @@ function AdHistory() {
                       alt="Payment"
                     />
                   </div>
+=======
+                <div className="booking-img">
+                  <img
+                    key={booking.id}
+                    src={
+                      "http://localhost:1337" +
+                      booking?.payment?.data.attributes?.url
+                    }
+                    alt="Payment"
+                  />
+>>>>>>> c117acd63bae196727c90a7da9d38e506b892cdf
                 </div>
               ))}
           </div>
