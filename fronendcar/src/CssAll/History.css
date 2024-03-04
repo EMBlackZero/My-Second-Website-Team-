@@ -67,15 +67,15 @@
 .confirm{
     margin-left: 10px;
     margin-top: 15px;
-    background-color: rgb(0, 243, 65);
-    color: rgb(0, 0, 0);
+    background-color: rgb(61, 128, 244);
+    color: rgb(255, 255, 255);
     padding: 4px;
     border-radius: 5px;
 }   
 .notconfirm{
     margin-left: 10px;
     margin-top: 15px;
-    background-color: rgb(229, 252, 235);
+    background-color: rgb(215, 230, 252);
     color: rgb(94, 94, 94);
     padding: 4px;
     border-radius: 5px;

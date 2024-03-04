@@ -75,7 +75,6 @@ function AdHistory() {
   const allpurchase = () => {
     setDataforfilter(dataHistory);
   };
-<<<<<<< HEAD
 
   //event
   const cancelconfirm = async (id) => {
@@ -87,7 +86,6 @@ function AdHistory() {
     setForcerefresh((prev) => !prev);
   };
 
-=======
   const unreturncar = () => {
     const unreturn = dataHistory.filter((e) => {
       return e.status === false;
@@ -95,7 +93,6 @@ function AdHistory() {
     console.log("nc", unreturn);
     setDataforfilter(unreturn);
   };
->>>>>>> c117acd63bae196727c90a7da9d38e506b892cdf
   const adminconfirm = async (t, id, st) => {
     console.log("id", id);
     if (t === true) {
@@ -190,13 +187,14 @@ function AdHistory() {
             <Button variant="primary" onClick={filteradminconfirm}>
               ยืนยันแล้ว
             </Button>
+            <Button variant="danger" onClick={unreturncar}>
+              รถที่ยังไม่คืน
+            </Button>
             <Button variant="success" onClick={filteradminstatus}>
               คืนแล้ว
             </Button>
             
-            <Button variant="warning" onClick={unreturncar}>
-              รถที่ยังไม่คืน
-            </Button>
+            
           </div>
         </div>
         <div className="containerHTR">
@@ -258,7 +256,6 @@ function AdHistory() {
             {dataforfilter
               .filter((booking) => booking.id === confirmid)
               .map((booking) => (
-<<<<<<< HEAD
                 <div key={uuidv4()}>
                   <h4>รหัสคำสั่งจอง : {booking.id}</h4>
                   <p>สลิปของลูกค้า</p>
@@ -272,17 +269,6 @@ function AdHistory() {
                       alt="Payment"
                     />
                   </div>
-=======
-                <div className="booking-img">
-                  <img
-                    key={booking.id}
-                    src={
-                      "http://localhost:1337" +
-                      booking?.payment?.data.attributes?.url
-                    }
-                    alt="Payment"
-                  />
->>>>>>> c117acd63bae196727c90a7da9d38e506b892cdf
                 </div>
               ))}
           </div>
