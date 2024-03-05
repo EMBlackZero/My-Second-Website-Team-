@@ -20,6 +20,8 @@ import HistoryDetail from "./PageAll/HistoryDetail";
 import SuccessfulPaymentPage from "./PageAll/SuccessfulPayment";
 import AdHTRconfirm from "./PageAll/AdHTRconfirm";
 import AdHTRall from "./PageAll/AdHTRall";
+import AdHTRnotsendback from "./PageAll/AdHTRnotsendback";
+import AdHTRsendback from "./PageAll/AdHTRsendback";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
   {
     path: "/AdminHistory/allhistory",
     element: <AdHTRall />,
+  },
+  {
+    path: "/AdminHistory/unreturn",
+    element: <AdHTRnotsendback />,
+  },
+  {
+    path: "/AdminHistory/returned",
+    element: <AdHTRsendback />,
   },
   {
     path: "/AdcreateCar",

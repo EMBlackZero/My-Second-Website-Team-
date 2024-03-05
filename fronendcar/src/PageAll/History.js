@@ -142,18 +142,18 @@ function History() {
                 </div>
               </div>
               <div className="booking-detail">
-              <p>ID : {booking.id}</p>
-                <p>Name : {booking.car.data.attributes.namecar}</p>
-                <p>Start : {booking.startdate}</p>
-                <p>End : {booking.enddate}</p>
+              <p>หมายเลข : {booking.id}</p>
+                <p>ยี่ห้อ - รุ่น : {booking.car.data.attributes.namecar}</p>
+                <p>วันที่เริ่มจอง : {booking.startdate}</p>
+                <p>วันคืนรถ: {booking.enddate}</p>
                 <p>
-                  Where :{" "}
+                สถานที่รับรถ :{" "}
                   <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
                     เปิดในเเมพ
                   </a>
                 </p>
                 <div className="status">
-                  status :{" "}
+                  สถานะ :{" "}
                   {booking.status === false ? (
                     <p className="notReturn">ยังไม่คืน</p>
                   ) : (
@@ -187,7 +187,7 @@ function History() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="dark" onClick={() => navigate("/LoginForm")}>
-              Login
+              เข้าสู่ระบบ
             </Button>
             <Button variant="secondary" onClick={() => setShowModal(false)}>
               ปิด
