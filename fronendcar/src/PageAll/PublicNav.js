@@ -32,7 +32,7 @@ function PublicNav(props) {
               <Form.Control
                 value={searchQuery}
                 type="search"
-                placeholder="Search by car brand "
+                placeholder="ค้นหาแบรนด์รถที่ต้องการ"
                 className="me-2"
                 aria-label="Search"
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -42,7 +42,7 @@ function PublicNav(props) {
                 className="search-btn"
                 onClick={() => sendtoNAV(searchQuery)}
               >
-                Search
+                ค้นหา
               </Button>
             </Form>
               }

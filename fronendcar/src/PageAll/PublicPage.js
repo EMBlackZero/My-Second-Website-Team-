@@ -107,14 +107,14 @@ const PublicPage = () => {
       <Nav onSearch={handleSearch} />
       <div className="content">
         <div className="price-filter">
-          <div className="item-infilter">minimum price: </div>
+          <div className="item-infilter">ราคาต่ำสุด: </div>
           <input
             type="text"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
             className="item-infilter"
           />
-          <div className="item-infilter">maximum price: </div>
+          <div className="item-infilter">ราคาสูงสุด: </div>
           <input
             type="text"
             value={maxPrice}
@@ -122,7 +122,7 @@ const PublicPage = () => {
             className="item-infilter"
           />
           <Button onClick={handlePriceFilter} className="btn-infilter">
-            Filter
+            คัดกรอง
           </Button>
         </div>
         {/* <div className="search-container">
@@ -184,7 +184,7 @@ const PublicPage = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="dark" onClick={() => gotologin()}>
-              Login
+              เข้าสู่ระบบ
             </Button>
             <Button variant="secondary" onClick={() => setShowModal(false)}>
               ปิด

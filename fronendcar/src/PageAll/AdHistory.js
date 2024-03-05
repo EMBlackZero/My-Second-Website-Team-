@@ -191,12 +191,12 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
                 </div>
               </div>
               <div className="booking-detail">
-                <p>ID : {booking.id}</p>
-                <p>Name : {booking.car.data.attributes.namecar}</p>
-                <p>Start : {booking.startdate}</p>
-                <p>End : {booking.enddate}</p>
+                <p>หมายเลข : {booking.id}</p>
+                <p>รุ่นรถ - ยี่ห้อ : {booking.car.data.attributes.namecar}</p>
+                <p>วันที่เริ่มจอง : {booking.startdate}</p>
+                <p>วันคืนรถ : {booking.enddate}</p>
                 <div className="status">
-                  status :{" "}
+                  สถานะ :{" "}
                   {booking.status === false ? (
                     <p className="notReturn">ยังไม่คืน</p>
                   ) : (

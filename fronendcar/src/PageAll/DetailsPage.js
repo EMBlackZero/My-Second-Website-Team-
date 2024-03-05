@@ -88,15 +88,15 @@ const DetailsPage = () => {
           <div className="layoutobj">
             <div className="layout1">
               <div>รายละเอียดรถ</div>
-              <div>Name : {data.attributes && data.attributes.namecar}</div>
+              <div>รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}</div>
               <div>
-                Car’s engine detail :{" "}
+              รายละเอียดของรถคันนี้ :{" "}
                 <Button onClick={() => setShowModal1(true)}>ตำหนิ</Button>
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
-              <div>Comment: <StarRatings
+              <div>ความคิดเห็น : <StarRatings
                   rating={datastar}
                   starRatedColor="#ffb400"
                   starHoverColor="#f9c74f"
@@ -134,7 +134,7 @@ const DetailsPage = () => {
               </div>
 
               <div>
-                Price per day : {data.attributes && data.attributes.price}{" "}
+                ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
                 บาท/วัน
               </div>
 

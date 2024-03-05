@@ -71,7 +71,7 @@ function StaticExample({ id }) {
         onClick={handleShow}
         style={{ float:"left" }}
       >
-        Delete
+        ลบรถคันนี้
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
