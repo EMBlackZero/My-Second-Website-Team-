@@ -54,15 +54,15 @@ const Comfirmcar1 = () => {
   const Check = () => {
     const filteredData = data.attributes.bookings.data.filter(
       (item) =>
-        (new Date(renterInfo.startdate) <=
+        ((new Date(renterInfo.startdate) <=
           new Date(item.attributes.startdate) &&
           new Date(renterInfo.enddate) >=
             new Date(item.attributes.startdate)) ||
         (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
           new Date(renterInfo.enddate) >= new Date(item.attributes.enddate)) ||
         (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
-          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate) &&
-          item.attributes.status === false)
+          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate))) &&
+          item.attributes.status === false
     );
     setLength(filteredData.length === undefined ? 0 : filteredData.length);
   };
