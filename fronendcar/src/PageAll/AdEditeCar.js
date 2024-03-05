@@ -116,17 +116,17 @@ const AdEditeCar = (props) => {
         onClick={handleShow}
         style={{ display: "block", margin: "auto", marginTop: "21px" }}
       >
-        Edit
+        แก้ไข
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Details</Modal.Title>
+          <Modal.Title>แก้ไขรายละเอียด</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="carName">
-              <Form.Label>Car Name</Form.Label>
+              <Form.Label>รุ่น - ยี่ห้อ</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Car Name"
@@ -135,7 +135,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carDescription">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>รายละเอียด</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -145,7 +145,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carPrice">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>ราคา</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Price"
@@ -154,7 +154,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="quantityLeft">
-              <Form.Label>Quantity Left</Form.Label>
+              <Form.Label>จำนวน</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Quantity Left"
@@ -163,17 +163,17 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="imageFile">
-              <Form.Label>Car Image</Form.Label>
+              <Form.Label>รูปประกอบ</Form.Label>
               <Form.Control type="file" onChange={handleImageChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            ปิด
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
+            บันทึก
           </Button>
         </Modal.Footer>
       </Modal>
