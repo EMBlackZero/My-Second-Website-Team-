@@ -7,6 +7,7 @@ import Nav from "./Nav";
 import DeletePage from "./DeletePage";
 import AdEditeCar from "./AdEditeCar";
 import Contact from "./Contact";
+import StarRatings from "react-star-ratings";
 
 const AdDetailsPage = () => {
   const { id } = useParams();
@@ -14,7 +15,9 @@ const AdDetailsPage = () => {
 
   const [data, setData] = useState([]);
 
-  const [dataU, setDataU] = useState([]);
+  const [dataComment, setDataComment] = useState([]);
+  const [datastarAVG, setDatastarAVG] = useState();
+
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
@@ -24,19 +27,60 @@ const AdDetailsPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/cars/${id}?populate=*`,config);
-      setData(response.data.data);
+      console.log("response.data.data", response.data.data);
+      const e = response.data.data;
+      const map_toset = {
+        key: e.id,
+        id: e.id,
+        ...e.attributes,
+        image: e.attributes.imgcar.data.attributes.url,
+      };
+
+      setData(map_toset);
       const responU = await axios.get(
-        `/api/cars/${id}?populate=bookings.user.username`,config
+        `/api/cars/${id}?populate=bookings.user.username`
       );
-      setDataU(responU.data.data);
+      console.log(
+        "responU.data.data",
+        responU.data.data?.attributes?.bookings?.data
+      );
+      const maptouse = responU.data.data?.attributes?.bookings?.data.map(
+        (e) => {
+          return {
+            key: e.id,
+            id: e.id,
+            ...e.attributes,
+            commenter: e.attributes.user.data.attributes.username,
+          };
+        }
+      );
+      setDataComment(maptouse);
+      const ratings = responU.data.data.attributes?.bookings?.data.map(
+        (d) => d.attributes.rating
+      );
+      console.log("ratings", ratings);
+
+      const averageRating =
+          ratings.length === 0
+            ? 0
+            : ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+      setDatastarAVG(averageRating);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    console.log("data", data);
+    console.log("dataComment", dataComment);
+    console.log("datastaraverage", datastarAVG);
+  }, [data]);
 
   return (
     <div>
@@ -50,29 +94,16 @@ const AdDetailsPage = () => {
             <div className="layout1">
               <div>รายละเอียดรถ</div>
               <div>
-                รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}
+                รุ่นรถ - ยี่ห้อ : {data.namecar}
               </div>
               <div>
                 รายละเอียดของรถคันนี้ :
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
-                  {data.attributes && data.attributes.description}
+                  {data.description}
                 </div>
               </div>
-              <div>ความคิดเห็น:</div>
-              <div class="comment-wrapper">
-                {dataU?.attributes?.bookings?.data.map((booking) => (
-                  <textarea
-                    rows="2"
-                    cols="20"
-                    id="comment"
-                    className="insCom"
-                    key={booking.id}
-                    readOnly
-                  >
-                    {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
-                  </textarea>
-                ))}
-              </div>
+              
+              
             </div>
             <div className="layout2">
               <DeletePage id={id} />
@@ -80,16 +111,16 @@ const AdDetailsPage = () => {
                 <img
                   src={
                     "http://localhost:1337" +
-                    data?.attributes?.imgcar?.data?.attributes?.url
+                    data.image
                   }
                 ></img>
               </div>
               <div>
-                จำนวนที่เหลือ :{data.attributes && data.attributes.remaining}{" "}
+                จำนวนที่เหลือ :{ data.remaining}{" "}
                 คัน
               </div>
               <div>
-                ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
+                ราคาเช่าต่อวัน : {data.price}{" "}
                 บาท/วัน
               </div>
               <AdEditeCar fetchData={fetchData} className="cheakcar" id={id} />
@@ -97,6 +128,38 @@ const AdDetailsPage = () => {
           </div>
         </Container>
       </div>
+      <div>
+            <div className="headcomment">
+              ความคิดเห็น :{" "}
+              <StarRatings
+                rating={datastarAVG}
+                starRatedColor="#ffb400"
+                starHoverColor="#f9c74f"
+                numberOfStars={5}
+                name="rating"
+                starDimension="40px"
+                starSpacing="5px"
+              />{" "}
+            </div>
+            <div class="comment-wrapper">
+              {dataComment.map(
+                (booking) =>
+                  booking.comment !== null && (
+                    <div className="insCom" key={booking.id}>
+                      <StarRatings
+                        rating={booking.rating}
+                        starRatedColor="#ffb400"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="30px"
+                        starSpacing="1px"
+                      />
+                      <p>{`${booking.commenter} : ${booking.comment}`}</p>
+                    </div>
+                  )
+              )}
+            </div>
+          </div>
       <Contact />
     </div>
   );

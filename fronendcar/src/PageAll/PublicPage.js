@@ -15,7 +15,6 @@ const PublicPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [maxPrice, setMaxPrice] = useState("");
   const [minPrice, setMinPrice] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
   const role = sessionStorage.getItem("role");
   const config = {
     headers: {
@@ -28,7 +27,7 @@ const PublicPage = () => {
   const fetchdata = () =>{
     setIsLoading(true);
     axios
-      .get("/api/cars?populate=*",config)
+      .get("/api/cars?populate=*")
       .then(({ data }) => {
         const mapToset = data.data.map((e) => {
           return {
