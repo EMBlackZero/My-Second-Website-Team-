@@ -18,13 +18,18 @@ const AdEditeCar = (props) => {
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [Idimg, setIdimg] = useState("");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   // useEffect to fetch car data from the server
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
+          `/api/cars/${id}?populate=*`,config
         );
         const fetchedData = response.data.data;
         setData(fetchedData);
@@ -81,21 +86,17 @@ const AdEditeCar = (props) => {
         const formData = new FormData();
         formData.append("files", imageFile);
         const uploadResponse = await axios.post(
-          "http://localhost:1337/api/upload",
-          formData
+          "/api/upload",
+          formData,config
         );
         formData2.imgcar = parseInt(uploadResponse.data[0].id);
       } else {
         formData2.imgcar = parseInt(Idimg);
       }
       await axios.put(
-        `http://localhost:1337/api/cars/${id}?populate=*`,
-        { data: formData2 },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        `/api/cars/${id}?populate=*`,
+        { data: formData2 },config
+        
       );
       handleClose();
       // Optionally, you can add success message or additional actions here
@@ -116,17 +117,17 @@ const AdEditeCar = (props) => {
         onClick={handleShow}
         style={{ display: "block", margin: "auto", marginTop: "21px" }}
       >
-        Edit
+        แก้ไข
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Details</Modal.Title>
+          <Modal.Title>แก้ไขรายละเอียด</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="carName">
-              <Form.Label>Car Name</Form.Label>
+              <Form.Label>รุ่น - ยี่ห้อ</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Car Name"
@@ -135,7 +136,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carDescription">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>รายละเอียด</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -145,7 +146,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="carPrice">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>ราคา</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Price"
@@ -154,7 +155,7 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="quantityLeft">
-              <Form.Label>Quantity Left</Form.Label>
+              <Form.Label>จำนวน</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Quantity Left"
@@ -163,17 +164,17 @@ const AdEditeCar = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="imageFile">
-              <Form.Label>Car Image</Form.Label>
+              <Form.Label>รูปประกอบ</Form.Label>
               <Form.Control type="file" onChange={handleImageChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            ปิด
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
+            บันทึก
           </Button>
         </Modal.Footer>
       </Modal>

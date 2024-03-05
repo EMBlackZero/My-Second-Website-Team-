@@ -11,22 +11,23 @@ import Contact from "./Contact";
 const AdDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [dataU, setDataU] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
+  const [data, setData] = useState([]);
+
+  const [dataU, setDataU] = useState([]);
   const config = {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
+
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:1337/api/cars/${id}?populate=*`
-      );
+      const response = await axios.get(`/api/cars/${id}?populate=*`,config);
       setData(response.data.data);
-      const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
+      const responU = await axios.get(
+        `/api/cars/${id}?populate=bookings.user.username`,config
+      );
       setDataU(responU.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -36,10 +37,6 @@ const AdDetailsPage = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
 
   return (
     <div>
@@ -52,22 +49,29 @@ const AdDetailsPage = () => {
           <div className="layoutobj">
             <div className="layout1">
               <div>รายละเอียดรถ</div>
-              <div>รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}</div>
+              <div>
+                รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}
+              </div>
               <div>
                 รายละเอียดของรถคันนี้ :
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
-              <div>
-              ความคิดเห็น:
-              </div>
+              <div>ความคิดเห็น:</div>
               <div class="comment-wrapper">
-              {dataU?.attributes?.bookings?.data.map((booking) => (
-              <textarea rows="2" cols="20" id="comment" className="insCom" key={booking.id} readOnly>
-                {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
-                </textarea>
-              ))}
+                {dataU?.attributes?.bookings?.data.map((booking) => (
+                  <textarea
+                    rows="2"
+                    cols="20"
+                    id="comment"
+                    className="insCom"
+                    key={booking.id}
+                    readOnly
+                  >
+                    {`${booking.attributes.user.data.attributes.username}: ${booking.attributes.comment}`}
+                  </textarea>
+                ))}
               </div>
             </div>
             <div className="layout2">
@@ -88,12 +92,12 @@ const AdDetailsPage = () => {
                 ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
                 บาท/วัน
               </div>
-              <AdEditeCar  fetchData={fetchData} className="cheakcar" id={id}  />
+              <AdEditeCar fetchData={fetchData} className="cheakcar" id={id} />
             </div>
           </div>
         </Container>
       </div>
-      <Contact/>
+      <Contact />
     </div>
   );
 };

@@ -13,13 +13,24 @@ function PaymentPage(props) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImageFile(file);
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (file && allowedTypes.includes(file.type)) {
+      setImageFile(file);
+    } else {
+      alert("Please select a valid image file (JPEG or PNG).");
+      event.target.value = null;
+    }
   };
 
   const handleSaveChanges = async (e) => {
@@ -29,10 +40,7 @@ function PaymentPage(props) {
       const formData = new FormData();
       formData.append("files", imageFile);
 
-      const uploadResponse = await axios.post(
-        "http://localhost:1337/api/upload",
-        formData
-      );
+      const uploadResponse = await axios.post("/api/upload", formData,config);
 
       const fileId = uploadResponse.data[0].id;
 
@@ -41,22 +49,9 @@ function PaymentPage(props) {
       };
 
       const putResponse = await axios.put(
-        `http://localhost:1337/api/bookings/${id}?populate=*`,
+        `/api/bookings/${id}?populate=*`,
         { data: formData2 },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
-      );
-
-      const remaining = await axios.get(
-        `http://localhost:1337/api/cars/${putResponse.data.data.attributes.car.data.id}/decrease_remaining`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        config
       );
 
       handleClose();
@@ -67,12 +62,8 @@ function PaymentPage(props) {
   };
 
   const backtoCarDetail = () => {
-    axios.delete(`http://localhost:1337/api/bookings/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-      },
-    });
-    const cardetailPage_previous = sessionStorage.getItem("wrap")
+    axios.delete(`/api/bookings/${id}`,config);
+    const cardetailPage_previous = sessionStorage.getItem("wrap");
     navigate(cardetailPage_previous);
   };
 
@@ -89,11 +80,13 @@ function PaymentPage(props) {
             <Breadcrumb.Item href={`/DetailsPage/${id}`}>
               รายละเอียด
             </Breadcrumb.Item>
-            <Breadcrumb.Item onClick={backtoCarDetail}>เลือกช่วงเวลา</Breadcrumb.Item>
+            <Breadcrumb.Item onClick={backtoCarDetail}>
+              เลือกช่วงเวลา
+            </Breadcrumb.Item>
             <Breadcrumb.Item active>ชำระเงิน</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        
+
         <div className="paytitle">
           <h2>เลือกช่องทางการชำระเงิน</h2>
         </div>

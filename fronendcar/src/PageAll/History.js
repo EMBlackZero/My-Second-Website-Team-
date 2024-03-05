@@ -5,9 +5,6 @@ import axios from "axios";
 import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 import Contact from "./Contact";
-
-axios.defaults.baseURL =
-  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
@@ -18,6 +15,11 @@ function History() {
   const [isLoading, setIsLoading] = useState(false);
   const iduser = sessionStorage.getItem("iduser");
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   const gotoHistoryDetail = (id) => {
     navigate(`/Historydetail/${id}`);
@@ -26,11 +28,11 @@ function History() {
   const fetchHistory = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`${URL_BOOKING}?populate=*`);
+      const response = await axios.get(`${URL_BOOKING}?populate=*`,config);
       console.log("response", response.data.data);
       const maptoSet = response.data.data.map(async (e) => {
         const find_img = await axios.get(
-          `${URL_CAR}/${e.attributes.car.data.id}?populate=*`
+          `${URL_CAR}/${e.attributes.car.data.id}?populate=*`,config
         );
 
         console.log("find_img", find_img.data.data.attributes.imgcar.data);
@@ -45,10 +47,11 @@ function History() {
       });
 
       const alldata = await Promise.all(maptoSet);
-      const filter = alldata.filter((e) => { //เอาแค่user id ที่ลอกอินอยู่
+      const filter = alldata.filter((e) => {
+        //เอาแค่user id ที่ลอกอินอยู่
         return e.user.data.id === parseInt(iduser);
       });
-      console.log("filter", (filter));
+      console.log("filter", filter);
       setDataHistory(filter); // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
     } catch (error) {
       console.log(error);
@@ -81,15 +84,17 @@ function History() {
     fetchHistory();
   }, []);
 
-  useEffect(() => { //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
+  useEffect(() => {
+    //เตรียมข้อมูลเสร็จเรียบร้อยมาหาว่าอันไหนรอคอนเฟิมเพื่อแสดงผล
     console.log("datahistory", dataHistory);
     console.log("iduser", iduser);
-    const notconfirm = dataHistory.filter((e) => { //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
+    const notconfirm = dataHistory.filter((e) => {
+      //ตอนโหลดมาครั้งแรกเซตเป็นยังไม่คอนเฟิมเอาไว้
       return e.adminconfirm !== true;
     });
     console.log("nc", notconfirm);
     setDataforfilter(notconfirm);
-  }, [dataHistory]); 
+  }, [dataHistory]);
 
   return (
     <div>
@@ -120,12 +125,12 @@ function History() {
         </div>
 
         <div className="containerHTR">
-          <h2>ประวัติการเช่าของฉัน</h2>
+          <h1>ประวัติการเช่าของฉัน</h1>
           {dataforfilter.map((booking) => (
             <div
               key={booking.id}
               className="container-Booking"
-              //onClick={() => setShowModal(true)}
+            //onClick={() => setShowModal(true)}
             >
               <div className="booking-img">
                 <img
@@ -142,12 +147,12 @@ function History() {
                 </div>
               </div>
               <div className="booking-detail">
-              <p>หมายเลข : {booking.id}</p>
+                <p>หมายเลข : {booking.id}</p>
                 <p>ยี่ห้อ - รุ่น : {booking.car.data.attributes.namecar}</p>
                 <p>วันที่เริ่มจอง : {booking.startdate}</p>
                 <p>วันคืนรถ: {booking.enddate}</p>
                 <p>
-                สถานที่รับรถ :{" "}
+                  สถานที่รับรถ :{" "}
                   <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
                     เปิดในเเมพ
                   </a>

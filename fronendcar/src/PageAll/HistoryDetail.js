@@ -20,17 +20,22 @@ function HistoryDetail() {
   const [havecomment, setHavecomment] = useState(false);
   const [send, setSend] = useState(false);
   const navigate = useNavigate();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   const fetchHistorydetail = async () => {
     try {
       setIsLoading(true);
 
       const [response] = await Promise.all([
-        axios.get(`${URL_BOOKING}/${id}?populate=*`),
+        axios.get(`${URL_BOOKING}/${id}?populate=*`,config),
       ]);
 
       const find_img = await axios.get(
-        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
+        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`,config
       );
 
       const Detailcar = response.data.data.attributes.car.data.attributes;
@@ -81,12 +86,8 @@ function HistoryDetail() {
             comment: comment,
             rating: rating,
           },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        },config
+        
       );
       setSend(true);
     } else {

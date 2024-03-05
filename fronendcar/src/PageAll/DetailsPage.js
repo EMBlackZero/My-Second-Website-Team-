@@ -64,7 +64,9 @@ const DetailsPage = () => {
       console.log("ratings", ratings);
 
       const averageRating =
-        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+          ratings.length === 0
+            ? 0
+            : ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
 
       setDatastarAVG(averageRating);
     } catch (error) {
