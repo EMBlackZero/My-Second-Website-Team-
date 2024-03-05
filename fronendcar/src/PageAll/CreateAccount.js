@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "../CssAll/LoginCss.css";
@@ -9,6 +9,7 @@ const CreateAccount = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [subscribe, setSubscribe] = useState(false);
+  const [show, setShow] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleUsernameChange = (e) => {
@@ -26,6 +27,7 @@ const CreateAccount = () => {
     setEmail(event.target.value);
   };
   const handleSubscribeChange = () => {
+    setShow(subscribe ? false : true);
     setSubscribe(!subscribe);
   };
   const handleSubmit = async (e) => {
@@ -135,6 +137,20 @@ const CreateAccount = () => {
       <button className="icon-button" onClick={() => navigate("/")}>
         <img src="back.png"></img>
       </button>
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>เงื่อนไขการให้บริการ</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>มึงต้องคืน</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleSubscribeChange}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => setShow(false)}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
