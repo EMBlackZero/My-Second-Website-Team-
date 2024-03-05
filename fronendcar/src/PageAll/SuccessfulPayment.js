@@ -80,18 +80,19 @@ function SuccessfulPayment() {
               <h1>ชำระเงินเสร็จสิ้น</h1>
             </div>
             <h4 className="waiting">กรุณารอแอดมินตรวจสอบสลิปการโอน</h4>
-            <h2>หมายเลขคำสั่งจอง " {data.id} "</h2>
-            <h4>ราคาทั้งหมด {data.Total} บาท</h4>
+            <h2>หมายเลขคำสั่งจอง : " {data.id} "</h2>
+            <h5>รถ {data.detail}</h5>
+            
             {data.startdate && data.enddate && (
-              <h4>
-                ระยะเวลาทั้งหมด{" "}
+              <h5>
+                ระยะเวลาเช่าทั้งหมด{" "}
                 {(new Date(data.enddate).getTime() -
                   new Date(data.startdate).getTime()) /
                   (1000 * 3600 * 24)}{" "}
                 วัน
-              </h4>
+              </h5>
             )}
-            <p>- {data.detail}</p>
+            <h5>ราคาทั้งหมด {data.Total} บาท</h5>
           </div>
           <div className="history-datail-image">
             <img src={"http://localhost:1337" + data?.image} alt="Car" />

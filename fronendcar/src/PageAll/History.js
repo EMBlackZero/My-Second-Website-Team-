@@ -125,12 +125,12 @@ function History() {
         </div>
 
         <div className="containerHTR">
-          <h2>ประวัติการเช่าของฉัน</h2>
+          <h1>ประวัติการเช่าของฉัน</h1>
           {dataforfilter.map((booking) => (
             <div
               key={booking.id}
               className="container-Booking"
-              //onClick={() => setShowModal(true)}
+            //onClick={() => setShowModal(true)}
             >
               <div className="booking-img">
                 <img
