@@ -20,7 +20,7 @@ const PublicPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchdata = () =>{
     setIsLoading(true);
     axios
       .get("http://localhost:1337/api/cars?populate=*")
@@ -34,7 +34,7 @@ const PublicPage = () => {
           };
         });
         setData(mapToset);
-        setFilteredData(mapToset); // Initially, set filtered data to all data
+        
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -42,6 +42,10 @@ const PublicPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  useEffect(() => {
+    fetchdata();
   }, []);
 
   const handlePriceFilter = () => {
@@ -64,7 +68,7 @@ const PublicPage = () => {
           };
         });
         setData(mapToset);
-        setFilteredData(mapToset); // Update filtered data when price filter is applied
+       
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -87,13 +91,13 @@ const PublicPage = () => {
     const query = txt.trim().toLowerCase();
     if (query === "") {
       // If the search query is empty, reset filtered data to all data
-      setFilteredData(data);
+      fetchdata();
     } else {
       // Filter data based on search query
       const filtered = data.filter((item) =>
         item.namecar.toLowerCase().includes(query)
       );
-      setFilteredData(filtered);
+      setData(filtered);
     }
   };
 
@@ -147,7 +151,7 @@ const PublicPage = () => {
         </Button>
         <div className="container">
           <div className="products-con">
-            {filteredData.map((item) => (
+            {data.map((item) => (
               <div className="products-item" key={item.id}>
                 <div className="products-img">
                   <img

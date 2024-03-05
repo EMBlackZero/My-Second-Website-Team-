@@ -4,9 +4,6 @@ import { Button, Container, Modal } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
-import MemberNav from "./MemberNav";
-import AdminNav from "./AdminNav";
-import PublicNav from "./PublicNav";
 import Contact from "./Contact";
 import Slide from "./Slide";
 import StarRatings from "react-star-ratings";
@@ -16,8 +13,8 @@ const DetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [dataU, setDataU] = useState([]);
-  const [datastar, setDatastar] = useState();
+  const [dataComment, setDataComment] = useState([]);
+  const [datastarAVG, setDatastarAVG] = useState();
 
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
   const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
@@ -30,34 +27,60 @@ const DetailsPage = () => {
     },
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/api/cars/${id}?populate=*`);
+      console.log("response.data.data", response.data.data);
+      const e = response.data.data;
+      const map_toset = {
+        key: e.id,
+        id: e.id,
+        ...e.attributes,
+        image: e.attributes.imgcar.data.attributes.url,
+      };
+
+      setData(map_toset);
+      const responU = await axios.get(
+        `/api/cars/${id}?populate=bookings.user.username`
+      );
+      console.log(
+        "responU.data.data",
+        responU.data.data?.attributes?.bookings?.data
+      );
+      const maptouse = responU.data.data?.attributes?.bookings?.data.map(
+        (e) => {
+          return {
+            key: e.id,
+            id: e.id,
+            ...e.attributes,
+            commenter: e.attributes.user.data.attributes.username,
+          };
+        }
+      );
+      setDataComment(maptouse);
+      const ratings = responU.data.data.attributes?.bookings?.data.map(
+        (d) => d.attributes.rating
+      );
+      console.log("ratings", ratings);
+
+      const averageRating =
+        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+      setDatastarAVG(averageRating);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/cars/${id}?populate=*`);
-        setData(response.data.data);
-        const responU = await axios.get(
-          `/api/cars/${id}?populate=bookings.user.username`
-        );
-
-        setDataU(responU.data.data);
-        const ratings = responU.data.data.attributes?.bookings?.data.map(
-          (d) => d.attributes.rating 
-        );
-
-        const averageRating =
-          ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
-
-        setDatastar(averageRating);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, [id]);
-  console.log(data);
-  console.log(dataU);
-  console.log(datastar);
+
+  useEffect(() => {
+    console.log("data", data);
+    console.log("dataComment", dataComment);
+    console.log("datastaraverage", datastarAVG);
+  }, [data]);
 
   const Comfirmcar = () => {
     sessionStorage.setItem("wrap", `/Comfirmcar1/${id}`);
@@ -88,60 +111,57 @@ const DetailsPage = () => {
           <div className="layoutobj">
             <div className="layout1">
               <div>รายละเอียดรถ</div>
-              <div>รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}</div>
+              <div>รุ่นรถ - ยี่ห้อ : {data.namecar}</div>
               <div>
-              รายละเอียดของรถคันนี้ :{" "}
+                รายละเอียดของรถคันนี้ :{" "}
                 <Button onClick={() => setShowModal1(true)}>ตำหนิ</Button>
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
-                  {data.attributes && data.attributes.description}
+                  {data.description}
                 </div>
               </div>
-              <div>ความคิดเห็น : <StarRatings
-                  rating={datastar}
-                  starRatedColor="#ffb400"
-                  starHoverColor="#f9c74f"
-                  numberOfStars={5}
-                  name="rating"
-                  starDimension="40px"
-                  starSpacing="8px"
-                /> </div>
-              <div class="comment-wrapper">
-                {dataU?.attributes?.bookings?.data.map(
-                  (booking) =>
-                    booking.attributes.comment !== null && (
-                      <textarea
-                        rows="2"
-                        cols="20"
-                        id="comment"
-                        className="insCom"
-                        key={booking.id}
-                        readOnly
-                      >
-                        {`${booking.attributes.user.data.attributes.username} : ${booking.attributes.comment}`}
-                      </textarea>
-                    )
-                )}
-              </div>
-
             </div>
             <div className="layout2">
               <div className="detialcar">
-                <img
-                  src={
-                    "http://localhost:1337" +
-                    data?.attributes?.imgcar?.data?.attributes?.url
-                  }
-                ></img>
+                <img src={"http://localhost:1337" + data.image}></img>
               </div>
 
-              <div>
-                ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
-                บาท/วัน
-              </div>
+              <div>ราคาเช่าต่อวัน : {data.price} บาท/วัน</div>
 
               <Button className="cheakcar" variant="dark" onClick={Comfirmcar}>
                 เช่ารถ
               </Button>
+            </div>
+          </div>
+          <div>
+            <div className="headcomment">
+              ความคิดเห็น :{" "}
+              <StarRatings
+                rating={datastarAVG}
+                starRatedColor="#ffb400"
+                starHoverColor="#f9c74f"
+                numberOfStars={5}
+                name="rating"
+                starDimension="40px"
+                starSpacing="5px"
+              />{" "}
+            </div>
+            <div class="comment-wrapper">
+              {dataComment.map(
+                (booking) =>
+                  booking.comment !== null && (
+                    <div className="insCom" key={booking.id}>
+                      <StarRatings
+                        rating={booking.rating}
+                        starRatedColor="#ffb400"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="30px"
+                        starSpacing="1px"
+                      />
+                      <p>{`${booking.commenter} : ${booking.comment}`}</p>
+                    </div>
+                  )
+              )}
             </div>
           </div>
         </Container>
