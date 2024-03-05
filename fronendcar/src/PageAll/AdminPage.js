@@ -16,8 +16,7 @@ const AdminPage = () => {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
-
-  useEffect(() => {
+  const fetchdata = () =>{
     axios
       .get("/api/cars?populate=*",config)
       .then(({ data }) => {
@@ -36,7 +35,12 @@ const AdminPage = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  useEffect(() => {
+    fetchdata()
   }, []);
+
 
   useEffect(() => {
     console.log("data", data);
@@ -74,7 +78,7 @@ const AdminPage = () => {
         >
           ประวัติรถที่เช่าทั้งหมด
         </Button>
-        <AdcreateCar />
+        <AdcreateCar fetch={fetchdata} />
         <div className="container">
           <div className="products-con">
             {filteredData.map((item) => (

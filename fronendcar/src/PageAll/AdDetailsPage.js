@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Container, Modal, Form } from "react-bootstrap";
+import { Button, Container, Modal, Form, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../CssAll/DetailsPage.css";
 import Nav from "./Nav";
@@ -106,7 +106,6 @@ const AdDetailsPage = () => {
               
             </div>
             <div className="layout2">
-              <DeletePage id={id} />
               <div className="detialcar">
                 <img
                   src={
@@ -123,7 +122,11 @@ const AdDetailsPage = () => {
                 ราคาเช่าต่อวัน : {data.price}{" "}
                 บาท/วัน
               </div>
+              <div className="editcarmenu">
               <AdEditeCar fetchData={fetchData} className="cheakcar" id={id} />
+              <DeletePage className="cheakcar" id={id} />
+              </div>
+        
             </div>
           </div>
         </Container>
@@ -141,7 +144,7 @@ const AdDetailsPage = () => {
                 starSpacing="5px"
               />{" "}
             </div>
-            <div class="comment-wrapper">
+            <div className="comment-wrapper">
               {dataComment.map(
                 (booking) =>
                   booking.comment !== null && (

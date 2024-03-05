@@ -16,8 +16,8 @@ const DetailsPage = () => {
   const [dataComment, setDataComment] = useState([]);
   const [datastarAVG, setDatastarAVG] = useState();
 
-  const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
-  const [showModal1, setShowModal1] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
+  const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
 
   const role = sessionStorage.getItem("role");
   const user = sessionStorage.getItem("username");
@@ -30,7 +30,6 @@ const DetailsPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/cars/${id}?populate=*`);
-      console.log("response.data.data", response.data.data);
       const e = response.data.data;
       const map_toset = {
         key: e.id,
@@ -42,10 +41,6 @@ const DetailsPage = () => {
       setData(map_toset);
       const responU = await axios.get(
         `/api/cars/${id}?populate=bookings.user.username`
-      );
-      console.log(
-        "responU.data.data",
-        responU.data.data?.attributes?.bookings?.data
       );
       const maptouse = responU.data.data?.attributes?.bookings?.data.map(
         (e) => {
@@ -61,7 +56,6 @@ const DetailsPage = () => {
       const ratings = responU.data.data.attributes?.bookings?.data.map(
         (d) => d.attributes.rating
       );
-      console.log("ratings", ratings);
 
       const averageRating =
           ratings.length === 0
@@ -78,12 +72,6 @@ const DetailsPage = () => {
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    console.log("data", data);
-    console.log("dataComment", dataComment);
-    console.log("datastaraverage", datastarAVG);
-  }, [data]);
-
   const Comfirmcar = () => {
     sessionStorage.setItem("wrap", `/Comfirmcar1/${id}`);
     role === null ? setShowModal(true) : navigate(`/Comfirmcar1/${id}`);
@@ -91,6 +79,21 @@ const DetailsPage = () => {
 
   return (
     <div>
+      <StarRatings
+        rating={datastarAVG}
+        starRatedColor="#ffb400"
+        starHoverColor="#f9c74f"
+        numberOfStars={5}
+        name="rating"
+        starDimension="40px"
+        starSpacing="5px"
+        style={{
+          position: "fixed",
+          top: "60px", // Adjust this value according to your navbar height
+          right: "20px", // Adjust this value according to your layout
+          zIndex: "999",
+        }}
+      />
       <Nav />
       <div className="content">
         <div className="backmenu">
@@ -145,9 +148,9 @@ const DetailsPage = () => {
                 name="rating"
                 starDimension="40px"
                 starSpacing="5px"
-              />{" "}
+              />
             </div>
-            <div class="comment-wrapper">
+            <div className="comment-wrapper">
               {dataComment.map(
                 (booking) =>
                   booking.comment !== null && (

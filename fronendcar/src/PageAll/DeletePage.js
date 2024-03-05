@@ -66,7 +66,7 @@ function StaticExample({ id }) {
         className="Delete"
         variant="danger"
         onClick={handleShow}
-        style={{ float:"left" }}
+        style={{ display: "block", marginLeft: "10px", marginTop: "21px" }}
       >
         ลบรถคันนี้
       </Button>

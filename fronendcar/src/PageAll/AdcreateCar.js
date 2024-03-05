@@ -4,7 +4,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const AdcreateCar = ({ id }) => {
+const AdcreateCar = (props) => {
+  
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
 
@@ -98,6 +99,7 @@ const AdcreateCar = ({ id }) => {
       );
 
       handleClose();
+      props.fetch();
     } catch (error) {
       console.error("Error saving changes:", error);
       // Handle errors here
