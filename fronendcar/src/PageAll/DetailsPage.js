@@ -79,21 +79,7 @@ const DetailsPage = () => {
 
   return (
     <div>
-      <StarRatings
-        rating={datastarAVG}
-        starRatedColor="#ffb400"
-        starHoverColor="#f9c74f"
-        numberOfStars={5}
-        name="rating"
-        starDimension="40px"
-        starSpacing="5px"
-        style={{
-          position: "fixed",
-          top: "60px", // Adjust this value according to your navbar height
-          right: "20px", // Adjust this value according to your layout
-          zIndex: "999",
-        }}
-      />
+      
       <Nav />
       <div className="content">
         <div className="backmenu">
@@ -173,7 +159,7 @@ const DetailsPage = () => {
         <Contact></Contact>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+            <Modal.Title>ต้องเข้าสู่ระบบ</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-login">
@@ -192,7 +178,7 @@ const DetailsPage = () => {
         </Modal>
         <Modal show={showModal1} onHide={() => setShowModal1(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+            <Modal.Title>ตำหนิบนรถ</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-login">

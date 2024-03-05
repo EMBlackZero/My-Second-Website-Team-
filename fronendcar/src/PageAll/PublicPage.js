@@ -182,7 +182,7 @@ const PublicPage = () => {
 
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title className="text-white">รายละเอียดการเช่า</Modal.Title>
+            <Modal.Title >ต้องเข้าสู่ระบบ</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-login">
