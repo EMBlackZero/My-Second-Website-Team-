@@ -11,7 +11,7 @@ axios.defaults.baseURL =
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
-function AdHistory() { // หน้านี้จะแสดงที่ยังไม่confirm
+function AdHTRconfirm() { // หน้านี้จะแสดงที่confirmแล้ว
   const navigate = useNavigate();
   const [dataHistory, setDataHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +29,8 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
           `${URL_CAR}/${e.attributes.car.data.id}?populate=*`
         );
         console.log("find_img", find_img.data.data.attributes.imgcar.data);
-        const img = find_img.data.data.attributes.imgcar.data;
-        const img2 = e.attributes.payment.data;
+        const img = find_img.data.data.attributes.imgcar.data; // รูปรถ
+        const img2 = e.attributes.payment.data; // รูปสลิป
 
         return {
           id: e.id,
@@ -40,37 +40,20 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
           ...e.attributes,
         };
       });
-      const alldata = await Promise.all(maptoSet);
-      const filter_not_confirm = alldata.filter((e)=>{
-        return e.adminconfirm !== true
+      const alldata = await Promise.all(maptoSet); // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
+      const filter_confirm = alldata.filter((e)=>{
+        return e.adminconfirm === true
       })
-      console.log('filter_not_confirm',filter_not_confirm)
-      setDataHistory(filter_not_confirm) // เซ็ตข้อมูลที่จะใชช้ฟิลเตอในอนาคต
+      console.log('filter_confirm',filter_confirm)
+      setDataHistory(filter_confirm)
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
- 
-  // //filter ไม่ใช้แล้ว
-  // const filteradminstatus = () => {
-  //   const confirm = dataHistory.filter((e) => {
-  //     return e.status === true;
-  //   });
-  //   console.log("nc", confirm);
-  //   setDataforfilter(confirm);
-  // };
-  // const unreturncar = () => {
-  //   const unreturn = dataHistory.filter((e) => {
-  //     return e.status === false;
-  //   });
-  //   console.log("nc", unreturn);
-  //   setDataforfilter(unreturn);
-  // };
 
-
-  //event
+  //Event
   const handlesearch = (txt) => {
     const query = txt;
     if (query === "") {
@@ -79,16 +62,9 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
     } else {
       // Filter data based on search query
       const filtered = dataHistory.filter((e) => e.id == txt);
+
       setDataHistory(filtered);
     }
-  };
-  const cancelconfirm = async (id) => {
-    const response = await axios.put(`${URL_BOOKING}/${id}`, {
-      data: { adminconfirm: false },
-    });
-    console.log(response);
-    setShowModal(false);
-    fetchHistory();
   };
   const adminconfirm = async (t, id, state) => {
     console.log("id", id);
@@ -104,7 +80,6 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
           adminconfirm: true,
         },
       });
-      fetchHistory();
     } else if (t === false && state === "2") {
       //ยืนยันว่าลูกค้าคืนรถ
       console.log("confirm id ", confirmid);
@@ -115,6 +90,14 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
         },
       });
     }
+  };
+  const cancelconfirm = async (id) => {
+    const response = await axios.put(`${URL_BOOKING}/${id}`, {
+      data: { adminconfirm: false },
+    });
+    console.log(response);
+    setShowModal(false);
+    fetchHistory()
   };
 
   //เฟทช์ข้อมูลตอนเข้าหน้านี้
@@ -132,7 +115,8 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
   const goto_admin_not_confirm = () =>{
     navigate('/AdminHistory')
   }
-  
+
+
   return (
     <div>
       {isLoading && (
@@ -153,7 +137,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
           </div>
           <div className="filtermenu">
             <Button variant="dark" onClick={goto_history_all}>
-              การเช่าทั้งหมด
+            การเช่าทั้งหมด
             </Button>
             <Button variant="light" onClick={goto_admin_not_confirm}>
               รอการยืนยัน
@@ -164,7 +148,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
             <Button variant="danger" >
               รถที่ยังไม่คืน
             </Button>
-            <Button variant="success">
+            <Button variant="success" >
               คืนแล้ว
             </Button>
             
@@ -172,7 +156,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
           </div>
         </div>
         <div className="containerHTR">
-          <h2>การเช่าที่รอการยืนยัน</h2>
+          <h2>การเช่าที่ยืนยันแล้ว</h2>
           {dataHistory.map((booking) => (
             <div key={uuidv4()} className="container-Booking">
               <div className="booking-img">
@@ -298,7 +282,8 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
       </Modal>
       <Contact />
     </div>
-  );
+  )
+  
 }
 
-export default AdHistory;
+export default AdHTRconfirm;

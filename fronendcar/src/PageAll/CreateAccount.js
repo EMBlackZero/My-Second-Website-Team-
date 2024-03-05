@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "../CssAll/LoginCss.css";
@@ -9,6 +9,7 @@ const CreateAccount = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [subscribe, setSubscribe] = useState(false);
+  const [show, setShow] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleUsernameChange = (e) => {
@@ -26,6 +27,7 @@ const CreateAccount = () => {
     setEmail(event.target.value);
   };
   const handleSubscribeChange = () => {
+    setShow(subscribe ? false : true);
     setSubscribe(!subscribe);
   };
   const handleSubmit = async (e) => {
@@ -135,6 +137,51 @@ const CreateAccount = () => {
       <button className="icon-button" onClick={() => navigate("/")}>
         <img src="back.png"></img>
       </button>
+      <Modal show={show} onHide={() => setShow(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>เงื่อนไขการให้บริการ</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <h5>เงื่อนไขการใช้งาน:</h5>
+    <p>
+      ผู้เช่าต้องมีอายุไม่ต่ำกว่า 21 ปีและต้องมีใบขับขี่ที่ถูกต้องและใช้ได้ในประเทศที่เช่ารถ
+      นอกจากนี้เช่ารถให้ผู้เช่าเท่านั้นและไม่สามารถให้คนอื่นขับได้โดยไม่ได้รับอนุญาต
+    </p>
+
+    <h5>การจองและการยกเลิก:</h5>
+    <p>
+      การจองต้องทำล่วงหน้าอย่างน้อย 24 ชั่วโมง และผู้เช่าต้องมีเอกสารการรับรองตัวตนที่ถูกต้อง.
+      การยกเลิกต้องทำภายในเวลาที่กำหนดและอาจมีค่าปรับในบางกรณี
+    </p>
+    <h5>การชำระเงิน</h5>
+    <p>
+    ค่าเช่ารถต้องชำระล่วงหน้าและมีการเก็บเงินประกันในบางกรณี ผู้เช่าต้องใช้บัตรเครดิตหรือวิธีการชำระเงินอื่นที่ได้รับการอนุมัติ
+    </p>
+    <h5>การใช้งาน</h5>
+    <p>ผู้เช่าต้องใช้รถในวัตถุประสงค์ที่ถูกต้องและไม่สามารถใช้ในการขนส่งวัตถุอันตรายหรือการกระทำที่ผิดกฎหมาย</p>
+    <h5>การบำรุงรักษารถ</h5>
+    <p>ผู้เช่าต้องรักษารถในสภาพสมบูรณ์และส่งคืนตามกำหนด นอกจากนี้ยังต้องดูแลและรักษาประกันภัยในระหว่างการใช้งาน</p>
+    <h5>ค่าปรับและค่าธรรมเนียม</h5>
+    <p>ผู้เช่าต้องรับผิดชอบค่าปรับในกรณีที่รถเสียหรือได้รับความเสียหาย นอกจากนี้ยังมีค่าธรรมเนียมเพิ่มเติมสำหรับการใช้บริการพิเศษ เช่น การใช้งาน GPS หรือเกียร์อัตโนมัติ</p>
+    <h5>การคุ้มครองและประกัน</h5>
+    <p>บริษัทจะมีการคุ้มครองประกันพื้นฐานสำหรับรถเช่า แต่ผู้เช่าสามารถเพิ่มความคุ้มครองเพิ่มเติมได้โดยจ่ายค่าเพิ่มเติม</p>
+    <h5>การคืนรถ</h5>
+    <p>ผู้เช่าต้องคืนรถตามเวลาที่กำหนด หากคืนล่าช้าอาจมีค่าปรับและผู้เช่าต้องรับผิดชอบค่าใช้จ่ายที่เกิดขึ้นจากการคืนล่าช้า</p>
+    <h5>การขับขี่ตามกฎหมาย</h5>
+    <p>ผู้เช่าต้องปฏิบัติตามกฎหมายจราจรในทุกประการขณะขับขี่และรับผิดชอบในการละเมิดกฎหมายจราจร</p>
+    <h5>ข้อตกลงทั่วไป</h5>
+    <p>เงื่อนไขเหล่านี้มีผลบังคับต่อทั้งผู้เช่าและบริษัทเช่ารถ และการใช้บริการเช่ารถจะถือว่าผูกพันตามเงื่อนไขที่ระบุไว้ทั้งหมด</p>
+
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="danger" onClick={handleSubscribeChange}>
+      ไม่ยอมรับเงื่อนไข
+    </Button>
+    <Button variant="primary" onClick={() => setShow(false)}>
+      ยอมรับเงื่อนไข
+    </Button>
+  </Modal.Footer>
+</Modal>
     </div>
   );
 };
