@@ -40,7 +40,11 @@ function PaymentPage(props) {
       const formData = new FormData();
       formData.append("files", imageFile);
 
-      const uploadResponse = await axios.post("/api/upload", formData,config);
+      const uploadResponse = await axios.post("/api/upload", formData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+        },
+      });
 
       const fileId = uploadResponse.data[0].id;
 
@@ -62,7 +66,7 @@ function PaymentPage(props) {
   };
 
   const backtoCarDetail = () => {
-    axios.delete(`/api/bookings/${id}`,config);
+    axios.delete(`/api/bookings/${id}`, config);
     const cardetailPage_previous = sessionStorage.getItem("wrap");
     navigate(cardetailPage_previous);
   };
