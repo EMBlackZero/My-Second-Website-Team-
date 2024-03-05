@@ -112,6 +112,12 @@ function AdHTRall() { //แสดงหมด
   const goto_admin_not_confirm = () =>{
     navigate('/AdminHistory')
   }
+  const goto_returned_car = () =>{
+    navigate('/AdminHistory/returned')
+  }
+  const goto_unreturn_car = () =>{
+    navigate('/AdminHistory/unreturn')
+  }
 
   return (
     <div>
@@ -141,10 +147,10 @@ function AdHTRall() { //แสดงหมด
             <Button variant="primary" onClick={goto_admin_confirm}>
               ยืนยันแล้ว
             </Button>
-            <Button variant="danger" >
+            <Button variant="danger" onClick={goto_unreturn_car} >
               รถที่ยังไม่คืน
             </Button>
-            <Button variant="success" >
+            <Button variant="success" onClick={goto_returned_car} >
               คืนแล้ว
             </Button>
             
