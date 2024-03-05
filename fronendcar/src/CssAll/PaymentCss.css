@@ -30,6 +30,11 @@
     text-align: center; 
   }
 
+  .qr-code{
+    justify-content: center;
+    text-align: center;
+  }
+
 /* For screens smaller than 769px (mobile) */
 @media (min-width: 768px) {
     .button-container {

@@ -119,8 +119,11 @@ function PaymentPage(props) {
                 <img
                   src="/myqr.jpg"
                   alt="qr-code"
-                  style={{ width: "400px", height: "400px" }}
+                  style={{ width: "300px", height: "300px" }}
                 />
+                <p>เลขบัญชีธนาคารกรุงสุโขทัย</p>
+                <p>123-456-xxxx-xx-x</p>
+                <p>บจก.รถเช่าผมไม่เล็กนะครับ</p>
               </Form.Group>
               <Form.Group className="mb-3" controlId="imageFile">
                 <Form.Control type="file" onChange={handleImageChange} />
