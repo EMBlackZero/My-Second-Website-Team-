@@ -18,13 +18,18 @@ const AdEditeCar = (props) => {
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [Idimg, setIdimg] = useState("");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   // useEffect to fetch car data from the server
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
+          `/api/cars/${id}?populate=*`,config
         );
         const fetchedData = response.data.data;
         setData(fetchedData);
@@ -81,21 +86,17 @@ const AdEditeCar = (props) => {
         const formData = new FormData();
         formData.append("files", imageFile);
         const uploadResponse = await axios.post(
-          "http://localhost:1337/api/upload",
-          formData
+          "/api/upload",
+          formData,config
         );
         formData2.imgcar = parseInt(uploadResponse.data[0].id);
       } else {
         formData2.imgcar = parseInt(Idimg);
       }
       await axios.put(
-        `http://localhost:1337/api/cars/${id}?populate=*`,
-        { data: formData2 },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        `/api/cars/${id}?populate=*`,
+        { data: formData2 },config
+        
       );
       handleClose();
       // Optionally, you can add success message or additional actions here

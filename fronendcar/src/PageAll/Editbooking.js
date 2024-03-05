@@ -10,12 +10,17 @@ function Editbooking(props) {
   const booking = props.data;
   const setModal = props.setModal;
   const fetchData = props.fetchData
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   //Event
   const admin_confirm = async (id) => {
     const response = await axios.put(`${URL_BOOKING}/${id}`, {
       data: { adminconfirm: true },
-    });
+    },config);
     console.log(response);
     setModal(false);
     fetchData()
@@ -23,7 +28,7 @@ function Editbooking(props) {
   const admin_sendback = async (id) => {
     const response = await axios.put(`${URL_BOOKING}/${id}`, {
       data: { status: true },
-    });
+    },config);
     console.log(response);
     setModal(false);
     fetchData()
@@ -31,7 +36,7 @@ function Editbooking(props) {
   const admin_un_sendback = async (id) => {
     const response = await axios.put(`${URL_BOOKING}/${id}`, {
       data: { status: false },
-    });
+    },config);
     console.log(response);
     setModal(false);
     fetchData()
@@ -39,7 +44,7 @@ function Editbooking(props) {
   const cancelconfirm = async (id) => {
     const response = await axios.put(`${URL_BOOKING}/${id}`, {
       data: { adminconfirm: false },
-    });
+    },config);
     console.log(response);
     setModal(false);
     fetchData()

@@ -6,12 +6,16 @@ import axios from "axios";
 const Slide = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
+          `/api/cars/${id}?populate=*`,config
         );
         setData(response.data.data.attributes.imgslide);
       } catch (error) {

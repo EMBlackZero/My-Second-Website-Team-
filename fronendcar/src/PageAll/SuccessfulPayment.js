@@ -6,7 +6,6 @@ import axios from "axios";
 import "../CssAll/Historydetail.css";
 import "../CssAll/SuccessPayment.css";
 import Contact from "./Contact";
-
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
@@ -15,17 +14,22 @@ function SuccessfulPayment() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   const fetchSuccessfulPayment = async () => {
     try {
       setIsLoading(true);
 
       const [response] = await Promise.all([
-        axios.get(`${URL_BOOKING}/${id}?populate=*`),
+        axios.get(`${URL_BOOKING}/${id}?populate=*`,config),
       ]);
 
       const findImg = await axios.get(
-        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`
+        `${URL_CAR}/${response.data.data.attributes.car.data.id}?populate=*`,config
       );
 
       const detailCar = response.data.data.attributes.car.data.attributes;

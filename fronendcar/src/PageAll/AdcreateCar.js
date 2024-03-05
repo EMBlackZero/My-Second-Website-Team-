@@ -16,6 +16,11 @@ const AdcreateCar = ({ id }) => {
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [images, setImages] = useState(null);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
 
   const handleImageChange = (event) => {
@@ -55,8 +60,8 @@ const AdcreateCar = ({ id }) => {
       formData.append("files", imageFile);
 
       const uploadResponses = await axios.post(
-        "http://localhost:1337/api/upload",
-        formData
+        "/api/upload",
+        formData,config
       );
       const fileId = uploadResponses.data[0].id;
 
@@ -66,8 +71,8 @@ const AdcreateCar = ({ id }) => {
       }
 
       const uploadResponse = await axios.post(
-        "http://localhost:1337/api/upload",
-        formDatas
+        "/api/upload",
+        formDatas,config
       );
       const fileIds = uploadResponse.data.map((d) => d.id);
       console.log(uploadResponse.data.map((d) => d.id));
@@ -83,13 +88,9 @@ const AdcreateCar = ({ id }) => {
       };
 
       const carResponse = await axios.post(
-        `http://localhost:1337/api/cars`,
-        { data: formData2 },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        `/api/cars`,
+        { data: formData2 },config
+        
       );
       console.log(
         "Car entry created/updated successfully:",

@@ -30,13 +30,14 @@ const DetailsPage = () => {
     },
   };
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/cars/${id}?populate=*`);
+        const response = await axios.get(`/api/cars/${id}?populate=*`,config);
         setData(response.data.data);
         const responU = await axios.get(
-          `/api/cars/${id}?populate=bookings.user.username`
+          `/api/cars/${id}?populate=bookings.user.username`,config
         );
 
         setDataU(responU.data.data);
@@ -45,7 +46,9 @@ const DetailsPage = () => {
         );
 
         const averageRating =
-          ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+          ratings.length === 0
+            ? 0
+            : ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
 
         setDatastar(averageRating);
       } catch (error) {

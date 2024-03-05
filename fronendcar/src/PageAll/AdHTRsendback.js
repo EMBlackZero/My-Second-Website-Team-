@@ -7,8 +7,7 @@ import "../CssAll/History.css";
 import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
 import Editbooking from "./Editbooking";
-axios.defaults.baseURL =
-  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+
 const URL_CAR = "/api/cars";
 const URL_BOOKING = "/api/bookings";
 
@@ -19,16 +18,20 @@ function AdHTRsendback() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false); // เพิ่ม state สำหรับจัดการการแสดง Modal
   const [confirmid, setconfirmid] = useState(); // เพิ่ม state สำหรับจัดการการแสดง Modal
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
   //ฟังชันดึงข้อมูล
   const fetchHistory = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`${URL_BOOKING}?populate=*`);
+      const response = await axios.get(`${URL_BOOKING}?populate=*`,config);
       console.log("response", response.data.data);
       const maptoSet = response.data.data.map(async (e) => {
         const find_img = await axios.get(
-          `${URL_CAR}/${e.attributes.car.data.id}?populate=*`
+          `${URL_CAR}/${e.attributes.car.data.id}?populate=*`,config
         );
         // console.log("find_img", find_img.data.data.attributes.imgcar.data);
         const img = find_img.data.data.attributes.imgcar.data; // รูปรถ

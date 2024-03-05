@@ -23,7 +23,7 @@ const LoginForm = () => {
     setSubmitEnabled(false);
 
     try {
-      const result = await axios.post("http://localhost:1337/api/auth/local", {
+      const result = await axios.post("/api/auth/local", {
         identifier: username,
         password: password,
       });
@@ -42,10 +42,7 @@ const LoginForm = () => {
       };
 
       //เช็ค role
-      const userResult = await axios.get(
-        "http://localhost:1337/api/users/me?populate=role",
-        config
-      );
+      const userResult = await axios.get("/api/users/me?populate=role",config);
 
       // Step 4: Check user's role and navigate accordingly
       if (userResult.data.role) {

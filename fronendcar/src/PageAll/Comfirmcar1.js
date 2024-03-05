@@ -29,12 +29,13 @@ const Comfirmcar1 = () => {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
+ 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
+          `/api/cars/${id}?populate=*`,config
         );
         setData(response.data.data);
       } catch (error) {
@@ -94,13 +95,8 @@ const Comfirmcar1 = () => {
       // Upload the image to Strapi
 
       const carResponse = await axios.post(
-        `http://localhost:1337/api/bookings`,
-        { data: renterInfo },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-        }
+        `/api/bookings`,
+        { data: renterInfo },config
       );
 
       console.log(

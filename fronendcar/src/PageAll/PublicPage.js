@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "../CssAll/Public.css";
 import Nav from "./Nav";
 import Contact from "./Contact";
+import config1 from "./config";
 
-axios.defaults.baseURL =
-  process.env.REACT_APP_BASE_URL || "http://localhost:1337";
+axios.defaults.baseURL = config1.serverUrlPrefix;
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
@@ -17,13 +17,18 @@ const PublicPage = () => {
   const [minPrice, setMinPrice] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const role = sessionStorage.getItem("role");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+    },
+  };
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:1337/api/cars?populate=*")
+      .get("/api/cars?populate=*",config)
       .then(({ data }) => {
         const mapToset = data.data.map((e) => {
           return {
@@ -45,7 +50,7 @@ const PublicPage = () => {
   }, []);
 
   const handlePriceFilter = () => {
-    let apiUrl = "http://localhost:1337/api/cars?populate=*";
+    let apiUrl = "/api/cars?populate=*";
     if (minPrice !== "") {
       apiUrl += `&filters[price][$gte]=${minPrice}`;
     }
@@ -53,7 +58,7 @@ const PublicPage = () => {
       apiUrl += `&filters[price][$lte]=${maxPrice}`;
     }
     axios
-      .get(apiUrl)
+      .get(apiUrl,config)
       .then(({ data }) => {
         const mapToset = data.data.map((e) => {
           return {

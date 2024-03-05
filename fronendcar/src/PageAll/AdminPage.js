@@ -19,7 +19,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/cars?populate=*", config)
+      .get("/api/cars?populate=*",config)
       .then(({ data }) => {
         console.log("data.data", data.data);
         const mapToset = data.data.map((e) => {
