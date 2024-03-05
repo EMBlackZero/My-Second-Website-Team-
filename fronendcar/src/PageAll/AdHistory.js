@@ -70,6 +70,13 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
   // };
 
 
+  //เปิดหน้าต่างแก้ไขและเซตค่าไอดีที่แก้
+  const edit_reservation = async(id)=>{
+    setShowModal(true)
+    setconfirmid(id)
+    console.log('you will modify booking id',id)
+  }
+
   //event
   const handlesearch = (txt) => {
     const query = txt;
@@ -90,32 +97,22 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
     setShowModal(false);
     fetchHistory();
   };
-  const adminconfirm = async (t, id, state) => {
-    console.log("id", id);
-    if (t === true) {
-      setShowModal(t);
-      setconfirmid(id);
-    } else if (t === false && state === "1") {
-      //ยืนยันการเช่า
-      console.log("confirm id ", confirmid);
-      setShowModal(false);
-      await axios.put(`${URL_BOOKING}/${confirmid}`, {
-        data: {
-          adminconfirm: true,
-        },
-      });
-      fetchHistory();
-    } else if (t === false && state === "2") {
-      //ยืนยันว่าลูกค้าคืนรถ
-      console.log("confirm id ", confirmid);
-      setShowModal(false);
-      await axios.put(`${URL_BOOKING}/${confirmid}`, {
-        data: {
-          status: true,
-        },
-      });
-    }
-  };
+  const admin_confirm = async(id) =>{
+    const response = await axios.put(`${URL_BOOKING}/${id}`, {
+      data: { adminconfirm: true },
+    });
+    console.log(response);
+    setShowModal(false);
+    fetchHistory();
+  }
+  const admin_sendback = async(id)=>{
+    const response = await axios.put(`${URL_BOOKING}/${id}`, {
+      data: { status : true },
+    });
+    console.log(response);
+    setShowModal(false);
+    fetchHistory();
+  }
 
   //เฟทช์ข้อมูลตอนเข้าหน้านี้
   useEffect(() => { 
@@ -209,7 +206,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
                     <Button
                       className="review-btn"
                       variant="dark"
-                      onClick={() => adminconfirm(true, booking.id)}
+                      onClick={() => edit_reservation(booking.id)}
                       key={uuidv4()}
                     >
                       จัดการการเช่า
@@ -257,7 +254,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
                   <Button
                     key={uuidv4()}
                     variant="dark"
-                    onClick={() => adminconfirm(false, "", "1")}
+                    onClick={() => admin_confirm(booking.id)}
                   >
                     ยืนยันการเช่า
                   </Button>
@@ -278,7 +275,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
                   <Button
                     key={uuidv4()}
                     variant="dark"
-                    onClick={() => adminconfirm(false, "", "2")}
+                    onClick={() => admin_sendback(booking.id)}
                     className="btn-marginleft"
                   >
                     คืนรถ
