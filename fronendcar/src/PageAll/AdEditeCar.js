@@ -5,7 +5,9 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AdEditeCar = ({ id }) => {
+const AdEditeCar = (props) => {
+  const id = props.id
+  const fetchdetail = props.fetchData
   const [data, setData] = useState({});
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -16,7 +18,6 @@ const AdEditeCar = ({ id }) => {
   const [quantityLeft, setQuantityLeft] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [Idimg, setIdimg] = useState("");
-  const [Idimg2, setIdimg2] = useState();
 
   // useEffect to fetch car data from the server
   useEffect(() => {
@@ -38,14 +39,14 @@ const AdEditeCar = ({ id }) => {
     };
     fetchData();
   }, [id]);
-  console.log(Idimg2);
+ 
 
   // Function to handle image change
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
   };
-  console.log(imageFile);
+  
   // Function to handle car name change
   const handlecarName = (event) => {
     setCarName(event.target.value);
@@ -100,9 +101,12 @@ const AdEditeCar = ({ id }) => {
       // Optionally, you can add success message or additional actions here
     } catch (error) {
       console.error("Error saving changes:", error);
+    } finally{
+      handleClose();
+      fetchdetail();
     }
     //window.location.reload(); // Reload the page
-    handleClose(); // Close modal
+    
   };
 
   return (

@@ -20,21 +20,20 @@ const AdDetailsPage = () => {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1337/api/cars/${id}?populate=*`
+      );
+      setData(response.data.data);
+      const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
+      setDataU(responU.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:1337/api/cars/${id}?populate=*`
-        );
-        setData(response.data.data);
-        const responU = await axios.get(`/api/cars/${id}?populate=bookings.user.username`);
-        setDataU(responU.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, [id]);
 
@@ -89,7 +88,7 @@ const AdDetailsPage = () => {
                 ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
                 บาท/วัน
               </div>
-              <AdEditeCar className="cheakcar" id={id} แก้ไข />
+              <AdEditeCar  fetchData={fetchData} className="cheakcar" id={id}  />
             </div>
           </div>
         </Container>

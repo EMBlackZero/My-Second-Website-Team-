@@ -6,6 +6,7 @@ import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
+import Editbooking from "./Editbooking";
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 const URL_CAR = "/api/cars";
@@ -29,7 +30,7 @@ function AdHTRnotsendback() {
         const find_img = await axios.get(
           `${URL_CAR}/${e.attributes.car.data.id}?populate=*`
         );
-        console.log("find_img", find_img.data.data.attributes.imgcar.data);
+        // console.log("find_img", find_img.data.data.attributes.imgcar.data);
         const img = find_img.data.data.attributes.imgcar.data; // รูปรถ
         const img2 = e.attributes.payment.data; // รูปสลิป
 
@@ -54,6 +55,13 @@ function AdHTRnotsendback() {
     }
   };
 
+  //เปิดหน้าต่างแก้ไขและเซตค่าไอดีที่แก้
+  const edit_reservation = async(id)=>{
+    setShowModal(true)
+    setconfirmid(id)
+    console.log('you will modify booking id',id)
+  }
+
   //Event
   const handlesearch = (txt) => {
     const query = txt;
@@ -67,39 +75,7 @@ function AdHTRnotsendback() {
       setDataHistory(filtered);
     }
   };
-  const adminconfirm = async (t, id, state) => {
-    console.log("id", id);
-    if (t === true) {
-      setShowModal(t);
-      setconfirmid(id);
-    } else if (t === false && state === "1") {
-      //ยืนยันการเช่า
-      console.log("confirm id ", confirmid);
-      setShowModal(false);
-      await axios.put(`${URL_BOOKING}/${confirmid}`, {
-        data: {
-          adminconfirm: true,
-        },
-      });
-    } else if (t === false && state === "2") {
-      //ยืนยันว่าลูกค้าคืนรถ
-      console.log("confirm id ", confirmid);
-      setShowModal(false);
-      await axios.put(`${URL_BOOKING}/${confirmid}`, {
-        data: {
-          status: true,
-        },
-      });
-    }
-  };
-  const cancelconfirm = async (id) => {
-    const response = await axios.put(`${URL_BOOKING}/${id}`, {
-      data: { adminconfirm: false },
-    });
-    console.log(response);
-    setShowModal(false);
-    fetchHistory()
-  };
+  
 
   //เฟทช์ข้อมูลตอนเข้าหน้านี้
   useEffect(() => { 
@@ -121,6 +97,10 @@ function AdHTRnotsendback() {
   }
   const goto_unreturn_car = () =>{
     navigate('/AdminHistory/unreturn')
+  }
+
+  const setModal = (status)=>{
+    setShowModal(status)
   }
 
 
@@ -164,7 +144,7 @@ function AdHTRnotsendback() {
           </div>
         </div>
         <div className="containerHTR">
-          <h2>การเช่าที่ยืนยันแล้ว</h2>
+          <h2>การเช่าที่ยังไม่คืนรถ</h2>
           {dataHistory.map((booking) => (
             <div key={uuidv4()} className="container-Booking">
               <div className="booking-img">
@@ -201,7 +181,7 @@ function AdHTRnotsendback() {
                     <Button
                       className="review-btn"
                       variant="dark"
-                      onClick={() => adminconfirm(true, booking.id)}
+                      onClick={() => edit_reservation(booking.id)}
                       key={uuidv4()}
                     >
                       จัดการการเช่า
@@ -243,48 +223,7 @@ function AdHTRnotsendback() {
           {dataHistory
             .filter((booking) => booking.id === confirmid)
             .map((booking) => (
-              <div key={uuidv4()}>
-                {/* ถ้ายังไม่ยืนยันจะแสดงปุ่มนี้ */}
-                {booking.adminconfirm !== true && (
-                  <Button
-                    key={uuidv4()}
-                    variant="dark"
-                    onClick={() => adminconfirm(false, "", "1")}
-                  >
-                    ยืนยันการเช่า
-                  </Button>
-                )}
-                {/* ถ้ายืนยันแล้วจะแสดงปุ่มนี้ */}
-
-                {booking.adminconfirm === true && (
-                  <Button
-                    key={uuidv4()}
-                    variant="secondary"
-                    onClick={() => cancelconfirm(booking.id)}
-                  >
-                    ยกเลิกยืนยันการเช่า
-                  </Button>
-                )}
-
-                {booking.adminconfirm === true && booking.status !== true && (
-                  <Button
-                    key={uuidv4()}
-                    variant="dark"
-                    onClick={() => adminconfirm(false, "", "2")}
-                    className="btn-marginleft"
-                  >
-                    คืนรถ
-                  </Button>
-                )}
-
-                <Button
-                  variant="danger"
-                  className="btn-marginleft"
-                  onClick={() => setShowModal(false)}
-                >
-                  ยกเลิก
-                </Button>
-              </div>
+              <Editbooking key={uuidv4()} fetchData={fetchHistory} setModal={setModal} data={booking}/>
             ))}
         </Modal.Footer>
       </Modal>
