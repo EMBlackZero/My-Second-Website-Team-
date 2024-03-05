@@ -7,8 +7,22 @@
     max-width: 40%; /* หรือความกว้างที่ต้องการ */
     margin: 0 auto; /* จะทำให้ .login อยู่ตรงกลางของหน้าจอ */
 }
-
-  
+.carlogo1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 300px;
+    width: 300px;
+    margin: 0 auto;
+}
+.carkeypic1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 170px;
+    width: 170px;
+    margin: 0 auto;
+}
 .name1 {
     display: flex;
     flex-direction: column;
@@ -71,6 +85,22 @@
     .icon-button img {
         width: 30px; /* เปลี่ยนขนาดของรูปภาพไอคอนใน .icon-button เมื่อหน้าจอมีความกว้างน้อยกว่า 768px */
         height: 30px;
+    }
+    .carkeypic1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100px;
+        width: 100px;
+        margin: 0 auto;
+    }
+    .carlogo1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 240px;
+        width: 240px;
+        margin: 0 auto;
     }
 }
   

@@ -101,12 +101,12 @@ function PaymentPage(props) {
         <div className="button-container">
           <button className="image-button" onClick={handleShow}>
             <img src="/creditcard.jpg" alt="Credit Card" />
-            <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
+            <span>บัตรเครดิต / เดบิต / มาสเตอร์การ์ด</span>
           </button>
 
           <button className="image-button" onClick={handleShow}>
             <img src="/money.jpg" alt="Cash" />
-            <span>เงินสด (ชำระหน้าร้าน ต้องจ่ายมัดจำ 1000 บาท)</span>
+            <span>เงินสด (ต้องจ่ายค่ามัดจำ 1000 บาท)</span>
           </button>
         </div>
 

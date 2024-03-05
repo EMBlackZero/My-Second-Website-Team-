@@ -58,6 +58,9 @@ const CreateAccount = () => {
   return (
     <div className="login">
       <h1 className="name1">สมัครสมาชิก</h1>
+      <div className="carkeypic1">
+        <img src = "carkey.png"></img>
+      </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>ชื่อ</Form.Label>

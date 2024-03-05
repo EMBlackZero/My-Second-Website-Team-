@@ -72,6 +72,9 @@ const LoginForm = () => {
     <div>
       <div className="login">
         <h1 className="name1">เข้าสู่ระบบ</h1>
+        <div className="carlogo1">
+          <img src="carlogo.png"></img>
+        </div>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Email or Username</Form.Label>
