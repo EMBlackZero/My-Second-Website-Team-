@@ -221,7 +221,7 @@ function AdHistory() { // หน้านี้จะแสดงที่ยั
                 <div key={uuidv4()}>
                   <h4>รหัสคำสั่งจอง : {booking.id}</h4>
                   <p>สลิปของลูกค้า</p>
-                  <div className="booking-img">
+                  <div className="bookingbill-img">
                     <img
                       key={uuidv4()}
                       src={
