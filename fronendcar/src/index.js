@@ -18,6 +18,8 @@ import AdHistory from "./PageAll/AdHistory";
 import Comfirmcar1 from "./PageAll/Comfirmcar1";
 import HistoryDetail from "./PageAll/HistoryDetail";
 import SuccessfulPaymentPage from "./PageAll/SuccessfulPayment";
+import AdHTRconfirm from "./PageAll/AdHTRconfirm";
+import AdHTRall from "./PageAll/AdHTRall";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
   {
     path: "/AdminHistory",
     element: <AdHistory />,
+  },
+  {
+    path: "/AdminHistory/confirmed",
+    element: <AdHTRconfirm/>,
+  },
+  {
+    path: "/AdminHistory/allhistory",
+    element: <AdHTRall />,
   },
   {
     path: "/AdcreateCar",
