@@ -108,7 +108,7 @@ function HistoryDetail() {
         </button>
         <div className="history-detail-container">
           <div className="history-detail-detail">
-            <h1>History Detail</h1>
+            <h1>รายละเอียด</h1>
             <h2>หมายเลขคำสั่งจอง {data.id}</h2>
             <h4>รายละเอียดรถของท่าน</h4>
             <p>- {data.detail}</p>

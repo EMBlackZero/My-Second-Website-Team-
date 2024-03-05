@@ -34,7 +34,7 @@ function AdminNav(props) {
                   <Form.Control
                     value={searchQuery}
                     type="search"
-                    placeholder="Search by car brand "
+                    placeholder="ค้นหาแบรนด์รถที่ต้องการ "
                     className="me-2"
                     aria-label="Search"
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -44,7 +44,7 @@ function AdminNav(props) {
                     className="search-btn"
                     onClick={() => sendtoNAV(searchQuery)}
                   >
-                    Search
+                    ค้นหา
                   </Button>
                 </Form>
               )}
@@ -55,7 +55,7 @@ function AdminNav(props) {
                   <Form.Control
                     value={searchQuery}
                     type="search"
-                    placeholder="Search by id "
+                    placeholder="ค้นหาหมายเลขรถ "
                     className="me-2"
                     aria-label="Search"
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -65,7 +65,7 @@ function AdminNav(props) {
                     className="search-btn"
                     onClick={() => sendtoNAV(searchQuery)}
                   >
-                    Search
+                    ค้นหา
                   </Button>
                 </Form>
               )}

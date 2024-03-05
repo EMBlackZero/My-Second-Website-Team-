@@ -169,10 +169,10 @@ const AdcreateCar = ({ id }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            ปิด
           </Button>
           <Button variant="primary" onClick={handleSaveChanges} disabled={images === null}>
-            Create
+            เพิ่มรถ
           </Button>
         </Modal.Footer>
       </Modal>

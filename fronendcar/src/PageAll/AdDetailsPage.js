@@ -53,15 +53,15 @@ const AdDetailsPage = () => {
           <div className="layoutobj">
             <div className="layout1">
               <div>รายละเอียดรถ</div>
-              <div>Name : {data.attributes && data.attributes.namecar}</div>
+              <div>รุ่นรถ - ยี่ห้อ : {data.attributes && data.attributes.namecar}</div>
               <div>
-                Car’s engine detail :
+                รายละเอียดของรถคันนี้ :
                 <div className="enginedetail" style={{ fontSize: "19px" }}>
                   {data.attributes && data.attributes.description}
                 </div>
               </div>
               <div>
-              Comment:
+              ความคิดเห็น:
               </div>
               <div class="comment-wrapper">
               {dataU?.attributes?.bookings?.data.map((booking) => (
@@ -86,7 +86,7 @@ const AdDetailsPage = () => {
                 คัน
               </div>
               <div>
-                Price per day : {data.attributes && data.attributes.price}{" "}
+                ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
                 บาท/วัน
               </div>
               <AdEditeCar className="cheakcar" id={id} แก้ไข />

@@ -209,7 +209,7 @@ const Comfirmcar1 = () => {
                 คัน
               </div>
               <div>
-                Price per day : {data.attributes && data.attributes.price}{" "}
+                ราคาเช่าต่อวัน : {data.attributes && data.attributes.price}{" "}
                 บาท/วัน
               </div>
             </div>

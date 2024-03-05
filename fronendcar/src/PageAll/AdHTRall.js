@@ -111,6 +111,12 @@ function AdHTRall() { //แสดงหมด
   const goto_admin_not_confirm = () =>{
     navigate('/AdminHistory')
   }
+  const goto_returned_car = () =>{
+    navigate('/AdminHistory/returned')
+  }
+  const goto_unreturn_car = () =>{
+    navigate('/AdminHistory/unreturn')
+  }
 
   return (
     <div>
@@ -140,10 +146,10 @@ function AdHTRall() { //แสดงหมด
             <Button variant="primary" onClick={goto_admin_confirm}>
               ยืนยันแล้ว
             </Button>
-            <Button variant="danger" >
+            <Button variant="danger" onClick={goto_unreturn_car} >
               รถที่ยังไม่คืน
             </Button>
-            <Button variant="success" >
+            <Button variant="success" onClick={goto_returned_car} >
               คืนแล้ว
             </Button>
             
@@ -171,12 +177,12 @@ function AdHTRall() { //แสดงหมด
                 </div>
               </div>
               <div className="booking-detail">
-                <p>ID : {booking.id}</p>
-                <p>Name : {booking.car.data.attributes.namecar}</p>
-                <p>Start : {booking.startdate}</p>
-                <p>End : {booking.enddate}</p>
+                <p>หมายเลข : {booking.id}</p>
+                <p>รุ่นรถ - ยี่ห้อ : {booking.car.data.attributes.namecar}</p>
+                <p>วันที่เริ่มจอง : {booking.startdate}</p>
+                <p>วันคืนรถ : {booking.enddate}</p>
                 <div className="status">
-                  status :{" "}
+                  สถานะ :{" "}
                   {booking.status === false ? (
                     <p className="notReturn">ยังไม่คืน</p>
                   ) : (
