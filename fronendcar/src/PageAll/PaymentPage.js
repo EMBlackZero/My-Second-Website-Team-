@@ -19,7 +19,13 @@ function PaymentPage(props) {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImageFile(file);
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (file && allowedTypes.includes(file.type)) {
+      setImageFile(file);
+    } else {
+      alert("Please select a valid image file (JPEG or PNG).");
+      event.target.value = null;
+    }
   };
 
   const handleSaveChanges = async (e) => {
@@ -93,7 +99,7 @@ function PaymentPage(props) {
             <Breadcrumb.Item active>ชำระเงิน</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        
+
         <div className="paytitle">
           <h2>เลือกช่องทางการชำระเงิน</h2>
         </div>
@@ -101,12 +107,12 @@ function PaymentPage(props) {
         <div className="button-container">
           <button className="image-button" onClick={handleShow}>
             <img src="/creditcard.jpg" alt="Credit Card" />
-            <span>บัตรเครดิต/เดบิต/มาสเตอร์การ์ด (ชำระออนไลน์)</span>
+            <span>บัตรเครดิต / เดบิต / มาสเตอร์การ์ด</span>
           </button>
 
           <button className="image-button" onClick={handleShow}>
             <img src="/money.jpg" alt="Cash" />
-            <span>เงินสด (ชำระหน้าร้าน ต้องจ่ายมัดจำ 1000 บาท)</span>
+            <span>เงินสด (ต้องจ่ายค่ามัดจำ 1000 บาท)</span>
           </button>
         </div>
 
