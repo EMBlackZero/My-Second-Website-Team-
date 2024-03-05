@@ -7,8 +7,6 @@ import Modal from "react-bootstrap/Modal";
 const AdcreateCar = (props) => {
   
   const [show, setShow] = useState(false);
-  const [show1, setShow1] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [carName, setCarName] = useState("");

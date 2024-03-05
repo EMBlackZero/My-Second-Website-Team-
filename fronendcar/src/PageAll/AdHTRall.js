@@ -202,9 +202,11 @@ function AdHTRall() { //แสดงหมด
               .filter((booking) => booking.id === confirmid)
               .map((booking) => (
                 <div key={uuidv4()}>
-                  <h4>รหัสคำสั่งจอง : {booking.id}</h4>
+                 <h3>รหัสคำสั่งจอง : {booking.id}</h3>
+                 <h4>ราคาที่ต้องจ่าย : {booking.Total}</h4>
                   <p>สลิปของลูกค้า</p>
-                  <div className="booking-img">
+
+                  <div className="bookingbill-img">
                     <img
                       key={uuidv4()}
                       src={
