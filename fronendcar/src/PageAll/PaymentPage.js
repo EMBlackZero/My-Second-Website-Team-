@@ -19,7 +19,13 @@ function PaymentPage(props) {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImageFile(file);
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (file && allowedTypes.includes(file.type)) {
+      setImageFile(file);
+    } else {
+      alert("Please select a valid image file (JPEG or PNG).");
+      event.target.value = null;
+    }
   };
 
   const handleSaveChanges = async (e) => {
@@ -93,7 +99,7 @@ function PaymentPage(props) {
             <Breadcrumb.Item active>ชำระเงิน</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        
+
         <div className="paytitle">
           <h2>เลือกช่องทางการชำระเงิน</h2>
         </div>
