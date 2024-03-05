@@ -89,7 +89,7 @@ function History() {
     });
     console.log("nc", notconfirm);
     setDataforfilter(notconfirm);
-  }, [dataHistory]); 
+  }, [dataHistory]);
 
   return (
     <div>
@@ -120,12 +120,12 @@ function History() {
         </div>
 
         <div className="containerHTR">
-          <h2>ประวัติการเช่าของฉัน</h2>
+          <h1>ประวัติการเช่าของฉัน</h1>
           {dataforfilter.map((booking) => (
             <div
               key={booking.id}
               className="container-Booking"
-              //onClick={() => setShowModal(true)}
+            //onClick={() => setShowModal(true)}
             >
               <div className="booking-img">
                 <img
@@ -142,12 +142,12 @@ function History() {
                 </div>
               </div>
               <div className="booking-detail">
-              <p>หมายเลข : {booking.id}</p>
+                <p>หมายเลข : {booking.id}</p>
                 <p>ยี่ห้อ - รุ่น : {booking.car.data.attributes.namecar}</p>
                 <p>วันที่เริ่มจอง : {booking.startdate}</p>
                 <p>วันคืนรถ: {booking.enddate}</p>
                 <p>
-                สถานที่รับรถ :{" "}
+                  สถานที่รับรถ :{" "}
                   <a href="https://maps.app.goo.gl/ymMhmqjas8LMjVtf8">
                     เปิดในเเมพ
                   </a>
