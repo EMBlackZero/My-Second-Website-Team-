@@ -122,6 +122,7 @@ const DetailsPage = () => {
                     )
                 )}
               </div>
+
             </div>
             <div className="layout2">
               <div className="detialcar">
