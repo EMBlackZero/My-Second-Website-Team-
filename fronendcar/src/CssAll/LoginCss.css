@@ -41,6 +41,17 @@
     font-size: 14px;
     margin-top: 20px;
 }
+.account1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
 .imlogo-container {
     display: flex;
     justify-content: center; /* จัดให้รูปอยู่ตรงกลางแนวนอน */

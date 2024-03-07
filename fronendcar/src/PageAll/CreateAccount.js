@@ -11,6 +11,7 @@ const CreateAccount = () => {
   const [subscribe, setSubscribe] = useState(false);
   const [show, setShow] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [data, setData] = useState([]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -30,16 +31,38 @@ const CreateAccount = () => {
     setShow(subscribe ? false : true);
     setSubscribe(!subscribe);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/users");
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to ensure this effect runs only once
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       console.log("Passwords do not match");
       window.alert("รหัสผ่านไม่ถูกต้อง");
       return; // ไม่ทำการส่งข้อมูลถ้ารหัสผ่านไม่ตรงกัน
+    } else if (data.some((d) => d.username === username)) {
+      window.alert("ชื่อผู้ใช้ของคุณถูกใช้โดยผู้ใช้อื่น");
+      return; // ไม่ทำการส่งข้อมูลถ้าชื่อผู้ใช้ซ้ำ
+    }else if (data.some((d) => d.email === email)) {
+      window.alert("อีเมลของคุณถูกใช้โดยผู้อื่น");
+      return; // ไม่ทำการส่งข้อมูลถ้าชื่อผู้ใช้ซ้ำ
     }
 
+
+
     try {
-      let result = await axios.post("/api/users", {
+      let result = await axios.post("/users", {
         username: username,
         email: email,
         password: password,
@@ -59,7 +82,7 @@ const CreateAccount = () => {
     <div className="login">
       <h1 className="name1">สมัครสมาชิก</h1>
       <div className="carkeypic1">
-        <img src = "carkey.png"></img>
+        <img src="carkey.png"></img>
       </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicUsername">
@@ -140,7 +163,7 @@ const CreateAccount = () => {
       <button className="icon-button" onClick={() => navigate("/")}>
         <img src="back.png"></img>
       </button>
-      <Modal show={show} onHide={() => setShow(false)} centered>
+      <Modal show={show} onHide={handleSubscribeChange} centered>
         <Modal.Header closeButton>
           <Modal.Title>เงื่อนไขการให้บริการ</Modal.Title>
         </Modal.Header>
@@ -152,12 +175,7 @@ const CreateAccount = () => {
             นอกจากนี้เช่ารถให้ผู้เช่าเท่านั้นและไม่สามารถให้คนอื่นขับได้โดยไม่ได้รับอนุญาต
           </p>
 
-          <h5>การจองและการยกเลิก:</h5>
-          <p>
-            การจองต้องทำล่วงหน้าอย่างน้อย 24 ชั่วโมง
-            และผู้เช่าต้องมีเอกสารการรับรองตัวตนที่ถูกต้อง.
-            การยกเลิกต้องทำภายในเวลาที่กำหนดและอาจมีค่าปรับในบางกรณี
-          </p>
+         
           <h5>การชำระเงิน</h5>
           <p>
             ค่าเช่ารถต้องชำระล่วงหน้าและมีการเก็บเงินประกันในบางกรณี
@@ -196,6 +214,10 @@ const CreateAccount = () => {
           <p>
             เงื่อนไขเหล่านี้มีผลบังคับต่อทั้งผู้เช่าและบริษัทเช่ารถ
             และการใช้บริการเช่ารถจะถือว่าผูกพันตามเงื่อนไขที่ระบุไว้ทั้งหมด
+          </p>
+          <h5>เงื่อนไขในการรับรถ</h5>
+          <p>
+            -ใช้ใบขับขี่ของลูกค้าในการยืนยันเพื่อรับรถ
           </p>
         </Modal.Body>
         <Modal.Footer>

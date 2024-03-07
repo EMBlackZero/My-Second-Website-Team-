@@ -8,8 +8,8 @@ import "../CssAll/Historydetail.css";
 import StarRatings from "react-star-ratings";
 import Contact from "./Contact";
 
-const URL_CAR = "/api/cars";
-const URL_BOOKING = "/api/bookings";
+const URL_CAR = "/cars";
+const URL_BOOKING = "/bookings";
 
 function HistoryDetail() {
   const { id } = useParams();

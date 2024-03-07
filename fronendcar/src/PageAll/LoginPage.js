@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../CssAll/LoginCss.css";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("001");
-  const [password, setPassword] = useState("123456");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [submitEnabled, setSubmitEnabled] = useState(true);
   const [show, setShow] = useState(false);
 
@@ -23,7 +23,7 @@ const LoginForm = () => {
     setSubmitEnabled(false);
 
     try {
-      const result = await axios.post("/api/auth/local", {
+      const result = await axios.post("/auth/local", {
         identifier: username,
         password: password,
       });
@@ -42,7 +42,7 @@ const LoginForm = () => {
       };
 
       //เช็ค role
-      const userResult = await axios.get("/api/users/me?populate=role",config);
+      const userResult = await axios.get("/users/me?populate=role", config);
 
       // Step 4: Check user's role and navigate accordingly
       if (userResult.data.role) {
@@ -94,6 +94,9 @@ const LoginForm = () => {
               required
             />
           </Form.Group>
+          <a onClick={() => setShow(true)}>
+            <h1 className="account1" >ลืมรหัสผ่าน?</h1>
+          </a>
 
           <Button /* className="blackButton" */
             style={{
@@ -117,6 +120,22 @@ const LoginForm = () => {
           <img src="back.png"></img>
         </button>
       </div>
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>กรุณาติดต่อผู้ให้บริการ</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>ช่องทางติดต่อ</h3>
+          <p>Line : @rodchao</p>
+          <p>Facebook : รถเช่าร้านผมไม่เล็กนะครับ</p>
+          <p>เบอร์โทร : 087-653-1456</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShow(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -29,14 +29,11 @@ const Comfirmcar1 = () => {
       Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
     },
   };
- 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/api/cars/${id}?populate=*`,config
-        );
+        const response = await axios.get(`/cars/${id}?populate=*`, config);
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -58,11 +55,15 @@ const Comfirmcar1 = () => {
           new Date(item.attributes.startdate) &&
           new Date(renterInfo.enddate) >=
             new Date(item.attributes.startdate)) ||
-        (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
-          new Date(renterInfo.enddate) >= new Date(item.attributes.enddate)) ||
-        (new Date(renterInfo.startdate) <= new Date(item.attributes.enddate) &&
-          new Date(renterInfo.enddate) <= new Date(item.attributes.enddate))) &&
-          item.attributes.status === false
+          (new Date(renterInfo.startdate) <=
+            new Date(item.attributes.enddate) &&
+            new Date(renterInfo.enddate) >=
+              new Date(item.attributes.enddate)) ||
+          (new Date(renterInfo.startdate) <=
+            new Date(item.attributes.enddate) &&
+            new Date(renterInfo.enddate) <=
+              new Date(item.attributes.enddate))) &&
+        item.attributes.status === false
     );
     setLength(filteredData.length === undefined ? 0 : filteredData.length);
   };
@@ -81,7 +82,7 @@ const Comfirmcar1 = () => {
 
     // Calculate the total price
     const totalPrice =
-      (data.attributes && data.attributes.price) * differenceDays;
+      (data.attributes && data.attributes.price) * (differenceDays+1);
 
     // Set the Total value in the renterInfo state
     setRenterInfo({ ...renterInfo, Total: totalPrice });
@@ -95,8 +96,9 @@ const Comfirmcar1 = () => {
       // Upload the image to Strapi
 
       const carResponse = await axios.post(
-        `/api/bookings`,
-        { data: renterInfo },config
+        `/bookings`,
+        { data: renterInfo },
+        config
       );
 
       console.log(
@@ -116,14 +118,21 @@ const Comfirmcar1 = () => {
       <Nav />
       <div className="content">
         <div className="backmenu">
-          <button className="buttonback" onClick={() => navigate(`/DetailsPage/${id}`)}>
+          <button
+            className="buttonback"
+            onClick={() => navigate(`/DetailsPage/${id}`)}
+          >
             <img src="/back.png" />
           </button>
           <Breadcrumb>
             <Breadcrumb.Item href="/">หน้าหลัก</Breadcrumb.Item>
-            <Breadcrumb.Item href={`/DetailsPage/${id}`}>รายละเอียด</Breadcrumb.Item>
+            <Breadcrumb.Item href={`/DetailsPage/${id}`}>
+              รายละเอียด
+            </Breadcrumb.Item>
             <Breadcrumb.Item active>เลือกช่วงเวลา</Breadcrumb.Item>
-            <Breadcrumb.Item active style={{ color: 'lightgray' }}>ชำระเงิน</Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: "lightgray" }}>
+              ชำระเงิน
+            </Breadcrumb.Item>
           </Breadcrumb>
         </div>
 
@@ -137,6 +146,7 @@ const Comfirmcar1 = () => {
                   <Form.Control
                     type="date"
                     placeholder="โปรดกรอก เลือกวันที่"
+                    min={new Date().toISOString().split("T")[0]}
                     name="startdate"
                     value={renterInfo.startdate}
                     onChange={handleInputChange}
@@ -149,6 +159,13 @@ const Comfirmcar1 = () => {
                     type="date"
                     placeholder="โปรดกรอก เลือกวันที่"
                     name="enddate"
+                    min={
+                      renterInfo.startdate !== ""
+                        ? new Date(renterInfo.startdate)
+                            .toISOString()
+                            .split("T")[0]
+                        : ""
+                    }
                     disabled={renterInfo.startdate === ""}
                     value={renterInfo.enddate}
                     onChange={handleInputChange}

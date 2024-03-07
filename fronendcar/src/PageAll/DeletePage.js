@@ -18,7 +18,7 @@ function StaticExample({ id }) {
   useEffect(() => {
   
     axios
-      .get(`/api/cars/${id}?populate=*`,config) // ใช้ id ที่ส่งเข้ามาในการเรียก API
+      .get(`/cars/${id}?populate=*`,config) // ใช้ id ที่ส่งเข้ามาในการเรียก API
       .then(({ data }) => {
         setData2(data.data.attributes.bookings.data.length);
         if (data2 !== 0) {
@@ -42,7 +42,7 @@ function StaticExample({ id }) {
         // ให้ใช้ Promise.all เพื่อรอให้ทุก request เสร็จสิ้น
         data1.map((i) => {
           try {
-            axios.delete(`/api/bookings/${i}`,config);
+            axios.delete(`/bookings/${i}`,config);
             console.log(`Entry with ID ${i} deleted successfully`);
           } catch (error) {
             console.error(
@@ -52,7 +52,7 @@ function StaticExample({ id }) {
         });
       }
 
-      axios.delete(`/api/cars/${id}`,config);
+      axios.delete(`/cars/${id}`,config);
       console.log(`Event with ID ${id} deleted successfully`);
       navigate("/AdminPage");
     } catch (error) {

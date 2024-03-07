@@ -5,8 +5,8 @@ import axios from "axios";
 import { Button, Spinner, Modal } from "react-bootstrap";
 import "../CssAll/History.css";
 import Contact from "./Contact";
-const URL_CAR = "/api/cars";
-const URL_BOOKING = "/api/bookings";
+const URL_CAR = "/cars";
+const URL_BOOKING = "/bookings";
 
 function History() {
   const navigate = useNavigate();

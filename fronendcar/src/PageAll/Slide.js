@@ -15,7 +15,7 @@ const Slide = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/api/cars/${id}?populate=*`
+          `/cars/${id}?populate=*`
         );
         setData(response.data.data.attributes.imgslide);
       } catch (error) {

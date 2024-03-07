@@ -8,8 +8,8 @@ import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
 import Editbooking from "./Editbooking";
 
-const URL_CAR = "/api/cars";
-const URL_BOOKING = "/api/bookings";
+const URL_CAR = "/cars";
+const URL_BOOKING = "/bookings";
 
 function AdHTRnotsendback() {
   const navigate = useNavigate();
@@ -161,7 +161,7 @@ function AdHTRnotsendback() {
                 </div>
               </div>
               <div className="booking-detail">
-                <p>ID : {booking.id}</p>
+                <p>หมายเลข : {booking.id}</p>
                 <p>Name : {booking.car.data.attributes.namecar}</p>
                 <p>Start : {booking.startdate}</p>
                 <p>End : {booking.enddate}</p>

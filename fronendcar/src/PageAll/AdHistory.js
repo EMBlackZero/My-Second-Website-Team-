@@ -8,8 +8,8 @@ import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
 import Editbooking from "./Editbooking";
 
-const URL_CAR = "/api/cars";
-const URL_BOOKING = "/api/bookings";
+const URL_CAR = "/cars";
+const URL_BOOKING = "/bookings";
 
 function AdHistory() {
   // หน้านี้จะแสดงที่ยังไม่confirm

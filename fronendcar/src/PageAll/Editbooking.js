@@ -4,7 +4,7 @@ import "../CssAll/History.css";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-const URL_BOOKING = "/api/bookings";
+const URL_BOOKING = "/bookings";
 
 function Editbooking(props) {
   const booking = props.data;

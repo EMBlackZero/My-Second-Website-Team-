@@ -29,7 +29,7 @@ const AdEditeCar = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/api/cars/${id}?populate=*`,config
+          `/cars/${id}?populate=*`,config
         );
         const fetchedData = response.data.data;
         setData(fetchedData);
@@ -86,7 +86,7 @@ const AdEditeCar = (props) => {
         const formData = new FormData();
         formData.append("files", imageFile);
         const uploadResponse = await axios.post(
-          "/api/upload",
+          "/upload",
           formData,config
         );
         formData2.imgcar = parseInt(uploadResponse.data[0].id);
@@ -94,7 +94,7 @@ const AdEditeCar = (props) => {
         formData2.imgcar = parseInt(Idimg);
       }
       await axios.put(
-        `/api/cars/${id}?populate=*`,
+        `/cars/${id}?populate=*`,
         { data: formData2 },config
         
       );

@@ -18,7 +18,7 @@ const AdminPage = () => {
   };
   const fetchdata = () =>{
     axios
-      .get("/api/cars?populate=*",config)
+      .get("/cars?populate=*",config)
       .then(({ data }) => {
         console.log("data.data", data.data);
         const mapToset = data.data.map((e) => {

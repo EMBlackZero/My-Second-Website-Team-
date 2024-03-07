@@ -59,7 +59,7 @@ const AdcreateCar = (props) => {
       formData.append("files", imageFile);
 
       const uploadResponses = await axios.post(
-        "/api/upload",
+        "/upload",
         formData,config
       );
       const fileId = uploadResponses.data[0].id;
@@ -70,7 +70,7 @@ const AdcreateCar = (props) => {
       }
 
       const uploadResponse = await axios.post(
-        "/api/upload",
+        "/upload",
         formDatas,config
       );
       const fileIds = uploadResponse.data.map((d) => d.id);
@@ -87,7 +87,7 @@ const AdcreateCar = (props) => {
       };
 
       const carResponse = await axios.post(
-        `/api/cars`,
+        `/cars`,
         { data: formData2 },config
         
       );

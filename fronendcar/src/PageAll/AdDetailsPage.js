@@ -26,7 +26,7 @@ const AdDetailsPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`/api/cars/${id}?populate=*`,config);
+      const response = await axios.get(`/cars/${id}?populate=*`,config);
       console.log("response.data.data", response.data.data);
       const e = response.data.data;
       const map_toset = {
@@ -38,7 +38,7 @@ const AdDetailsPage = () => {
 
       setData(map_toset);
       const responU = await axios.get(
-        `/api/cars/${id}?populate=bookings.user.username`
+        `/cars/${id}?populate=bookings.user.username`
       );
       console.log(
         "responU.data.data",
@@ -55,9 +55,9 @@ const AdDetailsPage = () => {
         }
       );
       setDataComment(maptouse);
-      const ratings = responU.data.data.attributes?.bookings?.data.map(
-        (d) => d.attributes.rating
-      );
+      const ratings = responU.data.data.attributes?.bookings?.data
+        .map((d) => d.attributes.rating)
+        .filter((rating) => rating > 0);
       console.log("ratings", ratings);
 
       const averageRating =

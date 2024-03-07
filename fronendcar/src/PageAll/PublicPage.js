@@ -24,10 +24,10 @@ const PublicPage = () => {
 
   const navigate = useNavigate();
 
-  const fetchdata = () =>{
+  const fetchdata = () => {
     setIsLoading(true);
     axios
-      .get("/api/cars?populate=*")
+      .get("/cars?populate=*")
       .then(({ data }) => {
         const mapToset = data.data.map((e) => {
           return {
@@ -38,7 +38,6 @@ const PublicPage = () => {
           };
         });
         setData(mapToset);
-        
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -46,14 +45,14 @@ const PublicPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     fetchdata();
   }, []);
 
   const handlePriceFilter = () => {
-    let apiUrl = "/api/cars?populate=*";
+    let apiUrl = "/cars?populate=*";
     if (minPrice !== "") {
       apiUrl += `&filters[price][$gte]=${minPrice}`;
     }
@@ -61,7 +60,7 @@ const PublicPage = () => {
       apiUrl += `&filters[price][$lte]=${maxPrice}`;
     }
     axios
-      .get(apiUrl,config)
+      .get(apiUrl)
       .then(({ data }) => {
         const mapToset = data.data.map((e) => {
           return {
@@ -72,7 +71,6 @@ const PublicPage = () => {
           };
         });
         setData(mapToset);
-       
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -182,7 +180,7 @@ const PublicPage = () => {
 
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title >ต้องเข้าสู่ระบบ</Modal.Title>
+            <Modal.Title>ต้องเข้าสู่ระบบ</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-login">

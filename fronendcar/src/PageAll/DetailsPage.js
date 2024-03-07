@@ -29,7 +29,7 @@ const DetailsPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`/api/cars/${id}?populate=*`);
+      const response = await axios.get(`/cars/${id}?populate=*`);
       const e = response.data.data;
       const map_toset = {
         key: e.id,
@@ -40,7 +40,7 @@ const DetailsPage = () => {
 
       setData(map_toset);
       const responU = await axios.get(
-        `/api/cars/${id}?populate=bookings.user.username`
+        `/cars/${id}?populate=bookings.user.username`
       );
       const maptouse = responU.data.data?.attributes?.bookings?.data.map(
         (e) => {
@@ -53,14 +53,14 @@ const DetailsPage = () => {
         }
       );
       setDataComment(maptouse);
-      const ratings = responU.data.data.attributes?.bookings?.data.map(
-        (d) => d.attributes.rating
-      );
+      const ratings = responU.data.data.attributes?.bookings?.data
+        .map((d) => d.attributes.rating)
+        .filter((rating) => rating > 0);
 
       const averageRating =
-          ratings.length === 0
-            ? 0
-            : ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+        ratings.length === 0
+          ? 0
+          : ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
 
       setDatastarAVG(averageRating);
     } catch (error) {
@@ -79,7 +79,6 @@ const DetailsPage = () => {
 
   return (
     <div>
-      
       <Nav />
       <div className="content">
         <div className="backmenu">

@@ -6,8 +6,8 @@ import axios from "axios";
 import "../CssAll/Historydetail.css";
 import "../CssAll/SuccessPayment.css";
 import Contact from "./Contact";
-const URL_CAR = "/api/cars";
-const URL_BOOKING = "/api/bookings";
+const URL_CAR = "/cars";
+const URL_BOOKING = "/bookings";
 
 function SuccessfulPayment() {
   const { id } = useParams();

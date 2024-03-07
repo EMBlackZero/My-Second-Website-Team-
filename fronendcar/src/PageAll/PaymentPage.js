@@ -40,7 +40,7 @@ function PaymentPage(props) {
       const formData = new FormData();
       formData.append("files", imageFile);
 
-      const uploadResponse = await axios.post("/api/upload", formData, {
+      const uploadResponse = await axios.post("/upload", formData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
         },
@@ -53,7 +53,7 @@ function PaymentPage(props) {
       };
 
       const putResponse = await axios.put(
-        `/api/bookings/${id}?populate=*`,
+        `/bookings/${id}?populate=*`,
         { data: formData2 },
         config
       );
@@ -66,7 +66,7 @@ function PaymentPage(props) {
   };
 
   const backtoCarDetail = () => {
-    axios.delete(`/api/bookings/${id}`, config);
+    axios.delete(`/bookings/${id}`, config);
     const cardetailPage_previous = sessionStorage.getItem("wrap");
     navigate(cardetailPage_previous);
   };
@@ -122,7 +122,7 @@ function PaymentPage(props) {
                   style={{ width: "300px", height: "300px" }}
                 />
                 <p>เลขบัญชีธนาคารกรุงสุโขทัย</p>
-                <p>123-456-xxxx-xx-x</p>
+                <p>123-456-7891-23-4</p>
                 <p>บจก.รถเช่าผมไม่เล็กนะครับ</p>
               </Form.Group>
               <Form.Group className="mb-3" controlId="imageFile">

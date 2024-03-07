@@ -55,7 +55,7 @@ function AdminNav(props) {
                   <Form.Control
                     value={searchQuery}
                     type="search"
-                    placeholder="ค้นหาหมายเลขรถ "
+                    placeholder="ค้นหาหมายเลขการจอง "
                     className="me-2"
                     aria-label="Search"
                     onChange={(e) => setSearchQuery(e.target.value)}
